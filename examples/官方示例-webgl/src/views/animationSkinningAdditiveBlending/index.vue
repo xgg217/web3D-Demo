@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import { Scene, PerspectiveCamera, DirectionalLight, AmbientLight, WebGLRenderer, AxesHelper } from 'three';
+import { Scene, Color, Fog, PerspectiveCamera, DirectionalLight, AmbientLight, WebGLRenderer, AxesHelper, CameraHelper } from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { getElmWidhtAndHeight } from '@/utils/index';
 import model from "./model"
@@ -25,11 +25,23 @@ scene.add(axesHelper);
 
 // 光源设置
 (() => {
-  const directionalLight = new DirectionalLight(0xffffff, 1);
-  directionalLight.position.set(100, 60, 50);
-  scene.add(directionalLight);
-  const ambient = new AmbientLight(0xffffff, 0.4);
-  scene.add(ambient);
+  const dirLight = new DirectionalLight(0xffffff, 3);
+  dirLight.position.set(3, 10, 10);
+  dirLight.castShadow = true; //
+  dirLight.shadow.camera.top = 2;
+  dirLight.shadow.camera.bottom = - 2;
+  dirLight.shadow.camera.left = -1;
+  dirLight.shadow.camera.right = 1;
+  dirLight.shadow.camera.near = 0;
+  dirLight.shadow.camera.far = 20;
+  dirLight.shadow.radius = 1;
+  dirLight.shadow.mapSize.set(1024, 1024);
+  scene.add(dirLight);
+  // const ambient = new AmbientLight(0xffffff, 0.4);
+  // scene.add(ambient);
+
+  // const cameraHelper = new CameraHelper(dirLight.shadow.camera);
+  // scene.add(cameraHelper);
 })();
 
 
@@ -38,8 +50,8 @@ const cameraFun = (() => {
   //渲染器和相机
   console.log(width.value);
 
-  const camera = new PerspectiveCamera(90, width.value / height.value, 1, 3000);
-  camera.position.set(292, 223, 185);//根据渲染范围尺寸数量级设置相机位置
+  const camera = new PerspectiveCamera(45, width.value / height.value, 1, 3000);
+  camera.position.set(-2, 4, 4);//根据渲染范围尺寸数量级设置相机位置
   camera.lookAt(0, 0, 0);
   return camera
 });
@@ -57,9 +69,18 @@ const renderer = function renderer(camera: PerspectiveCamera): WebGLRenderer {
   renderer.setSize(width.value, height.value)
   // 将webgl渲染的canvas内容添加到body
 
+  // renderer.setClearColor(0xa0a0a0, 1); // 设置背景颜色
+  renderer.setClearColor(0xffffff, 1); // 设置背景颜色
+  // scene.background = new Color(0xa0a0a0);
+  // scene.fog = new Fog(0xa0a0a0, 10, 50);
+
+  // 设置渲染器，允许光源阴影渲染
+  renderer.shadowMap.enabled = true;
+
   canRef.value.appendChild(renderer.domElement);
   const controls = new OrbitControls(camera, renderer.domElement);
   // renderer.outputEncoding = THREE.sRGBEncoding;
+  controls.target.set(0, 0, 0);
 
   controls.addEventListener('change', function () {
     renderer.render(scene, camera); //执行渲染操作

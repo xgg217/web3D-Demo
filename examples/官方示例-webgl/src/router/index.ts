@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import AnimationKeyframes from '@/views/AnimationKeyframes/index.vue'
+import AnimationKeyframes from '@/views/animationSkinningAdditiveBlending/index.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),

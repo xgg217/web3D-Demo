@@ -12,8 +12,8 @@ const avcStr = ref('animation / skinning / additive / blending')
       <ul>
         <li>
           <DirectoryCardCmp title="animation / skinning / additive / blending"
-            imgSrc="/src/views/AnimationKeyframes/webgl_animation_skinning_additive_blending.jpg"
-            :isAvc="avcStr === 'animation / skinning / additive / blending'" notes="人" />
+            imgSrc="/src/views/animationSkinningAdditiveBlending/webgl_animation_skinning_additive_blending.jpg"
+            :isAvc="avcStr === 'animation / skinning / additive / blending'" notes="运动模拟" />
         </li>
       </ul>
     </nav>
