@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body{
+      overflow: hidden;
+      margin: 0px;
+    }
+
+    #can{
+      position: relative;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: #000;
+    }
+
+    button{
+      position: absolute;
+      bottom: 10vh;
+      left: 50%;
+    }
+
+    .a {
+      transform: translateX(-100%);
+    }
+
+    .b {
+      transform: translateX(100%);
+    }
+
+  </style>
+</head>
+<body>
+
+  <div id="can">
+    <button type="button" class="a">设备A</button>
+    <button type="button" class="b">设备B</button>
+  </div>
+
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "./three.module.min.js",
+        "three/addons/": "./jsm/"
+      }
+    }
+  </script>
+
+  <script src="./index.js" type="module"></script>
+</body>
+</html>

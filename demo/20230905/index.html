@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Three.js中文网：www.webgl3d.cn</title>
+    <style>
+        body {
+            overflow: hidden;
+            margin: 0px;
+        }
+        #tag {
+            padding: 0px 10px;
+            /* border: #00ffff solid 1px; */
+            height: 40px;
+            line-height: 40px;
+            color: #fff;
+            background: rgba(25, 25, 25, 0.5);
+            border-radius: 5px;
+            width: 65px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="tag">标签内容</div>
+    <!-- type="importmap"功能：.html文件中也能和nodejs开发环境中一样方式，引入npm安装的js库 -->
+    <script type="importmap">
+        {
+			"imports": {
+				"three": "./three.module.min.js",
+                "three/addons/": "./jsm/"
+			}
+		}
+	</script>
+    <script src="./index.js" type="module">
+    </script>
+</body>
+
+</html>
