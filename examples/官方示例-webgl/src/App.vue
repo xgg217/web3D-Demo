@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import {ref} from 'vue';
-import {  RouterView } from 'vue-router'
+import { ref } from 'vue';
+import { RouterView } from 'vue-router'
 import DirectoryCardCmp from "@/components/DirectoryCardCmp.vue"
 
-const avcStr = ref('animation / keyframes')
+const avcStr = ref('animation / skinning / additive / blending')
 </script>
 
 <template>
@@ -11,12 +11,9 @@ const avcStr = ref('animation / keyframes')
     <nav>
       <ul>
         <li>
-          <DirectoryCardCmp
-            title="animation / keyframes"
-            imgSrc="/src/views/AnimationKeyframes/webgl_animation_keyframes.jpg"
-            :isAvc="avcStr === 'animation / keyframes'"
-            notes="东京街头"
-          />
+          <DirectoryCardCmp title="animation / skinning / additive / blending"
+            imgSrc="/src/views/AnimationKeyframes/webgl_animation_skinning_additive_blending.jpg"
+            :isAvc="avcStr === 'animation / skinning / additive / blending'" notes="人" />
         </li>
       </ul>
     </nav>
@@ -24,7 +21,7 @@ const avcStr = ref('animation / keyframes')
 
       <RouterView />
     </div>
-</main>
+  </main>
 </template>
 
 <style scoped>

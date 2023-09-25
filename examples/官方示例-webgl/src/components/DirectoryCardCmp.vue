@@ -25,11 +25,11 @@ const props = defineProps({
 </script>
 
 <template>
-  <div class="box" :class="{selected: props.isAvc}">
-    <div class="imgs" >
+  <div class="box" :class="{ selected: props.isAvc }">
+    <div class="imgs">
       <img :src="props.imgSrc" alt="">
     </div>
-    <p>{{props.title}}</p>
+    <p class="title">{{ props.title }}</p>
 
     <p class="notes">{{ props.notes }}</p>
   </div>
@@ -60,10 +60,11 @@ const props = defineProps({
 
 .imgs img {
   width: 100%;
-  max-height: 100%;
+  /* max-height: 100%; */
 }
 
 p {
+  box-sizing: border-box;
   margin: 0;
   padding: 8px 12px 4px;
   font-size: 16px;
@@ -72,8 +73,20 @@ p {
   color: #444;
 }
 
+.title {
+  width: 250px;
+  font-weight: bold;
+}
+
+.title:hover {
+  color: #049EF4;
+
+}
+
 .notes {
   font-size: 12px;
   color: #999;
+  width: 250px;
+  /* border: 1px solid red; */
 }
 </style>
