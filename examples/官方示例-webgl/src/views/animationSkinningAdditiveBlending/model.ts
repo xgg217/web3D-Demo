@@ -24,10 +24,6 @@ group.add(mesh);
 
 
 
-// folder1.
-
-
-
 (() => {
   const gui = new GUI();//创建GUI对象
   const folder1 = gui.addFolder( '动作' );
@@ -36,7 +32,6 @@ group.add(mesh);
 
   type IIitemActions = {
     [key:string]: {
-      weight: 1 | 0,
       name: string,
       action: AnimationClip | null,
     }
@@ -54,9 +49,9 @@ group.add(mesh);
   };
   const currentBaseAction = 'idle';
   const baseActions:IIitemActions = {
-    idle: { weight: 1, name: '休闲', action: null },
-    walk: { weight: 0, name: '走路', action: null },
-    run: { weight: 0, name: '跑步', action: null }
+    idle: { name: '休闲', action: null },
+    walk: { name: '走路', action: null },
+    run: { name: '跑步', action: null }
   };
 
   let mixer:AnimationMixer;
@@ -79,9 +74,10 @@ group.add(mesh);
     // console.log(item);
     // action.paused = true;
     if(currentAction && item && item.action) {
-      currentAction.paused = true;
+      currentAction.stop();
       const action = mixer.clipAction( item.action );
       action.play();
+      currentAction = action;
     }
 
   });
