@@ -25,65 +25,75 @@ group.add(mesh);
 
 
 (() => {
+  type IIitemActions = {
+    [key:string]: {
+      name: string,
+      key: string, // 动作的key
+      action: AnimationClip | null,
+    }
+  }
+
   const gui = new GUI();//创建GUI对象
   const folder1 = gui.addFolder( '动作' );
   const folder2 = gui.addFolder( '姿态' );
   const folder3 = gui.addFolder( '分组3' );
 
-  type IIitemActions = {
-    [key:string]: {
-      name: string,
-      action: AnimationClip | null,
-    }
-  }
-
-  // 正在播放的动作
-  let currentAction:AnimationAction | null = null;
+  const loader = new GLTFLoader();
+  let mixer:AnimationMixer; // 动画混合器
+  let currentAction:AnimationAction | null = null; // 正在播放的动作
 
   // 动作
-  const baseActionsStr = {
-    none: '默认',
-    idle: '休闲',
-    walk: '走路',
-    run: '跑步'
-  };
-  const currentBaseAction = 'idle';
-  const baseActions:IIitemActions = {
-    idle: { name: '休闲', action: null },
-    walk: { name: '走路', action: null },
-    run: { name: '跑步', action: null }
-  };
+  const {baseActions} = (() => {
 
-  let mixer:AnimationMixer;
+    // 对应动作的动画
+    const baseActions:IIitemActions = {
+      headShake: { name: '左右摇头', key: 'headShake', action: null },
+      sad_pose: { name: '点头', key: 'sad_pose', action: null },
+      sneak_pose: { name: '紧张', key: 'sneak_pose', action: null },
+      idle: { name: '休闲', key: 'idle', action: null },
+      walk: { name: '走路', key: 'walk', action: null },
+      run: { name: '跑步', key: 'run', action: null }
+    };
 
-  folder1.add(baseActionsStr, 'idle', baseActionsStr).name('动作').onChange((val) => {
-    console.log(val);
-    let item = null;
-    console.log(Object.values(baseActions));
+    // 展示的动作
+    const baseActionsStr = {
+      左右摇头: baseActions['headShake'].key,
+      点头: baseActions['sad_pose'].key,
+      紧张: baseActions['sneak_pose'].key,
+      休闲: baseActions['idle'].key,
+      走路: baseActions['walk'].key,
+      跑步: baseActions['run'].key
+    };
 
-    for (const value of Object.values(baseActions))  {
-      // console.log(value);
+    // 点击指定动作的回调
+    folder1.add(baseActionsStr, '休闲', baseActionsStr).name('动作').onChange((val) => {
 
-      if(value.name === val) {
-        item = value;
-        console.log(value);
-        break;
+      let item = null;
+      console.log(Object.values(baseActions));
+
+      for (const value of Object.values(baseActions))  {
+
+        if(value.key === val) {
+          item = value;
+          // console.log(value);
+          break;
+        }
       }
+
+      if(currentAction && item && item.action) {
+        currentAction.stop();
+        const action = mixer.clipAction( item.action );
+        action.play();
+        currentAction = action;
+      }
+
+    });
+
+    return {
+      baseActions
     }
+  })();
 
-    // console.log(item);
-    // action.paused = true;
-    if(currentAction && item && item.action) {
-      currentAction.stop();
-      const action = mixer.clipAction( item.action );
-      action.play();
-      currentAction = action;
-    }
-
-  });
-
-
-  const loader = new GLTFLoader();
 
   loader.load(littlestTokyoUrl, function ( gltf ) {
     console.log('控制台查看加载gltf文件返回的对象结构',gltf);
@@ -98,47 +108,41 @@ group.add(mesh);
 
     // 动画
     (() => {
-       mixer = new AnimationMixer(gltf.scene);
+      mixer = new AnimationMixer(gltf.scene);
 
       const animations = gltf.animations;
 
+      // 获取指定动作的动画
       animations.forEach(item => {
 
         const name = item.name;
-        // console.log(item);
-
 
         // @ts-ignore
-        if(baseActionsStr[name]) {
+        if(baseActions[name] && (baseActions[name].action === null)) {
           // console.log(item);
           baseActions[name].action = item;
         }
       })
 
-
+      // 播放默认动作
       if(baseActions['idle'].action) {
-
         currentAction = mixer.clipAction( baseActions['idle'].action );
-
         currentAction.play();
       }
 
-
-      const clock = new Clock();
-      function loop() {
-        requestAnimationFrame(loop);
-        const frameT = clock.getDelta();
-        // 更新播放器相关的时间
-        mixer.update(frameT);
-      }
+      // 循环播放动画
       loop();
     })();
 
-
-
-
   });
 
+  const clock = new Clock();
+  function loop() {
+    requestAnimationFrame(loop);
+    const frameT = clock.getDelta();
+    // 更新播放器相关的时间
+    mixer.update(frameT);
+  }
 })();
 
 
