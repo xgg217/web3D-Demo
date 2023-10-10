@@ -1,7 +1,7 @@
 import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { Group,Mesh, PlaneGeometry, MeshLambertMaterial,AnimationMixer, Clock } from "three"
 import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
-import type {AnimationAction} from "three"
+import type {AnimationAction, AnimationClip} from "three"
 
 const littlestTokyoUrl = new URL('./Xbot.glb', import.meta.url).href;
 
@@ -38,9 +38,12 @@ group.add(mesh);
     [key:string]: {
       weight: 1 | 0,
       name: string,
-      action: AnimationAction,
+      action: AnimationClip | null,
     }
   }
+
+  // 正在播放的动作
+  let currentAction:AnimationAction | null = null;
 
   // 动作
   const baseActionsStr = {
@@ -52,11 +55,11 @@ group.add(mesh);
   const currentBaseAction = 'idle';
   const baseActions:IIitemActions = {
     idle: { weight: 1, name: '休闲', action: null },
-    walk: { weight: 0, name: '走路' },
-    run: { weight: 0, name: '跑步' }
+    walk: { weight: 0, name: '走路', action: null },
+    run: { weight: 0, name: '跑步', action: null }
   };
 
-  let mixer = null;
+  let mixer:AnimationMixer;
 
   folder1.add(baseActionsStr, 'idle', baseActionsStr).name('动作').onChange((val) => {
     console.log(val);
@@ -64,21 +67,22 @@ group.add(mesh);
     console.log(Object.values(baseActions));
 
     for (const value of Object.values(baseActions))  {
-      console.log(value);
+      // console.log(value);
 
       if(value.name === val) {
         item = value;
+        console.log(value);
         break;
       }
     }
 
     // console.log(item);
-
-    const action = mixer.clipAction( item.action );
-    action.play();
-
-
-
+    // action.paused = true;
+    if(currentAction && item && item.action) {
+      currentAction.paused = true;
+      const action = mixer.clipAction( item.action );
+      action.play();
+    }
 
   });
 
@@ -92,6 +96,7 @@ group.add(mesh);
     group.add( gltf.scene );
 
     gltf.scene.traverse( function ( object ) {
+      // @ts-ignore
       if ( object.isMesh ) {object.castShadow = true;}
     });
 
@@ -99,11 +104,8 @@ group.add(mesh);
     (() => {
        mixer = new AnimationMixer(gltf.scene);
 
-      // const allActions:AnimationAction[] = []; // 所有动作
-
       const animations = gltf.animations;
 
-      // const numAnimations = animations.length; // 所有动作
       animations.forEach(item => {
 
         const name = item.name;
@@ -112,30 +114,19 @@ group.add(mesh);
 
         // @ts-ignore
         if(baseActionsStr[name]) {
-          console.log(item);
-
-          // const action = mixer.clipAction( item );
-          // console.log(action);
-
-          // action.play();
-
-        //   // allActions.push(action);
+          // console.log(item);
           baseActions[name].action = item;
         }
       })
-      // console.log(baseActions['idle'].action);
 
 
-      const action = mixer.clipAction( baseActions['idle'].action );
-      // console.log(action);
+      if(baseActions['idle'].action) {
 
-      action.play();
+        currentAction = mixer.clipAction( baseActions['idle'].action );
 
+        currentAction.play();
+      }
 
-
-
-      // const clipAction = mixer.clipAction(gltf.animations[0]);
-      // clipAction.play();
 
       const clock = new Clock();
       function loop() {
