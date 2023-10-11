@@ -3,6 +3,7 @@ import { Group,Mesh, PlaneGeometry, MeshLambertMaterial,AnimationMixer, Clock } 
 import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
 import type {AnimationAction, AnimationClip} from "three"
 
+
 const littlestTokyoUrl = new URL('./Xbot.glb', import.meta.url).href;
 
 
@@ -47,9 +48,9 @@ group.add(mesh);
 
     // 对应动作的动画
     const baseActions:IIitemActions = {
-      headShake: { name: '左右摇头', key: 'headShake', action: null },
-      sad_pose: { name: '点头', key: 'sad_pose', action: null },
-      sneak_pose: { name: '紧张', key: 'sneak_pose', action: null },
+      // headShake: { name: '左右摇头', key: 'headShake', action: null },
+      // sad_pose: { name: '点头', key: 'sad_pose', action: null },
+      // sneak_pose: { name: '紧张', key: 'sneak_pose', action: null },
       idle: { name: '休闲', key: 'idle', action: null },
       walk: { name: '走路', key: 'walk', action: null },
       run: { name: '跑步', key: 'run', action: null }
@@ -57,9 +58,9 @@ group.add(mesh);
 
     // 展示的动作
     const baseActionsStr = {
-      左右摇头: baseActions['headShake'].key,
-      点头: baseActions['sad_pose'].key,
-      紧张: baseActions['sneak_pose'].key,
+      // 左右摇头: baseActions['headShake'].key,
+      // 点头: baseActions['sad_pose'].key,
+      // 紧张: baseActions['sneak_pose'].key,
       休闲: baseActions['idle'].key,
       走路: baseActions['walk'].key,
       跑步: baseActions['run'].key
@@ -93,6 +94,29 @@ group.add(mesh);
       baseActions
     }
   })();
+
+  // 姿态
+  const {} = (() => {
+    // 对应动作的动作
+    const attitude = {
+      headShake: { name: '左右摇头', key: 'headShake', action: null },
+      sad_pose: { name: '点头', key: 'sad_pose', action: null },
+      sneak_pose: { name: '紧张', key: 'sneak_pose', action: null },
+    }
+
+    // folder2.add()
+
+
+    // 展示的动作
+    const baseActionsStr = {
+      // 左右摇头: baseActions['headShake'].key,
+      // 点头: baseActions['sad_pose'].key,
+      // 紧张: baseActions['sneak_pose'].key,
+    };
+
+  })();
+
+
 
 
   loader.load(littlestTokyoUrl, function ( gltf ) {

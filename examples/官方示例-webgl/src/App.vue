@@ -31,7 +31,6 @@ main {
 
 nav {
   padding: 10px;
-  /* width: 280px; */
   height: 95vh;
   border: 1px solid #000;
   overflow-y: scroll;
@@ -49,6 +48,7 @@ ul {
 
   li {
     list-style: none;
+    width: 280px;
   }
 }
 </style>

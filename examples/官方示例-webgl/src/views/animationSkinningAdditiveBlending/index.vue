@@ -3,6 +3,7 @@ import { onMounted, ref } from 'vue';
 import { Scene, Color, Fog, PerspectiveCamera, DirectionalLight, AmbientLight, WebGLRenderer, AxesHelper, CameraHelper } from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { getElmWidhtAndHeight } from '@/utils/index';
+import Stats from 'three/addons/libs/stats.module.js';
 import model from "./model"
 
 const canRef = ref();
@@ -10,7 +11,7 @@ const width = ref(0); // 高度
 const height = ref(0); // 高度
 
 const scene = new Scene();
-
+const stats = new Stats();
 
 scene.add(model);
 
@@ -78,6 +79,16 @@ const renderer = function renderer(camera: PerspectiveCamera): WebGLRenderer {
   renderer.shadowMap.enabled = true;
 
   canRef.value.appendChild(renderer.domElement);
+
+  // 渲染帧率
+  {
+    // @ts-ignore
+    const el = stats.domElement;
+    el.style.left = '300px';
+    // @ts-ignore
+    canRef.value.appendChild(stats.domElement);
+  }
+
   const controls = new OrbitControls(camera, renderer.domElement);
   // renderer.outputEncoding = THREE.sRGBEncoding;
   controls.target.set(0, 0, 0);
@@ -102,6 +113,7 @@ onMounted(() => {
   const rend = renderer(camera);
 
   const render = function render() {
+    stats.update();
     rend.render(scene, camera);
     requestAnimationFrame(render);
   }
