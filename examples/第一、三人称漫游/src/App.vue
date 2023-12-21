@@ -13,7 +13,6 @@ const { warppRef,init } = (() => {
   const clock = new THREE.Clock();
 
 
-  scene.add(group);
 
   // 设置光源
   const setLight = () => {
@@ -51,6 +50,20 @@ const { warppRef,init } = (() => {
     scene.add( gridHelper );
   }
 
+  // 设置窗口大小
+  const setWindowResize = () => {
+    window.addEventListener('resize', () => {
+      // 重置渲染器输出画布canvas尺寸
+      renderer?.setSize(window.innerWidth, window.innerHeight);
+
+      // 全屏情况下：设置观察范围长宽比aspect为窗口宽高比
+      camera.aspect = window.innerWidth / window.innerHeight;
+
+      camera.updateProjectionMatrix();
+    });
+
+  }
+
   // 渲染循环
   const render = () => {
 
@@ -68,8 +81,9 @@ const { warppRef,init } = (() => {
   // 初始化
   const init = () => {
 
-
     window.setTimeout(() => {
+
+      scene.add(group);
 
       // 设置光源
       setLight();
@@ -80,16 +94,8 @@ const { warppRef,init } = (() => {
       // 辅助工具
       setAuxiliaryTool();
 
-      // 自适应窗口被调整大小时发生
-      window.onresize = () => {
-        // 重置渲染器输出画布canvas尺寸
-        renderer?.setSize(window.innerWidth, window.innerHeight);
-
-        // 全屏情况下：设置观察范围长宽比aspect为窗口宽高比
-        camera.aspect = window.innerWidth / window.innerHeight;
-
-        camera.updateProjectionMatrix();
-      }
+      // 自适应窗口被调整大小时发生的事件
+      setWindowResize();
 
       // 渲染循环
       render();
@@ -109,10 +115,6 @@ const { warppRef,init } = (() => {
 
 onMounted(() => {
   init();
-
-
-  console.log(document.querySelector('.third'));
-
 });
 
 onUnmounted(() => {

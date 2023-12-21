@@ -213,33 +213,25 @@ const { butControlsInit } = (() => {
     cameraGroup.rotation.x = x;
   }
 
-  // 进入指针锁定模式后，鼠标旋转视角（无限旋转）
+  /**
+   * 鼠标旋转视角
+   * 1. 进入指针锁定模式后，鼠标无限旋转
+   * 2. 按下鼠标左键，小幅度旋转视角
+   */
   document.addEventListener('mousemove', (event) => {
-    // if(!isLock) { return }
-    // console.log(isLock);
-
 
     if(isLock || isLeftBut) {
-
       setRotation(event);
     }
   });
 
   // 按下鼠标左键，小幅度旋转视角
   document.addEventListener('mousedown', (event) => {
-    // console.log(isLock);
-
 
     // 如果当前处于指针锁定模式，则不执行
     if(isLock) { return }
 
     isLeftBut = true;
-
-    console.log(12);
-
-    console.log(event.movementX);
-
-
 
     setRotation(event);
 
