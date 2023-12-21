@@ -9,7 +9,7 @@ const { warppRef,init } = (() => {
   const scene = new THREE.Scene();
   const warppRef = ref<HTMLDivElement | null>(null);
   let renderer:THREE.WebGLRenderer | null = null;
-  const clock = new THREE.Clock();
+  // const clock = new THREE.Clock();
 
   scene.add(group);
 
@@ -52,9 +52,9 @@ const { warppRef,init } = (() => {
 
   // 渲染循环
   const render = () => {
-    const deltaTime = clock.getDelta();
+    // const deltaTime = clock.getDelta();
 
-    mixer.update(deltaTime);// 更新播放器相关的时间
+    // mixer.update(deltaTime);// 更新播放器相关的时间
 
     renderer?.render(scene, camera);
     requestAnimationFrame(render);

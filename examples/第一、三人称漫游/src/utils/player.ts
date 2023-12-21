@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { group,mixer, player } from './model.js'
+// import { group,mixer, player } from './model.js'
 
 // 2.创建相机
 const camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 0.1, 1000);
