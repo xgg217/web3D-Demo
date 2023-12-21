@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted,ref } from 'vue';
 import * as THREE from "three";
-import { camera } from "./utils"
+import { camera } from "./utils/player"
 
 
 const { warppRef,init } = (() => {
