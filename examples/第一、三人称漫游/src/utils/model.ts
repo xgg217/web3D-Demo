@@ -9,7 +9,7 @@ let gltf = null;
 // let player = null;
 
 try {
-  gltf = await loader.loadAsync("@/public/人.glb");
+  gltf = await loader.loadAsync("@/");
   // console.log('gltf', gltf);
 
 } catch (error) {
