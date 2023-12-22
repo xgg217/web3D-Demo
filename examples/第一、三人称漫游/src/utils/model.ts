@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 
 const loader = new GLTFLoader();
 
@@ -10,15 +10,11 @@ let gltf = null;
 
 try {
   gltf = await loader.loadAsync("人.glb");
-
 } catch (error) {
   console.error(error);
 }
 
-
-
 const player = gltf!.scene; // 玩家角色模型
-
 
 //包含关键帧动画的模型作为参数创建一个播放器
 const mixer = new THREE.AnimationMixer(gltf!.scene);
@@ -31,4 +27,3 @@ clipAction.play(); //播放动画
 group.add(player);
 
 export { group, mixer, player };
-
