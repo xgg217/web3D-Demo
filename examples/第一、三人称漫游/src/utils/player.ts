@@ -1,5 +1,6 @@
 import * as THREE from "three";
-import { player } from "./model.js";
+import { player, changeAction } from "./model.js";
+import { ACTION_TYPE } from "./enum";
 
 // 创建相机
 const camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -7,15 +8,15 @@ camera.position.set(0, 1.6, -5.5); // 玩家角色后面一点
 camera.lookAt(0, 1.6, 0); //对着人身上某个点  视线大致沿着人的正前方
 
 const cameraGroup = new THREE.Group();
-cameraGroup.add(camera); // // 层级关系：player <—— cameraGroup <—— camera
+cameraGroup.add(camera); // 层级关系：player <—— cameraGroup <—— camera
 player.add(cameraGroup); // 第三人称视角：相机作为人的子对象，会跟着人运动
 
 // asdw按键 控制前后左右
 const { playerUpdate } = (() => {
   const v = new THREE.Vector3(0, 0, 0); //初始速度设置为0
-  const a = 12; //加速度：调节按键加速快慢
-  const vMax = 5; //限制玩家角色最大速度
-  const damping = -0.04; // 阻尼系数
+  const a = 30; //加速度：调节按键加速快慢
+  const vMax = 10; //限制玩家角色最大速度
+  const damping = -0.1; // 阻尼系数
 
   // 声明一个对象keyStates用来记录键盘事件状态
   const keyStates = {
@@ -52,8 +53,6 @@ const { playerUpdate } = (() => {
 
   // 当某个键盘抬起设置对应属性设置为false
   document.addEventListener("keyup", (event) => {
-    // console.log('event.code', event.code);
-
     // 按下W键
     if (event.code === "KeyW" || event.code === "ArrowUp") {
       keyStates.W = false;
@@ -78,6 +77,7 @@ const { playerUpdate } = (() => {
   // 循环执行的函数中测试W键盘状态值
   function playerUpdate(deltaTime: number) {
     const front = new THREE.Vector3();
+    const vL = v.length();
 
     //限制最高速度
     if (v.length() < vMax) {
@@ -119,6 +119,17 @@ const { playerUpdate } = (() => {
         const right = front.clone().cross(up);
         v.add(right.multiplyScalar(a * deltaTime));
       }
+    }
+
+    //速度小于0.2切换到站着休息状态
+    if (vL < 0.2) {
+      changeAction(ACTION_TYPE.Idle.value);
+    } else if (vL >= 0.2 && vL < 4) {
+      //步行状态
+      changeAction(ACTION_TYPE.Walk.value);
+    } else if (vL > 4) {
+      // 跑步状态
+      changeAction(ACTION_TYPE.Run.value);
     }
 
     // 阻尼减速
