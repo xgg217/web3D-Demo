@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Three.js中文网：http://www.webgl3d.cn/</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <script type="module">
+        // 引入Three.js
+        import * as THREE from '../../../three.js-r125/build/three.module.js';
+        // 引入Three.js扩展库OrbitControls.js：旋转缩放功能
+        import { OrbitControls } from '../../../three.js-r125/examples/jsm/controls/OrbitControls.js';
+        // 渲染HTML元素标签的渲染器CSS2DRenderer 
+        // 通过CSS2DObject把HTML元素包装为一个类似网格模型Mesh的three.js模型对象
+        import { CSS2DRenderer,CSS2DObject } from '../../../../three.js-r125/examples/jsm/renderers/CSS2DRenderer.js';
+        /**
+        * 创建场景对象Scene
+        * Scene包含三维模型和光源
+        */
+        var scene = new THREE.Scene();
+        /**立方体*/
+        var box = new THREE.BoxGeometry(30, 30, 30); //创建一个立方体几何对象
+        var material = new THREE.MeshLambertMaterial({
+            color: 0xffffff
+        }); //材质对象
+        var boxMesh = new THREE.Mesh(box, material); //网格模型对象
+        boxMesh.translateZ(-80);
+        scene.add(boxMesh); //网格模型添加到场景中
+        /**
+        * 光源设置
+        */
+        // 平行光1
+        var directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+        directionalLight.position.set(400, 200, 300);
+        scene.add(directionalLight);
+        //环境光
+        var ambient = new THREE.AmbientLight(0xffffff, 0.3);
+        scene.add(ambient);
+
+        // Three.js三维坐标轴 三个坐标轴颜色RGB分别对应xyz轴
+        var axesHelper = new THREE.AxesHelper(250);
+        scene.add(axesHelper);
+
+        // width和height用来设置Three.js输出Canvas画布尺寸，同时用来辅助设置相机渲染范围
+        var width = window.innerWidth; //窗口文档显示区的宽度
+        var height = window.innerHeight; //窗口文档显示区的高度
+        /**
+        * 透视投影相机设置
+        */
+        // 30:视场角度, width / height:Canvas画布宽高比, 1:近裁截面, 3000：远裁截面
+        var camera = new THREE.PerspectiveCamera(30, width / height, 1, 3000);
+        camera.position.set(292, 223, 185);//相机在Three.js三维坐标系中的位置
+        camera.lookAt(0, 0, 0);//相机指向Three.js坐标系原点
+        /**
+         * 创建渲染器对象
+         */
+        var renderer = new THREE.WebGLRenderer({
+            antialias: true, //开启锯齿
+        });
+        renderer.setPixelRatio(window.devicePixelRatio);//设置设备像素比率,防止Canvas画布输出模糊。
+        renderer.setSize(width, height); //设置渲染区域尺寸
+        // renderer.domElement表示Three.js渲染结果,也就是一个HTML元素(Canvas画布)
+        document.body.appendChild(renderer.domElement); //body元素中插入canvas对象
+
+
+        /**
+        * HTML元素编写一个UI效果作为模型标签
+        */
+        var div = document.createElement('div');
+        div.innerHTML = '立方体';
+        div.style.padding = '10px';
+        div.style.color = '#fff';
+        div.style.backgroundColor = 'rgba(25,25,25,0.5)';
+        div.style.borderRadius = '5px'
+
+
+        //HTML元素标签作为参数创建一个CSS2模型对象CSS2DObject
+        //你可以把CSS2DObject模型对象类比为网格模型Mesh，一样具有position属性
+        //CSS2DObject模型对象不具有角度和缩放.scale属性
+        var label = new CSS2DObject(div);
+        //设置模型对象CSS2DObject在场景位置
+        //标签标注boxMesh模型所以复制boxMesh的位置
+        label.position.copy(boxMesh.position);
+        //适当偏移标签
+        label.position.y += 30
+        scene.add(label);//CSS2模型标签插入到场景中
+
+        // 创建一个CSS2渲染器CSS2DRenderer
+        var labelRenderer = new CSS2DRenderer();
+        labelRenderer.setSize(window.innerWidth, window.innerHeight);
+        labelRenderer.domElement.style.position = 'absolute';
+        // 避免renderer.domElement影响HTMl标签定位，设置top为0px
+        labelRenderer.domElement.style.top = '0px';
+        labelRenderer.domElement.style.left = '0px';
+        //设置.pointerEvents=none，以免模型标签HTML元素遮挡鼠标选择场景模型
+        labelRenderer.domElement.style.pointerEvents = 'none';
+        document.body.appendChild(labelRenderer.domElement);
+
+        // 渲染循环
+        function render() {
+            //渲染场景中的HTMl元素包装成的CSS2模型对象
+            labelRenderer.render(scene, camera);
+            renderer.render(scene, camera); //执行渲染操作
+            requestAnimationFrame(render); //请求再次执行渲染函数render，渲染下一帧
+        }
+        render();
+
+        //创建控件对象  控件可以监听鼠标的变化，改变相机对象的属性
+        // 旋转：拖动鼠标左键
+        // 缩放：滚动鼠标中键
+        // 平移：拖动鼠标右键
+        var controls = new OrbitControls(camera, renderer.domElement);
+    </script>
+</body>
+
+</html>

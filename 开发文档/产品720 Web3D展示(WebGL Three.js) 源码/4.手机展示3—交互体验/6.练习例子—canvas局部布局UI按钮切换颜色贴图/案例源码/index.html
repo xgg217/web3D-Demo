@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Three.js中文网：http://www.webgl3d.cn/</title>
+  <style>
+    body {
+      margin: 0;
+      /* overflow: hidden; */
+      background: #f0f0f0;
+    }
+
+    .container {
+      display: flex;
+      /* row是flex-direction默认值,可以不设置，表示主轴为水平方向，从左向右排列*/
+      flex-direction: row;
+      /*space-between表示*/
+      justify-content: space-between;
+
+    }
+
+    .item {
+      /* 和背景颜色区分查看布局效果 */
+      background: #ffffff;
+    }
+
+    .colorChoose {
+      border: 1px solid #ccc;
+      display: inline-block;
+      margin-left: 4px;
+      padding: 2px 4px;
+      cursor:pointer;
+    }
+    .colorChoose:hover{
+      cursor:hand;
+    }
+    .colorChoose img {
+      /* 图片和文字水平方向居中对齐 */
+      vertical-align: middle;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div style="margin:0 auto;width:1210px;height:800px;">
+    <div>
+      <img src="./assets/img0.png" alt="">
+    </div>
+
+    <div class="container">
+      <!-- Three.js渲染结果，也就是手机的3D模型渲染结果嵌入到id="canvas"的div元素中 -->
+      <div id="canvas" class="item" style="width:450px;height:740px;">
+      </div>
+      <div class="item" style="width:750px;height:740px;">
+        <div
+          style="padding-left: 6px;font: 700 16px Arial,'microsoft yahei';color: #666;padding-top: 10px;line-height: 28px;margin-bottom: 5px;">
+          华为 HUAWEI 畅享9 手机 1300万AI双摄 4000mAh大电池 幻夜黑 全网通(4G+128G)</div>
+        <div>
+          <img src="./assets/img.png" alt="">
+        </div>
+        <div style="line-height: 40px;font-size:12px;padding-left: 8px;color: #666;">
+          <span style="color: #999;">选择颜色</span>
+          <div class="colorChoose" id="map1" style="margin-left: 10px;border: 1px solid #e3393c;"><img
+              src="./assets/极光紫.jpg">极光紫</div>
+          <div class="colorChoose" id="map2"><img src="./assets/幻夜黑.jpg">幻夜黑</div>
+          <div class="colorChoose" id="map3"><img src="./assets/珊瑚红.jpg">珊瑚红</div>
+          <div class="colorChoose" id="map4"><img src="./assets/极光蓝.jpg">极光蓝</div>
+        </div>
+        <div style="margin-top: 4px;">
+          <img src="./assets/img2.png" alt="">
+        </div>
+      </div>
+    </div>
+    <div style="margin-top: 10px;">
+      <img src="./assets/img3.png" alt="">
+    </div>
+  </div>
+  <script>
+
+
+    // 函数：changeMap切换手机的颜色贴图
+    function changeMap(color) {//color：手机颜色贴图名称
+      // 切换材质颜色贴图
+      mobilePhoneMesh.material.map = texLoader.load("./scene/model/" + color + '.png');//颜色贴图
+    }
+
+  </script>
+  <script type="module">
+    // 引入Three.js
+    import * as THREE from '../../../../three.js-r125/build/three.module.js';
+    import { renderer } from './RenderLoop.js'
+    // 把渲染器的渲染结果canvas对象插入到'pos'对应的div元素中
+    document.getElementById('canvas').appendChild(renderer.domElement);
+
+    import { mobilePhoneMesh} from './scene/model.js'//手机网格模型Mesh
+    var texLoader = new THREE.TextureLoader();//纹理贴图加载器
+
+    var map1 = texLoader.load("./scene/model/极光紫.png");//颜色贴图            
+    var map2 = texLoader.load("./scene/model/幻夜黑.png");//颜色贴图
+    var map3 = texLoader.load("./scene/model/珊瑚红.png");//颜色贴图
+    var map4 = texLoader.load("./scene/model/极光蓝.png");//颜色贴图
+    map1.flipY = false;// 纹理朝向texture.flipY
+    map2.flipY = false;// 纹理朝向texture.flipY
+    map3.flipY = false;// 纹理朝向texture.flipY
+    map4.flipY = false;// 纹理朝向texture.flipY
+
+    // 四个按钮DOM
+    var dom1 = document.getElementById('map1');
+    var dom2 = document.getElementById('map2');
+    var dom3 = document.getElementById('map3');
+    var dom4 = document.getElementById('map4');
+
+
+    var chooseDom = dom1;//表示当前选中的DOM
+    // 每个手机颜色切换按钮设置一个鼠标单击事件
+    dom1.onclick = function () {
+      chooseDom.style.borderColor = "#ccc";
+      chooseDom = dom1;
+      chooseDom.style.borderColor = "#e3393c";
+      mobilePhoneMesh.material.map = map1;
+    }
+    dom2.onclick = function () {
+      chooseDom.style.borderColor = "#ccc";
+      chooseDom = dom2;
+      chooseDom.style.borderColor = "#e3393c";
+      mobilePhoneMesh.material.map = map2;
+    }
+    dom3.onclick = function () {
+      chooseDom.style.borderColor = "#ccc";
+      chooseDom = dom3;
+      chooseDom.style.borderColor = "#e3393c";
+      mobilePhoneMesh.material.map = map3;
+    }
+    dom4.onclick = function () {
+      chooseDom.style.borderColor = "#ccc";
+      chooseDom = dom4;
+      chooseDom.style.borderColor = "#e3393c";
+      mobilePhoneMesh.material.map = map4;
+    }
+
+  </script>
+</body>
+
+</html>

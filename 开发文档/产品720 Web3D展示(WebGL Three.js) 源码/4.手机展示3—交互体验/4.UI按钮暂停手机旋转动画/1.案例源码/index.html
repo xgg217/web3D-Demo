@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Three.js中文网：http://www.webgl3d.cn/</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+    }
+    /* 旋转UI按钮样式 */
+    #rotate {
+      position: absolute;
+      /* top: 30px;*/
+      bottom: 60px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 30px;
+      padding: 12px;
+    }
+    #rotate img{
+      cursor: pointer;
+      width:26px;
+    }    
+  </style>
+</head>
+
+<body>
+  <div id="rotate"><img id="img" style="" src="./assets/旋转.png"></div>
+  <script>
+    const div = document.getElementById('rotate');
+    div.style.left = (window.innerWidth - 26) / 2 + 'px';
+  </script>
+
+  <script type="module">
+    import { renderer } from './RenderLoop.js'
+    //Three.js渲染结果Canvas画布插入到body元素中
+    document.body.appendChild(renderer.domElement);
+
+    import { model } from './scene/model.js'//产品模型对象
+    let rotateFrame = null;
+    function rotateAnimation() {//设置产品模型旋转动画
+      model.rotateY(0.01);//手机绕y轴旋转
+      rotateFrame = requestAnimationFrame(rotateAnimation); //请求再次执行函数rotateAnimation
+    }
+    rotateAnimation();
+
+    const div = document.getElementById('rotate');
+    const img = document.getElementById('img');
+    let rotateBool  = true;
+    div.onclick = function () {//按钮单击停止或启动旋转动画
+      if(rotateBool){
+        cancelAnimationFrame(rotateFrame);//手机旋转展示动画停止
+        img.src="./assets/停止旋转.png";//切换按钮图表
+      }else{
+        rotateAnimation();//手机旋转展示
+        img.src="./assets/旋转.png";//切换按钮图表
+      }
+      rotateBool = !rotateBool;      
+    }
+  </script>
+</body>
+
+</html>

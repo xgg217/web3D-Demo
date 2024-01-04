@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Three.js中文网：http://www.webgl3d.cn/</title>
+  <style>
+    body {
+      margin: 0;
+      /* overflow: hidden; */
+      background: #f0f0f0;
+    }
+
+    .colorChoose {
+      display: inline-block;
+      margin-left: 20px;
+      cursor: pointer;
+    }
+
+    .colorChoose img {
+      width: 50px;
+    }
+
+    #color {
+      width: 314px;
+      position: absolute;
+      /* top: 30px; */
+      bottom: 12px;
+      background:rgba(255,255,255,0.1);
+    }
+
+    #camera {
+      position: absolute;
+      display: flex;
+      /* row是flex-direction默认值,可以不设置，表示主轴为水平方向，从左向右排列*/
+      flex-direction: row;
+      /*space-between表示*/
+      justify-content: space-between;
+      /* CSS3设置HTML元素背面不可见 */
+      /* backface-visibility: hidden; */
+    }
+
+    #message {
+      color: #fff;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 0px;
+      /* 边框 */
+      background: linear-gradient(#00ffff, #00ffff) left top,
+        linear-gradient(#00ffff, #00ffff) left top,
+        linear-gradient(#00ffff, #00ffff) right bottom,
+        linear-gradient(#00ffff, #00ffff) right bottom;
+      background-repeat: no-repeat;
+      background-size: 2px 20px, 36px 2px;
+      background-color: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+      font-size: 18px;
+      padding: 8px 12px;
+    }
+  </style>
+</head>
+
+<body>
+
+
+  <div id="color" style="">
+    <div class="colorChoose" id="map1"><img src="./assets/极光紫.png"></div>
+    <div class="colorChoose" id="map2"><img src="./assets/幻夜黑.png"></div>
+    <div class="colorChoose" id="map3"><img src="./assets/珊瑚红.png"></div>
+    <div class="colorChoose" id="map4"><img src="./assets/极光蓝.png"></div>
+  </div>
+
+
+
+
+  <div id="camera" style="visibility:hidden;">
+    <div>
+      <div style="height:1px;width:130px;background: #00ffff;margin-top:68px"></div>
+    </div>
+    <div id="message" style="width:350px;height:120px;">
+      <div style="padding: 10px 4px;font-size:18px;">双摄像头</div>
+      <div style="padding: 10px 24px;font-size:16px;">后置主摄像头——1300万像素(F/1.8光圈)</div>
+      <div style="padding: 10px 24px;font-size:16px;">后置副摄像头——200万像素的</div>
+      <!-- 设置一个关闭按钮 -->
+    </div>
+  </div>
+
+
+
+
+  <script>
+
+    var div = document.getElementById('color');
+    div.style.left = (window.innerWidth - 314) / 2 + 'px';
+
+    // 函数：changeMap切换手机的颜色贴图
+    function changeMap(color) {//color：手机颜色贴图名称
+      // 切换材质颜色贴图
+      mobilePhoneMesh.material.map = texLoader.load("./scene/model/" + color + '.png');//颜色贴图
+    }
+
+
+  </script>
+  <script type="module">
+    // 引入Three.js
+    import * as THREE from '../../../../three.js-r125/build/three.module.js';
+    import { renderer } from './RenderLoop.js'
+    //Three.js渲染结果Canvas画布插入到body元素中
+    document.body.appendChild(renderer.domElement);
+
+
+
+
+    import { mobilePhoneMesh } from './scene/model.js'//手机网格模型Mesh
+    var texLoader = new THREE.TextureLoader();//纹理贴图加载器
+
+    var map1 = texLoader.load("./scene/model/极光紫.png");//颜色贴图            
+    var map2 = texLoader.load("./scene/model/幻夜黑.png");//颜色贴图
+    var map3 = texLoader.load("./scene/model/珊瑚红.png");//颜色贴图
+    var map4 = texLoader.load("./scene/model/极光蓝.png");//颜色贴图
+    map1.flipY = false;// 纹理朝向texture.flipY
+    map2.flipY = false;// 纹理朝向texture.flipY
+    map3.flipY = false;// 纹理朝向texture.flipY
+    map4.flipY = false;// 纹理朝向texture.flipY
+    var mapArr = [map1, map2, map3, map4]
+
+    var dom1 = document.getElementById('map1');
+    var dom2 = document.getElementById('map2');
+    var dom3 = document.getElementById('map3');
+    var dom4 = document.getElementById('map4');
+    var domArr = [dom1, dom2, dom3, dom4];
+
+    var chooseDom = dom1;
+    // 每个手机颜色切换按钮设置一个鼠标单击事件
+    dom1.onclick = function () {
+      chooseDom.style.borderColor = "#ccc";
+      chooseDom = dom1;
+      chooseDom.style.borderColor = "#00aaaa";
+      mobilePhoneMesh.material.map = map1;
+    }
+    dom2.onclick = function () {
+      chooseDom.style.borderColor = "#ccc";
+      chooseDom = dom2;
+      chooseDom.style.borderColor = "#00aaaa";
+      mobilePhoneMesh.material.map = map2;
+    }
+    dom3.onclick = function () {
+      chooseDom.style.borderColor = "#ccc";
+      chooseDom = dom3;
+      chooseDom.style.borderColor = "#00aaaa";
+      mobilePhoneMesh.material.map = map3;
+    }
+    dom4.onclick = function () {
+      chooseDom.style.borderColor = "#ccc";
+      chooseDom = dom4;
+      chooseDom.style.borderColor = "#00aaaa";
+      mobilePhoneMesh.material.map = map4;
+    }
+
+  </script>
+</body>
+
+</html>

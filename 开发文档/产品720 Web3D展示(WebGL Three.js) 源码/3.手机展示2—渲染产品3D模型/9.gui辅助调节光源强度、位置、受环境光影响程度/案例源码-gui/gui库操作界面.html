@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Three.js中文网：http://www.webgl3d.cn/</title>
+    <style>
+        body {
+          margin: 0;
+          overflow: hidden;
+        }
+      </style>
+    <script src="http://www.yanhuangxueyuan.com/3D/example/three.min.js"></script>
+    <!--引入dat.gui.js库-->
+    <script src="dat.gui.js"></script>
+</head>
+
+<body>
+    <script>
+        /**
+         * 创建场景对象
+         */
+        var scene = new THREE.Scene();
+        /**
+         * 创建网格模型
+         */
+        var box = new THREE.BoxGeometry(100, 100, 100);//创建一个立方体几何对象
+        var material = new THREE.MeshLambertMaterial({ color: 0x0000ff });//材质对象
+        var mesh = new THREE.Mesh(box, material);//网格模型对象
+        scene.add(mesh);//网格模型添加到场景中
+        /**
+         * 光源设置
+         */
+        //点光源
+        var point = new THREE.PointLight(0xffffff);
+        point.position.set(400, 200, 300);//点光源位置
+        scene.add(point);//点光源添加到场景中
+        //环境光
+        var ambient = new THREE.AmbientLight(0x444444);
+        scene.add(ambient);
+        /**
+         * 相机设置
+         */
+        var width = window.innerWidth;//窗口宽度
+        var height = window.innerHeight;//窗口高度
+        var k = width / height;//窗口宽高比
+        var s = 100;//三维场景缩放系数
+        //创建相机对象
+        var camera = new THREE.OrthographicCamera(-s * k, s * k, s, -s, 1, 1000);
+        camera.position.set(200, 300, 200);//设置相机位置
+        camera.lookAt(scene.position);//设置相机方向(指向的场景对象)
+        /**
+         * 创建三维场景的控制界面
+         */
+        //创建控件对象变量
+        var controls = {
+            缩放系数: 1,
+            转速: 0.01,
+            颜色: material.color.getStyle(),
+        };
+        //关联空间数据创建交互界面
+        var gui = new dat.GUI();//创建GUI对象
+        var folder = gui.addFolder('菜单');//添加文件夹
+        //设置交互界面位置
+        gui.domElement.style = 'position:absolute;top:0px;right:0px;height:260px;';
+        folder.addColor(controls, '颜色');//添加颜色菜单选项
+        //添加缩放系数拖动条菜单选项
+        folder.add(controls, '缩放系数', 0.1, 2.5);
+        //添加转速下拉菜单选项
+        folder.add(controls, '转速', { 低速: 0.005, 中速: 0.01, 高速: 0.1 });
+        folder.open();//文件夹folder下面的菜单选项展开显示
+        /**
+         * 创建渲染器对象
+         */
+        var renderer = new THREE.WebGLRenderer();
+        renderer.setSize(width, height);
+        renderer.setClearColor(0xb9d3ff, 1);//设置背景颜色
+        document.body.appendChild(renderer.domElement);//body元素中插入canvas对象
+        function render() {
+            renderer.render(scene, camera);//执行渲染操作
+            mesh.scale.x = controls.缩放系数;//更新缩放系数
+            mesh.rotateY(controls.转速);//更新旋转速度
+            material.color.setStyle(controls.颜色);//更新颜色
+            requestAnimationFrame(render);//请求再次执行渲染函数render
+        }
+        render();
+    </script>
+</body>
+
+</html>
