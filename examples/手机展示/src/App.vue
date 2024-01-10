@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { onMounted, ref, onUnmounted } from "vue";
-import * as THREE from "three";
-import { camera } from "./utils/player"
+import { onMounted, ref, onUnmounted } from 'vue';
+import * as THREE from 'three';
+import { camera } from './utils/player';
 
 let stopRender = false;
 
@@ -49,7 +49,7 @@ const { warppRef, init } = (() => {
 
   // 设置窗口大小
   const setWindowResize = () => {
-    window.addEventListener("resize", () => {
+    window.addEventListener('resize', () => {
       // 重置渲染器输出画布canvas尺寸
       renderer?.setSize(window.innerWidth, window.innerHeight);
 
@@ -63,7 +63,7 @@ const { warppRef, init } = (() => {
   // 渲染循环
   const render = () => {
     if (!stopRender) {
-      const deltaTime = clock.getDelta();
+      // const deltaTime = clock.getDelta();
 
       // playerUpdate(deltaTime); // 更新任务
       // mixer.update(deltaTime); // 更新播放器相关的时间
@@ -92,7 +92,6 @@ const { warppRef, init } = (() => {
 
       // 渲染循环
       render();
-
     }, 500);
   };
 
