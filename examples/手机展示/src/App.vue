@@ -2,7 +2,7 @@
 import { onMounted, ref, onUnmounted } from 'vue';
 import * as THREE from 'three';
 import { camera } from './utils/player';
-import {phoneGroup}from "./utils/phone"
+import { phoneGroup } from './utils/phone';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
 
@@ -12,7 +12,7 @@ const { warppRef, init } = (() => {
   const scene = new THREE.Scene();
   const warppRef = ref<HTMLDivElement | null>(null);
   let renderer: THREE.WebGLRenderer | null = null;
-  let controls:OrbitControls ;
+  let controls: OrbitControls;
   const clock = new THREE.Clock();
 
   // 设置光源
@@ -51,18 +51,13 @@ const { warppRef, init } = (() => {
     scene.add(gridHelper);
 
     // gui
-    const gui = new GUI();
-    // const obj = {
-    //   x: 30,
-    //   y: 60,
-    //   z: 300,
-    // };
-
-    gui.add(camera.position, 'x', 0, 500);
-    gui.add(camera.position, 'y', 0, 500);
-    gui.add(camera.position, 'z', 0, 600);
-    // scene.add(gui);
-
+    {
+      const gui = new GUI();
+      gui.add(camera.position, 'x', 0, 500);
+      gui.add(camera.position, 'y', 0, 500);
+      gui.add(camera.position, 'z', 0, 600);
+      // scene.add(gui);
+    }
   };
 
   // 设置窗口大小
@@ -73,9 +68,6 @@ const { warppRef, init } = (() => {
 
       // 全屏情况下：设置观察范围长宽比aspect为窗口宽高比
       camera.aspect = window.innerWidth / window.innerHeight;
-
-
-
 
       camera.updateProjectionMatrix();
     });
@@ -100,31 +92,30 @@ const { warppRef, init } = (() => {
     controls = new OrbitControls(camera, renderer!.domElement);
     controls.addEventListener('change', function () {
       renderer!.render(scene, camera); //执行渲染操作
-    });//监听鼠标、键盘事件
-  }
+    }); //监听鼠标、键盘事件
+  };
 
   // 初始化
   const init = () => {
+    scene.add(phoneGroup);
 
-      scene.add(phoneGroup);
+    // 设置光源
+    setLight();
 
-      // 设置光源
-      setLight();
+    // 渲染器
+    setRenderer();
 
-      // 渲染器
-      setRenderer();
+    // 辅助工具
+    setAuxiliaryTool();
 
-      // 辅助工具
-      setAuxiliaryTool();
+    // 自适应窗口被调整大小时发生的事件
+    setWindowResize();
 
-      // 自适应窗口被调整大小时发生的事件
-      setWindowResize();
+    // 渲染循环
+    render();
 
-      // 渲染循环
-      render();
-
-      //
-      initOrbitControls();
+    //
+    initOrbitControls();
   };
 
   return {
