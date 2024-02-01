@@ -17,10 +17,18 @@ const { warppRef, init } = (() => {
 
   // 设置光源
   const setLight = () => {
-    const directionLight = new THREE.DirectionalLight(0xffffff, 0.4);
-    const ambient = new THREE.AmbientLight(0xffffff, 0.4);
-
+    // 平行光1
+    const directionLight = new THREE.DirectionalLight(0xffffff, 0.8);
+    directionLight.position.set(400, 200, 300);
     scene.add(directionLight);
+
+    // 平行光2
+    const directionLight2 = new THREE.DirectionalLight(0xffffff, 0.8);
+    directionLight.position.set(-400, -200, -300);
+    scene.add(directionLight2);
+
+    // 环境光
+    const ambient = new THREE.AmbientLight(0xffffff, 0.9);
     scene.add(ambient);
   };
 
@@ -28,9 +36,11 @@ const { warppRef, init } = (() => {
   const setRenderer = () => {
     // 初始化渲染器
     renderer = new THREE.WebGLRenderer({
-      antialias: true
+      antialias: true //开启锯齿
     });
 
+    // 设置设备像素比率,防止Canvas画布输出模糊
+    renderer.setPixelRatio(window.devicePixelRatio);
     // 设置渲染的尺寸大小
     renderer.setSize(window.innerWidth, window.innerHeight);
 
