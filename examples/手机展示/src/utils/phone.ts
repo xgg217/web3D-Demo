@@ -11,7 +11,7 @@ const textureCube = new THREE.CubeTextureLoader()
   .setPath('./model/envMap/')
   .load(['px.jpg', 'nx.jpg', 'py.jpg', 'ny.jpg', 'pz.jpg', 'nz.jpg']);
 
-// let gltf = null;
+const gltf = null;
 try {
   const gltf = await loader.loadAsync('手机.gltf');
 
@@ -26,17 +26,17 @@ try {
     metalness: 1.0, //Mesh表面金属度，默认值0.5
     roughness: 1.0, //Mesh表面粗糙度，默认值0.5
 
-    map: texLoader.load('@/assets/model/basecolor.png'), // 颜色贴图
+    map: texLoader.load('model/basecolor.png'), // 颜色贴图
 
     // 金属度 粗糙度 贴图表示的值会和金属度、粗糙度分别相乘
     // 如果有金属度或粗糙度贴图就不用专门设置金属度或粗糙度属性了
-    roughnessMap: texLoader.load('@/assets/model/roughness.png'), // 粗糙度贴图
-    metalnessMap: texLoader.load('@/assets/model/metallic.png'), // 金属度贴图
+    roughnessMap: texLoader.load('model/roughness.png'), // 粗糙度贴图
+    metalnessMap: texLoader.load('model/metallic.png'), // 金属度贴图
 
     // 相机镜头等位置需要设置半透明效果（设置 alphaMap 和 transparent 属性）
-    normalMap: texLoader.load('@/assets/model/normal.png'), // 法线贴图
-    alphaMap: texLoader.load('@/assets/model/opacity.png'), // 透明贴图
-    // transparent: true, // 使用 alphaMap 注意开启透明计算
+    normalMap: texLoader.load('model/normal.png'), // 法线贴图
+    alphaMap: texLoader.load('model/opacity.png'), // 透明贴图
+    transparent: true, // 使用 alphaMap 注意开启透明计算
 
     envMap: textureCube, //设置pbr材质环境贴图，渲染效果更好
     envMapIntensity: 0.9 //设置环境贴图对模型表面影响程度
@@ -56,8 +56,6 @@ try {
 } catch (error) {
   console.error(error);
 }
-
-// console.log(gltf);
 
 phoneGroup.position.setY(80);
 
