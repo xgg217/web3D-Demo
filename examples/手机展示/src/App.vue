@@ -19,17 +19,23 @@ const { warppRef, init } = (() => {
   const setLight = () => {
     // 平行光1
     const directionLight = new THREE.DirectionalLight(0xffffff, 0.8);
-    directionLight.position.set(400, 200, 300);
+    directionLight.position.set(100, 200, 300);
     scene.add(directionLight);
 
     // 平行光2
     const directionLight2 = new THREE.DirectionalLight(0xffffff, 0.8);
-    directionLight.position.set(-400, -200, -300);
+    directionLight2.position.set(-400, -200, -300);
     scene.add(directionLight2);
 
     // 环境光
-    const ambient = new THREE.AmbientLight(0xffffff, 0.9);
+    const ambient = new THREE.AmbientLight(0xffffff, 2.9);
     scene.add(ambient);
+
+    // DirectionalLightHelper：可视化平行光
+    var helper1 = new THREE.DirectionalLightHelper(directionLight, 5);
+    scene.add(helper1);
+    var helper2 = new THREE.DirectionalLightHelper(directionLight2, 5);
+    scene.add(helper2);
   };
 
   // 设置渲染器

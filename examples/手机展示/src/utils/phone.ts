@@ -36,7 +36,7 @@ try {
     // 相机镜头等位置需要设置半透明效果（设置 alphaMap 和 transparent 属性）
     normalMap: texLoader.load('@/assets/model/normal.png'), // 法线贴图
     alphaMap: texLoader.load('@/assets/model/opacity.png'), // 透明贴图
-    transparent: true, // 使用 alphaMap 注意开启透明计算
+    // transparent: true, // 使用 alphaMap 注意开启透明计算
 
     envMap: textureCube, //设置pbr材质环境贴图，渲染效果更好
     envMapIntensity: 0.9 //设置环境贴图对模型表面影响程度
