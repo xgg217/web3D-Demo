@@ -13,7 +13,7 @@ const { warppRef, init } = (() => {
   const warppRef = ref<HTMLDivElement | null>(null);
   let renderer: THREE.WebGLRenderer | null = null;
   let controls: OrbitControls;
-  const clock = new THREE.Clock();
+  // const clock = new THREE.Clock();
 
   // 设置光源
   const setLight = () => {
@@ -50,8 +50,6 @@ const { warppRef, init } = (() => {
     // 设置渲染的尺寸大小
     renderer.setSize(window.innerWidth, window.innerHeight);
 
-    // console.log(warppRef.value);
-
     // 将webgl渲染的canvas内容添加到body
     warppRef.value?.appendChild(renderer.domElement);
   };
@@ -67,13 +65,13 @@ const { warppRef, init } = (() => {
     // scene.add(gridHelper);
 
     // gui
-    {
-      const gui = new GUI();
-      gui.add(camera.position, 'x', 0, 500);
-      gui.add(camera.position, 'y', 0, 500);
-      gui.add(camera.position, 'z', 0, 600);
-      // scene.add(gui);
-    }
+    // {
+    //   const gui = new GUI();
+    //   gui.add(camera.position, 'x', 0, 500);
+    //   gui.add(camera.position, 'y', 0, 500);
+    //   gui.add(camera.position, 'z', 0, 600);
+    //   // scene.add(gui);
+    // }
   };
 
   // 设置窗口大小
@@ -99,7 +97,7 @@ const { warppRef, init } = (() => {
 
       renderer!.render(scene, camera);
       requestAnimationFrame(render);
-      // console.log(camera.position);
+      console.log(camera.position);
     }
   };
 

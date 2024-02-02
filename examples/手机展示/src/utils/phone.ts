@@ -56,6 +56,6 @@ try {
   console.error(error);
 }
 
-phoneGroup.position.setY(80);
+// phoneGroup.position.setY(0);
 
 export { phoneGroup };
