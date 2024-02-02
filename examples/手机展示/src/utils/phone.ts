@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import type { Object3D } from 'three';
+// import type { Object3D } from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
 const phoneGroup = new THREE.Group();
@@ -11,7 +11,6 @@ const textureCube = new THREE.CubeTextureLoader()
   .setPath('./model/envMap/')
   .load(['px.jpg', 'nx.jpg', 'py.jpg', 'ny.jpg', 'pz.jpg', 'nz.jpg']);
 
-const gltf = null;
 try {
   const gltf = await loader.loadAsync('手机.gltf');
 
