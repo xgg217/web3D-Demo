@@ -1,10 +1,11 @@
 import * as THREE from 'three';
-// import type { Object3D } from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
 const phoneGroup = new THREE.Group();
 const loader = new GLTFLoader();
 const texLoader = new THREE.TextureLoader();
+
+// console.log(imgUrl);
 
 // 加载环境贴图
 const textureCube = new THREE.CubeTextureLoader()
@@ -12,7 +13,9 @@ const textureCube = new THREE.CubeTextureLoader()
   .load(['px.jpg', 'nx.jpg', 'py.jpg', 'ny.jpg', 'pz.jpg', 'nz.jpg']);
 
 try {
-  const gltf = await loader.loadAsync('手机.gltf');
+  const imgUrl = new URL('./../assets/手机.gltf', import.meta.url).href;
+  // const url = getImageUrl('./src/assets/手机.gltf');
+  const gltf = await loader.loadAsync(imgUrl);
 
   const phoneGltf = gltf.scene; // 玩家角色模型
   phoneGroup.add(phoneGltf);
