@@ -28,7 +28,7 @@ const { warppRef, init } = (() => {
     scene.add(directionLight2);
 
     // 环境光
-    const ambient = new THREE.AmbientLight(0xffffff, 2);
+    const ambient = new THREE.AmbientLight(0xffffff, 3);
     scene.add(ambient);
 
     // DirectionalLightHelper：可视化平行光
@@ -90,6 +90,8 @@ const { warppRef, init } = (() => {
   // 渲染循环
   const render = () => {
     if (!stopRender) {
+      phoneGroup.rotateY(0.005); // 每次渲染的时候旋转
+
       // const deltaTime = clock.getDelta();
 
       // playerUpdate(deltaTime); // 更新任务
