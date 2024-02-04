@@ -4,7 +4,7 @@ import * as THREE from 'three';
 import { camera } from './utils/player';
 import { phoneGroup } from './utils/phone';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
+// import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
 
 let stopRender = false;
 
@@ -28,7 +28,7 @@ const { warppRef, init } = (() => {
     scene.add(directionLight2);
 
     // 环境光
-    const ambient = new THREE.AmbientLight(0xffffff, 2.9);
+    const ambient = new THREE.AmbientLight(0xffffff, 2);
     scene.add(ambient);
 
     // DirectionalLightHelper：可视化平行光

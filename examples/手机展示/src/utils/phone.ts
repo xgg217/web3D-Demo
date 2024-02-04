@@ -13,6 +13,8 @@ const textureCube = new THREE.CubeTextureLoader()
   .load(['px.jpg', 'nx.jpg', 'py.jpg', 'ny.jpg', 'pz.jpg', 'nz.jpg']);
 
 try {
+  // console.log(import.meta.url);
+
   const imgUrl = new URL('./../assets/手机.gltf', import.meta.url).href;
   // const url = getImageUrl('./src/assets/手机.gltf');
   const gltf = await loader.loadAsync(imgUrl);
