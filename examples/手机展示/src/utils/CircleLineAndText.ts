@@ -12,13 +12,12 @@ const lineAndTextGroup = new THREE.Group();
 
   //线条模型对象
   const line = new THREE.Line(geometry, material);
-
+  line.rotateX(Math.PI / 2); //绕x轴旋转90度
   lineAndTextGroup.add(line);
 }
 
 // 添加文字
 
-lineAndTextGroup.rotateX(Math.PI / 2); //绕x轴旋转90度
 lineAndTextGroup.position.y -= 85; //平移到产品的底部
 
 export { lineAndTextGroup };
