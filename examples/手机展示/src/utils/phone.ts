@@ -1,6 +1,8 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { lineAndTextGroup } from './CircleLineAndText';
 
+const allGroup = new THREE.Group();
 const phoneGroup = new THREE.Group();
 const loader = new GLTFLoader();
 const texLoader = new THREE.TextureLoader();
@@ -63,4 +65,6 @@ try {
 
 // phoneGroup.position.setY(0);
 
-export { phoneGroup };
+allGroup.add(phoneGroup, lineAndTextGroup);
+
+export { phoneGroup, allGroup };

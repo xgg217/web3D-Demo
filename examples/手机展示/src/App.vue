@@ -2,7 +2,7 @@
 import { onMounted, ref, onUnmounted } from 'vue';
 import * as THREE from 'three';
 import { camera } from './utils/player';
-import { phoneGroup } from './utils/phone';
+import { phoneGroup, allGroup } from './utils/phone';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 // import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
 
@@ -119,7 +119,7 @@ const { warppRef, init } = (() => {
 
   // 初始化
   const init = () => {
-    scene.add(phoneGroup);
+    scene.add(allGroup);
 
     // 设置光源
     setLight();
