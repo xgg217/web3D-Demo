@@ -90,7 +90,7 @@ const { warppRef, init } = (() => {
   // 渲染循环
   const render = () => {
     if (!stopRender) {
-      phoneGroup.rotateY(0.005); // 每次渲染的时候旋转
+      // phoneGroup.rotateY(0.005); // 每次渲染的时候旋转
 
       // const deltaTime = clock.getDelta();
 
@@ -109,6 +109,12 @@ const { warppRef, init } = (() => {
     controls.addEventListener('change', function () {
       renderer!.render(scene, camera); //执行渲染操作
     }); //监听鼠标、键盘事件
+
+    //相机位置与观察目标点最小值
+    controls.minDistance = 200;
+
+    //相机位置与观察目标点最大值
+    controls.maxDistance = 500;
   };
 
   // 初始化
@@ -130,7 +136,7 @@ const { warppRef, init } = (() => {
     // 渲染循环
     render();
 
-    //
+    // 相机控制器
     initOrbitControls();
   };
 
