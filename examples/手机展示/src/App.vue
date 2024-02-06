@@ -32,10 +32,10 @@ const { warppRef, init } = (() => {
     scene.add(ambient);
 
     // DirectionalLightHelper：可视化平行光
-    var helper1 = new THREE.DirectionalLightHelper(directionLight, 5);
-    scene.add(helper1);
-    var helper2 = new THREE.DirectionalLightHelper(directionLight2, 5);
-    scene.add(helper2);
+    // var helper1 = new THREE.DirectionalLightHelper(directionLight, 5);
+    // scene.add(helper1);
+    // var helper2 = new THREE.DirectionalLightHelper(directionLight2, 5);
+    // scene.add(helper2);
   };
 
   // 设置渲染器

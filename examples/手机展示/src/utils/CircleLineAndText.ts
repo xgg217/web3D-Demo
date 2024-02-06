@@ -1,4 +1,6 @@
 import * as THREE from 'three';
+import { FontLoader } from 'three/addons/loaders/FontLoader.js';
+import font from 'three/examples/fonts/helvetiker_bold.typeface.json';
 
 const lineAndTextGroup = new THREE.Group();
 
@@ -17,6 +19,38 @@ const lineAndTextGroup = new THREE.Group();
 }
 
 // 添加文字
+{
+  const loader = new FontLoader();
+  const a = loader.parse(font);
+  console.log(a);
+
+  // const imgUrl = new URL(
+  //   './../../node_modules/three/examples/fonts/helvetiker_bold.typeface.json',
+  //   import.meta.url
+  // ).href;
+  // const loader = new FontLoader();
+  // const font = loader.load(
+  //   // 资源URL
+  //   // 'three/examples/fonts/helvetiker_bold.typeface.json',
+  //   imgUrl,
+
+  //   // onLoad回调
+  //   function (font) {
+  //     // do something with the font
+  //     console.log(font);
+  //   }
+
+  //   // onProgress回调
+  //   // function ( xhr ) {
+  //   //   console.log( (xhr.loaded / xhr.total * 100) + '% loaded' );
+  //   // },
+
+  //   // // onError回调
+  //   // function ( err ) {
+  //   //   console.log( 'An error happened' );
+  //   // }
+  // );
+}
 
 lineAndTextGroup.position.y -= 85; //平移到产品的底部
 
