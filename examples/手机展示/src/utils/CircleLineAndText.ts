@@ -3,12 +3,13 @@ import { FontLoader } from 'three/addons/loaders/FontLoader.js';
 import font from 'three/examples/fonts/helvetiker_bold.typeface.json';
 
 const lineAndTextGroup = new THREE.Group();
+const R = 50;
 
 // 画圆弧
 {
   const curve = new THREE.ArcCurve(0, 0, 60, Math.PI / 2 + Math.PI / 6, Math.PI / 2 - Math.PI / 6);
 
-  const points = curve.getPoints(50);
+  const points = curve.getPoints(R);
   const geometry = new THREE.BufferGeometry().setFromPoints(points);
   const material = new THREE.LineBasicMaterial({ color: 0xff0000 });
 
@@ -21,8 +22,20 @@ const lineAndTextGroup = new THREE.Group();
 // 添加文字
 {
   const loader = new FontLoader();
-  const a = loader.parse(font);
-  console.log(a);
+  const f = loader.parse(font);
+  console.log(f);
+
+  const materuial = new THREE.MeshLambertMaterial({
+    color: 0xffffff,
+    side: THREE.DoubleSide
+  });
+  const shapes = f.generateShapes("720°", 10);
+  const geometry = new THREE.ShapeGeometry(shapes);
+  const textMesh = new THREE.Mesh(geometry, materuial);
+  textMesh.position.z = R;
+  textMesh.position.x = -12;
+
+  lineAndTextGroup.add(textMesh);
 
   // const imgUrl = new URL(
   //   './../../node_modules/three/examples/fonts/helvetiker_bold.typeface.json',
