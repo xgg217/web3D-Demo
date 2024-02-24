@@ -82,20 +82,14 @@ const {setMeshColor} = (() => {
   mp3.flipY = false; // 纹理朝向
   mp4.flipY = false; // 纹理朝向
 
-  console.log(mp1);
+  // console.log(mp1);
 
 
   const setMeshColor = (index: 1|2|3|4) => {
     // const mesh = phoneGroup.getObjectByName('手机')!;
-    if(mobilePhoneMesh) {
+    if(mobilePhoneMesh && mobilePhoneMesh.material) {
       mobilePhoneMesh.material.map = mpArr[index - 1];
-
-      // console.log(mobilePhoneMesh.material.map);
     }
-
-
-    // console.log(index);
-
   };
 
   return {
