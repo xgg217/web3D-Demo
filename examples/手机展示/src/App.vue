@@ -2,7 +2,7 @@
 import { onMounted, ref, onUnmounted } from 'vue';
 import * as THREE from 'three';
 import { camera } from './utils/player';
-import { phoneGroup, allGroup } from './utils/phone';
+import { phoneGroup, allGroup, setMeshColor } from './utils/phone';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 // import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
 
@@ -180,7 +180,15 @@ const {rTitle,isRotateY,onRotateY} = (() => {
     isRotateY,
     onRotateY
   }
-})()
+})();
+
+// 修改背景色
+const setBgColor = (index: 1|2|3|4) => {
+  // console.log(index);
+
+  setMeshColor(index)
+
+}
 
 onMounted(() => {
   init();
@@ -197,6 +205,22 @@ onUnmounted(() => {
   <div class="but">
     <button @click="onRotateY">{{ rTitle }}</button>
   </div>
+
+  <!-- 手机背景 -->
+  <ul>
+    <li>
+      <img src="/bgc/幻夜黑.png" alt="幻夜黑" @click="setBgColor(1)">
+    </li>
+    <li>
+      <img src="/bgc/极光蓝.png" alt="极光蓝" @click="setBgColor(2)">
+    </li>
+    <li>
+      <img src="/bgc/极光紫.png" alt="极光紫" @click="setBgColor(3)">
+    </li>
+    <li>
+      <img src="/bgc/珊瑚红.png" alt="珊瑚红" @click="setBgColor(4)">
+    </li>
+  </ul>
 </template>
 
 <style scoped>
@@ -209,5 +233,27 @@ onUnmounted(() => {
   position: fixed;
   right: 10%;
   bottom: 10%;
+}
+
+ul {
+  position: fixed;
+  right: 15%;
+  bottom: 10%;
+  display: flex;
+  list-style: none;
+}
+
+ul li {
+  border-radius: 50%;
+  /* border: 1px solid red; */
+  margin-left: 5px;
+}
+
+ul li img {
+  width: 60px;
+  height: 100%;
+  cursor: pointer;
+
+
 }
 </style>

@@ -7,6 +7,8 @@ const phoneGroup = new THREE.Group();
 const loader = new GLTFLoader();
 const texLoader = new THREE.TextureLoader();
 
+let mobilePhoneMesh: THREE.Object3D<THREE.Object3DEventMap> | null = null; // 只想手机网格模型
+
 // console.log(imgUrl);
 
 // 加载环境贴图
@@ -26,12 +28,16 @@ try {
 
   const mesh = phoneGltf.getObjectByName('手机')!;
 
+  mobilePhoneMesh = mesh;
+
   // console.log(mesh.material);
+  // const mp1 = texLoader.load("@/assets/bgc/幻夜黑.png");
   // @ts-ignore
   mesh.material = new THREE.MeshStandardMaterial({
     metalness: 1.0, //Mesh表面金属度，默认值0.5
     roughness: 1.0, //Mesh表面粗糙度，默认值0.5
 
+    // map: texLoader.load('model/basecolor.png'), // 颜色贴图
     map: texLoader.load('model/basecolor.png'), // 颜色贴图
 
     // 金属度 粗糙度 贴图表示的值会和金属度、粗糙度分别相乘
@@ -65,10 +71,11 @@ try {
 
 // 颜色切换
 const {setMeshColor} = (() => {
-  const mp1 = texLoader.load("@/assets/bgc/幻夜黑.png");
-  const mp2 = texLoader.load("@/assets/bgc/极光蓝.png");
-  const mp3 = texLoader.load("@/assets/bgc/极光紫.png");
-  const mp4 = texLoader.load("@/assets/bgc/珊瑚红.png");
+  const mp1 = texLoader.load("wl/幻夜黑.png");
+  const mp2 = texLoader.load("wl/极光蓝.png");
+  const mp3 = texLoader.load("wl/极光紫.png");
+  const mp4 = texLoader.load("wl/珊瑚红.png");
+  const mpArr = [mp1, mp2,mp3,mp4]
 
   mp1.flipY = false; // 纹理朝向
   mp2.flipY = false; // 纹理朝向
@@ -80,7 +87,15 @@ const {setMeshColor} = (() => {
 
   const setMeshColor = (index: 1|2|3|4) => {
     // const mesh = phoneGroup.getObjectByName('手机')!;
-    // mesh.material.map = 'map' + index;
+    if(mobilePhoneMesh) {
+      mobilePhoneMesh.material.map = mpArr[index - 1];
+
+      // console.log(mobilePhoneMesh.material.map);
+    }
+
+
+    // console.log(index);
+
   };
 
   return {
