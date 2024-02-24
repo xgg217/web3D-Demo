@@ -23,7 +23,7 @@ const R = 50;
 {
   const loader = new FontLoader();
   const f = loader.parse(font);
-  console.log(f);
+  // console.log(f);
 
   const materuial = new THREE.MeshLambertMaterial({
     color: 0xffffff,
@@ -36,33 +36,6 @@ const R = 50;
   textMesh.position.x = -12;
 
   lineAndTextGroup.add(textMesh);
-
-  // const imgUrl = new URL(
-  //   './../../node_modules/three/examples/fonts/helvetiker_bold.typeface.json',
-  //   import.meta.url
-  // ).href;
-  // const loader = new FontLoader();
-  // const font = loader.load(
-  //   // 资源URL
-  //   // 'three/examples/fonts/helvetiker_bold.typeface.json',
-  //   imgUrl,
-
-  //   // onLoad回调
-  //   function (font) {
-  //     // do something with the font
-  //     console.log(font);
-  //   }
-
-  //   // onProgress回调
-  //   // function ( xhr ) {
-  //   //   console.log( (xhr.loaded / xhr.total * 100) + '% loaded' );
-  //   // },
-
-  //   // // onError回调
-  //   // function ( err ) {
-  //   //   console.log( 'An error happened' );
-  //   // }
-  // );
 }
 
 lineAndTextGroup.position.y -= 85; //平移到产品的底部

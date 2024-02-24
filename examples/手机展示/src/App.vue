@@ -91,6 +91,9 @@ const { warppRef, init } = (() => {
   const render = () => {
     if (!stopRender) {
       // phoneGroup.rotateY(0.005); // 每次渲染的时候旋转
+      if(isRotateY.value) {
+        phoneGroup.rotateY(0.005);
+      }
 
       // const deltaTime = clock.getDelta();
 
@@ -146,6 +149,39 @@ const { warppRef, init } = (() => {
   };
 })();
 
+// 旋转控制
+const {rTitle,isRotateY,onRotateY} = (() => {
+  const sVal = "开始旋转";
+  const eVal = "停止旋转";
+  const rTitle = ref("开始旋转");
+  const isRotateY = ref(false);
+
+  // 设置 开始/停止 旋转
+  const onRotateY = () => {
+    // 开始旋转
+    if(isRotateY.value) {
+      console.log("开始旋转 --> 停止旋转");
+
+      // 开始旋转 --> 停止旋转
+      isRotateY.value = false;
+      rTitle.value = sVal;
+    } else {
+      // 停止旋转 --> 开始旋转
+      console.log("停止旋转 --> 开始旋转");
+      isRotateY.value = true;
+      rTitle.value = eVal;
+    }
+  };
+
+  //
+
+  return {
+    rTitle,
+    isRotateY,
+    onRotateY
+  }
+})()
+
 onMounted(() => {
   init();
 });
@@ -157,11 +193,21 @@ onUnmounted(() => {
 
 <template>
   <div ref="warppRef" class="warpp"></div>
+
+  <div class="but">
+    <button @click="onRotateY">{{ rTitle }}</button>
+  </div>
 </template>
 
 <style scoped>
 .warpp {
   width: 100%;
   height: 100%;
+}
+
+.but {
+  position: fixed;
+  right: 10%;
+  bottom: 10%;
 }
 </style>

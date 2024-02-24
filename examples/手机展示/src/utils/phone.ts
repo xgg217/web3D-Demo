@@ -63,8 +63,34 @@ try {
   console.error(error);
 }
 
+// 颜色切换
+const {setMeshColor} = (() => {
+  const mp1 = texLoader.load("@/assets/bgc/幻夜黑.png");
+  const mp2 = texLoader.load("@/assets/bgc/极光蓝.png");
+  const mp3 = texLoader.load("@/assets/bgc/极光紫.png");
+  const mp4 = texLoader.load("@/assets/bgc/珊瑚红.png");
+
+  mp1.flipY = false; // 纹理朝向
+  mp2.flipY = false; // 纹理朝向
+  mp3.flipY = false; // 纹理朝向
+  mp4.flipY = false; // 纹理朝向
+
+  console.log(mp1);
+
+
+  const setMeshColor = (index: 1|2|3|4) => {
+    // const mesh = phoneGroup.getObjectByName('手机')!;
+    // mesh.material.map = 'map' + index;
+  };
+
+  return {
+    setMeshColor
+  }
+})();
+
 // phoneGroup.position.setY(0);
 
 allGroup.add(phoneGroup, lineAndTextGroup);
 
-export { phoneGroup, allGroup };
+
+export { phoneGroup, allGroup,setMeshColor };
