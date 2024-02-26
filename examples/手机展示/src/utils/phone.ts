@@ -11,6 +11,69 @@ let mobilePhoneMesh: THREE.Object3D<THREE.Object3DEventMap> | null = null; // �
 
 // console.log(imgUrl);
 
+// 手机壳颜色切换
+const {setMeshColor} = (() => {
+  const mp1 = texLoader.load("wl/幻夜黑.png");
+  const mp2 = texLoader.load("wl/极光蓝.png");
+  const mp3 = texLoader.load("wl/极光紫.png");
+  const mp4 = texLoader.load("wl/珊瑚红.png");
+  const mpArr = [mp1, mp2,mp3,mp4]
+
+  mp1.flipY = false; // 纹理朝向
+  mp2.flipY = false; // 纹理朝向
+  mp3.flipY = false; // 纹理朝向
+  mp4.flipY = false; // 纹理朝向
+
+  // console.log(mp1);
+
+
+  const setMeshColor = (index: 1|2|3|4) => {
+    // const mesh = phoneGroup.getObjectByName('手机')!;
+    if(mobilePhoneMesh && mobilePhoneMesh.material) {
+      mobilePhoneMesh.material.map = mpArr[index - 1];
+    }
+  };
+
+  return {
+    setMeshColor
+  }
+})();
+
+// 手机摄像头位置标注
+const {getWPsition} = (() => {
+  const dir = new THREE.Vector3(); // 后置摄像头世界坐标
+
+  // 后置摄像头 标注
+  const spriteMaterial = new THREE.SpriteMaterial({
+    // color:0x00ffff,//设置颜色
+    map: texLoader.load("光点.png"),
+    transparent: true
+  });
+  const sprite = new THREE.Sprite(spriteMaterial);
+  sprite.scale.set(6, 6, 1);
+
+  phoneGroup.add(sprite);
+
+  // 获取世界坐标
+  const getWPsition = (group:THREE.Object3D<THREE.Object3DEventMap>) => {
+    group.getWorldPosition(dir);
+    console.log(dir);
+
+    dir.setX(dir.x - 7);
+    dir.setZ(dir.z - 2);
+
+    sprite.position.copy(dir);
+    console.log(12);
+
+
+
+  }
+
+  return {
+    getWPsition
+  }
+})();
+
 // 加载环境贴图
 const textureCube = new THREE.CubeTextureLoader()
   .setPath('./model/envMap/')
@@ -32,7 +95,8 @@ try {
 
   // 模型中包含两个空对象分别是手机前/后摄像头位置，主要是为了方便读取摄像头的世界坐标
   const frontObject3D = phoneGltf.getObjectByName('后置摄像头位置')!;
-  console.log(frontObject3D);
+  // console.log(frontObject3D);
+  getWPsition(frontObject3D);
 
 
   mobilePhoneMesh = mesh;
@@ -76,35 +140,11 @@ try {
   console.error(error);
 }
 
-// 手机壳颜色切换
-const {setMeshColor} = (() => {
-  const mp1 = texLoader.load("wl/幻夜黑.png");
-  const mp2 = texLoader.load("wl/极光蓝.png");
-  const mp3 = texLoader.load("wl/极光紫.png");
-  const mp4 = texLoader.load("wl/珊瑚红.png");
-  const mpArr = [mp1, mp2,mp3,mp4]
-
-  mp1.flipY = false; // 纹理朝向
-  mp2.flipY = false; // 纹理朝向
-  mp3.flipY = false; // 纹理朝向
-  mp4.flipY = false; // 纹理朝向
-
-  // console.log(mp1);
 
 
-  const setMeshColor = (index: 1|2|3|4) => {
-    // const mesh = phoneGroup.getObjectByName('手机')!;
-    if(mobilePhoneMesh && mobilePhoneMesh.material) {
-      mobilePhoneMesh.material.map = mpArr[index - 1];
-    }
-  };
 
-  return {
-    setMeshColor
-  }
-})();
 
-// 手机摄像头位置标注
+
 
 // phoneGroup.position.setY(0);
 
