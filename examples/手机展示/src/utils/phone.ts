@@ -19,14 +19,21 @@ const textureCube = new THREE.CubeTextureLoader()
 try {
   // console.log(import.meta.url);
 
-  const imgUrl = new URL('./../assets/手机.gltf', import.meta.url).href;
+  const imgUrl = new URL('./../assets/手机-标注.gltf', import.meta.url).href;
   // const url = getImageUrl('./src/assets/手机.gltf');
   const gltf = await loader.loadAsync(imgUrl);
+  console.log(gltf);
 
   const phoneGltf = gltf.scene; // 玩家角色模型
   phoneGroup.add(phoneGltf);
 
   const mesh = phoneGltf.getObjectByName('手机')!;
+
+
+  // 模型中包含两个空对象分别是手机前/后摄像头位置，主要是为了方便读取摄像头的世界坐标
+  const frontObject3D = phoneGltf.getObjectByName('后置摄像头位置')!;
+  console.log(frontObject3D);
+
 
   mobilePhoneMesh = mesh;
 
@@ -69,7 +76,7 @@ try {
   console.error(error);
 }
 
-// 颜色切换
+// 手机壳颜色切换
 const {setMeshColor} = (() => {
   const mp1 = texLoader.load("wl/幻夜黑.png");
   const mp2 = texLoader.load("wl/极光蓝.png");
@@ -96,6 +103,8 @@ const {setMeshColor} = (() => {
     setMeshColor
   }
 })();
+
+// 手机摄像头位置标注
 
 // phoneGroup.position.setY(0);
 
