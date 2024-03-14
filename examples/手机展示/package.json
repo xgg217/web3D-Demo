@@ -13,6 +13,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@tweenjs/tween.js": "^23.1.1",
     "three": "^0.160.0",
     "vue": "^3.3.11"
   },

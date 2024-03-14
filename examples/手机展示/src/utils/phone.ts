@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { lineAndTextGroup } from './CircleLineAndText';
+import TWEEN from '@tweenjs/tween.js';
 
 const allGroup = new THREE.Group();
 const phoneGroup = new THREE.Group();
@@ -9,15 +10,15 @@ const texLoader = new THREE.TextureLoader();
 
 let mobilePhoneMesh: THREE.Object3D<THREE.Object3DEventMap> | null = null; // 只想手机网格模型
 
-// console.log(imgUrl);
+console.log(TWEEN);
 
 // 手机壳颜色切换
-const {setMeshColor} = (() => {
-  const mp1 = texLoader.load("wl/幻夜黑.png");
-  const mp2 = texLoader.load("wl/极光蓝.png");
-  const mp3 = texLoader.load("wl/极光紫.png");
-  const mp4 = texLoader.load("wl/珊瑚红.png");
-  const mpArr = [mp1, mp2,mp3,mp4]
+const { setMeshColor } = (() => {
+  const mp1 = texLoader.load('wl/幻夜黑.png');
+  const mp2 = texLoader.load('wl/极光蓝.png');
+  const mp3 = texLoader.load('wl/极光紫.png');
+  const mp4 = texLoader.load('wl/珊瑚红.png');
+  const mpArr = [mp1, mp2, mp3, mp4];
 
   mp1.flipY = false; // 纹理朝向
   mp2.flipY = false; // 纹理朝向
@@ -26,36 +27,54 @@ const {setMeshColor} = (() => {
 
   // console.log(mp1);
 
-
-  const setMeshColor = (index: 1|2|3|4) => {
+  const setMeshColor = (index: 1 | 2 | 3 | 4) => {
     // const mesh = phoneGroup.getObjectByName('手机')!;
-    if(mobilePhoneMesh && mobilePhoneMesh.material) {
+    // @ts-ignore
+    if (mobilePhoneMesh && mobilePhoneMesh.material) {
+      // @ts-ignore
       mobilePhoneMesh.material.map = mpArr[index - 1];
     }
   };
 
   return {
     setMeshColor
-  }
+  };
 })();
 
 // 手机摄像头位置标注
-const {getWPsition} = (() => {
+const { getWPsition } = (() => {
   const dir = new THREE.Vector3(); // 后置摄像头世界坐标
 
   // 后置摄像头 标注
   const spriteMaterial = new THREE.SpriteMaterial({
     // color:0x00ffff,//设置颜色
-    map: texLoader.load("光点.png"),
+    map: texLoader.load('光点.png'),
     transparent: true
   });
+
   const sprite = new THREE.Sprite(spriteMaterial);
   sprite.scale.set(6, 6, 1);
+  sprite.renderOrder = 1;
+
+  // xyz三个方向都放大2倍
+  // sprite.scale.set(9, 9, 1);
+  // 缩放动画
+  const tween = new TWEEN.Tween(sprite.scale)
+    .to(
+      {
+        x: 9,
+        y: 9,
+        z: 1
+      },
+      2000
+    )
+    .repeat(Number.MAX_VALUE)
+    .yoyo(true);
 
   phoneGroup.add(sprite);
 
   // 获取世界坐标
-  const getWPsition = (group:THREE.Object3D<THREE.Object3DEventMap>) => {
+  const getWPsition = (group: THREE.Object3D<THREE.Object3DEventMap>) => {
     group.getWorldPosition(dir);
     console.log(dir);
 
@@ -63,15 +82,20 @@ const {getWPsition} = (() => {
     dir.setZ(dir.z - 2);
 
     sprite.position.copy(dir);
-    console.log(12);
 
+    tween.start();
+  };
 
-
+  // 缩放动画
+  function render() {
+    TWEEN.update();
+    requestAnimationFrame(render);
   }
+  render();
 
   return {
     getWPsition
-  }
+  };
 })();
 
 // 加载环境贴图
@@ -92,17 +116,15 @@ try {
 
   const mesh = phoneGltf.getObjectByName('手机')!;
 
-
   // 模型中包含两个空对象分别是手机前/后摄像头位置，主要是为了方便读取摄像头的世界坐标
-  const frontObject3D = phoneGltf.getObjectByName('后置摄像头位置')!;
-  // console.log(frontObject3D);
-  getWPsition(frontObject3D);
-
+  {
+    const frontObject3D = phoneGltf.getObjectByName('后置摄像头位置')!;
+    // 设置摄像头位置
+    getWPsition(frontObject3D);
+  }
 
   mobilePhoneMesh = mesh;
 
-  // console.log(mesh.material);
-  // const mp1 = texLoader.load("@/assets/bgc/幻夜黑.png");
   // @ts-ignore
   mesh.material = new THREE.MeshStandardMaterial({
     metalness: 1.0, //Mesh表面金属度，默认值0.5
@@ -140,15 +162,8 @@ try {
   console.error(error);
 }
 
-
-
-
-
-
-
 // phoneGroup.position.setY(0);
 
 allGroup.add(phoneGroup, lineAndTextGroup);
 
-
-export { phoneGroup, allGroup,setMeshColor };
+export { phoneGroup, allGroup, setMeshColor };
