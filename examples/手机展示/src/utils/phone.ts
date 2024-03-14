@@ -67,9 +67,8 @@ const { getWPsition } = (() => {
       },
       2000
     )
-    .repeat(Number.MAX_VALUE)
-    .yoyo(true)
-    .easing(TWEEN.Easing.Sinusoidal.InOut);
+    .repeat(Infinity)
+    .yoyo(true);
 
   phoneGroup.add(sprite);
 
