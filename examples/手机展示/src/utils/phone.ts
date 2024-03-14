@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { lineAndTextGroup } from './CircleLineAndText';
 import TWEEN from '@tweenjs/tween.js';
+import { CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
 
 const allGroup = new THREE.Group();
 const phoneGroup = new THREE.Group();
@@ -9,8 +10,6 @@ const loader = new GLTFLoader();
 const texLoader = new THREE.TextureLoader();
 
 let mobilePhoneMesh: THREE.Object3D<THREE.Object3DEventMap> | null = null; // 只想手机网格模型
-
-console.log(TWEEN);
 
 // 手机壳颜色切换
 const { setMeshColor } = (() => {
@@ -69,9 +68,29 @@ const { getWPsition } = (() => {
       2000
     )
     .repeat(Number.MAX_VALUE)
-    .yoyo(true);
+    .yoyo(true)
+    .easing(TWEEN.Easing.Sinusoidal.InOut);
 
   phoneGroup.add(sprite);
+
+  {
+    setTimeout(() => {
+      const div = document.getElementById('tag')!;
+      console.log(div);
+
+      const tag = new CSS2DObject(div);
+      console.log(tag);
+
+      // div.style.position = 'absolute';
+      // div.style.top = '-10px';
+      // div.style.pointerEvents = 'none';
+      sprite.add(tag);
+      console.log(div);
+    }, 1000);
+
+    // const tag = new CSS2DObject(div);
+    // phoneGroup.add(tag);
+  }
 
   // 获取世界坐标
   const getWPsition = (group: THREE.Object3D<THREE.Object3DEventMap>) => {
@@ -109,7 +128,7 @@ try {
   const imgUrl = new URL('./../assets/手机-标注.gltf', import.meta.url).href;
   // const url = getImageUrl('./src/assets/手机.gltf');
   const gltf = await loader.loadAsync(imgUrl);
-  console.log(gltf);
+  // console.log(gltf);
 
   const phoneGltf = gltf.scene; // 玩家角色模型
   phoneGroup.add(phoneGltf);

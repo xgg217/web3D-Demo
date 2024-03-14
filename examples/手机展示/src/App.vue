@@ -5,6 +5,8 @@ import { camera } from './utils/player';
 import { phoneGroup, allGroup, setMeshColor } from './utils/phone';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 // import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
+import { CSS2DRenderer } from 'three/addons/renderers/CSS2DRenderer.js';
+import Stats from 'three/addons/libs/stats.module.js';
 
 let stopRender = false;
 
@@ -13,6 +15,7 @@ const { warppRef, init } = (() => {
   const warppRef = ref<HTMLDivElement | null>(null);
   let renderer: THREE.WebGLRenderer | null = null;
   let controls: OrbitControls;
+  let stats = new Stats();
   // const clock = new THREE.Clock();
 
   // 设置光源
@@ -60,6 +63,11 @@ const { warppRef, init } = (() => {
     const axesHelper = new THREE.AxesHelper(100);
     scene.add(axesHelper);
 
+    // 帧率渲染
+    {
+      document.body.appendChild(stats.domElement);
+    }
+
     // 添加一个辅助网格地面
     // const gridHelper = new THREE.GridHelper(300, 25, 0x004444, 0x004444);
     // scene.add(gridHelper);
@@ -78,22 +86,45 @@ const { warppRef, init } = (() => {
   const setWindowResize = () => {
     window.addEventListener('resize', () => {
       // 重置渲染器输出画布canvas尺寸
-      renderer?.setSize(window.innerWidth, window.innerHeight);
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      renderer?.setSize(width, height);
+
+      // HTML标签css2Renderer.domElement尺寸重新设置
+      css2Renderer.setSize(width, height);
 
       // 全屏情况下：设置观察范围长宽比aspect为窗口宽高比
-      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.aspect = width / height;
 
       camera.updateProjectionMatrix();
     });
   };
 
+  // CSS2渲染器CSS2DRenderer
+  const css2Renderer = (() => {
+    // 创建一个CSS2渲染器CSS2DRenderer
+    const css2Renderer = new CSS2DRenderer();
+    css2Renderer.setSize(window.innerWidth, window.innerHeight);
+    // HTML标签<div id="tag"></div>外面父元素叠加到canvas画布上且重合
+    css2Renderer.domElement.style.position = 'absolute';
+    css2Renderer.domElement.style.top = '0px';
+    //设置.pointerEvents=none，解决HTML元素标签对threejs canvas画布鼠标事件的遮挡
+    css2Renderer.domElement.style.pointerEvents = 'none';
+    document.body.appendChild(css2Renderer.domElement);
+
+    return css2Renderer;
+  })();
+
   // 渲染循环
   const render = () => {
     if (!stopRender) {
       // phoneGroup.rotateY(0.005); // 每次渲染的时候旋转
-      if(isRotateY.value) {
+      if (isRotateY.value) {
         phoneGroup.rotateY(0.005);
       }
+      css2Renderer.render(scene, camera);
+
+      stats.update(); // 帧率渲染
 
       // const deltaTime = clock.getDelta();
 
@@ -150,24 +181,24 @@ const { warppRef, init } = (() => {
 })();
 
 // 旋转控制
-const {rTitle,isRotateY,onRotateY} = (() => {
-  const sVal = "开始旋转";
-  const eVal = "停止旋转";
-  const rTitle = ref("开始旋转");
+const { rTitle, isRotateY, onRotateY } = (() => {
+  const sVal = '开始旋转';
+  const eVal = '停止旋转';
+  const rTitle = ref('开始旋转');
   const isRotateY = ref(false);
 
   // 设置 开始/停止 旋转
   const onRotateY = () => {
     // 开始旋转
-    if(isRotateY.value) {
-      console.log("开始旋转 --> 停止旋转");
+    if (isRotateY.value) {
+      console.log('开始旋转 --> 停止旋转');
 
       // 开始旋转 --> 停止旋转
       isRotateY.value = false;
       rTitle.value = sVal;
     } else {
       // 停止旋转 --> 开始旋转
-      console.log("停止旋转 --> 开始旋转");
+      console.log('停止旋转 --> 开始旋转');
       isRotateY.value = true;
       rTitle.value = eVal;
     }
@@ -179,16 +210,15 @@ const {rTitle,isRotateY,onRotateY} = (() => {
     rTitle,
     isRotateY,
     onRotateY
-  }
+  };
 })();
 
 // 修改背景色
-const setBgColor = (index: 1|2|3|4) => {
+const setBgColor = (index: 1 | 2 | 3 | 4) => {
   // console.log(index);
 
-  setMeshColor(index)
-
-}
+  setMeshColor(index);
+};
 
 onMounted(() => {
   init();
@@ -209,18 +239,21 @@ onUnmounted(() => {
   <!-- 手机背景 -->
   <ul>
     <li>
-      <img src="/bgc/幻夜黑.png" alt="幻夜黑" @click="setBgColor(1)">
+      <img src="/bgc/幻夜黑.png" alt="幻夜黑" @click="setBgColor(1)" />
     </li>
     <li>
-      <img src="/bgc/极光蓝.png" alt="极光蓝" @click="setBgColor(2)">
+      <img src="/bgc/极光蓝.png" alt="极光蓝" @click="setBgColor(2)" />
     </li>
     <li>
-      <img src="/bgc/极光紫.png" alt="极光紫" @click="setBgColor(3)">
+      <img src="/bgc/极光紫.png" alt="极光紫" @click="setBgColor(3)" />
     </li>
     <li>
-      <img src="/bgc/珊瑚红.png" alt="珊瑚红" @click="setBgColor(4)">
+      <img src="/bgc/珊瑚红.png" alt="珊瑚红" @click="setBgColor(4)" />
     </li>
   </ul>
+
+  <!-- 场景标注 -->
+  <div id="tag">标签内容</div>
 </template>
 
 <style scoped>
@@ -253,7 +286,17 @@ ul li img {
   width: 60px;
   height: 100%;
   cursor: pointer;
+}
 
-
+#tag {
+  position: absolute;
+  top: -10px;
+  left: 200px;
+  pointer-events: none;
+  padding: 10px;
+  color: #fff;
+  background-color: red;
+  border-radius: 5px;
+  width: 65px;
 }
 </style>
