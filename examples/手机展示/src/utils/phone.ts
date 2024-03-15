@@ -3,6 +3,7 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { lineAndTextGroup } from './CircleLineAndText';
 import TWEEN from '@tweenjs/tween.js';
 import { CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
+import gd from '/光点.png';
 
 const allGroup = new THREE.Group();
 const phoneGroup = new THREE.Group();
@@ -10,6 +11,8 @@ const loader = new GLTFLoader();
 const texLoader = new THREE.TextureLoader();
 
 let mobilePhoneMesh: THREE.Object3D<THREE.Object3DEventMap> | null = null; // 只想手机网格模型
+
+let sprite: THREE.Sprite;
 
 // 手机壳颜色切换
 const { setMeshColor } = (() => {
@@ -50,8 +53,17 @@ const { getWPsition } = (() => {
     map: texLoader.load('光点.png'),
     transparent: true
   });
+  // const image = new Image();
+  // // const tag = new CSS2DObject(div);
+  // image.src = gd;
+  // image.onload = function () {
+  //   console.log(gd);
+  // };
 
-  const sprite = new THREE.Sprite(spriteMaterial);
+  // const img = new CSS2DObject(image);
+  // phoneGroup.add(img);
+
+  sprite = new THREE.Sprite(spriteMaterial);
   sprite.scale.set(6, 6, 1);
   sprite.renderOrder = 1;
 
@@ -67,8 +79,9 @@ const { getWPsition } = (() => {
       },
       2000
     )
+    .easing(TWEEN.Easing.Quadratic.Out) // 平滑动画
     .repeat(Infinity)
-    .yoyo(true);
+    .yoyo();
 
   phoneGroup.add(sprite);
 
@@ -94,7 +107,7 @@ const { getWPsition } = (() => {
   // 获取世界坐标
   const getWPsition = (group: THREE.Object3D<THREE.Object3DEventMap>) => {
     group.getWorldPosition(dir);
-    console.log(dir);
+    // console.log(dir);
 
     dir.setX(dir.x - 7);
     dir.setZ(dir.z - 2);
@@ -107,6 +120,7 @@ const { getWPsition } = (() => {
   // 缩放动画
   function render() {
     TWEEN.update();
+
     requestAnimationFrame(render);
   }
   render();

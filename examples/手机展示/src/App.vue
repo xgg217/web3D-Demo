@@ -65,6 +65,7 @@ const { warppRef, init } = (() => {
 
     // 帧率渲染
     {
+      // @ts-ignore
       document.body.appendChild(stats.domElement);
     }
 
