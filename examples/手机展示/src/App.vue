@@ -64,9 +64,9 @@ const { warppRef, init } = (() => {
     scene.add(axesHelper);
 
     // 帧率渲染
-    {
-      document.body.appendChild(stats.domElement);
-    }
+    // @ts-ignore
+    document.body.appendChild(stats.domElement);
+
 
     // 添加一个辅助网格地面
     // const gridHelper = new THREE.GridHelper(300, 25, 0x004444, 0x004444);
@@ -253,7 +253,12 @@ onUnmounted(() => {
   </ul>
 
   <!-- 场景标注 -->
-  <div id="tag">标签内容</div>
+  <div id="message" style="width:350px;height:120px;">
+    <div style="padding: 10px 4px;font-size:18px;">双摄像头</div>
+    <div style="padding: 10px 24px;font-size:16px;">后置主摄像头——1300万像素(F/1.8光圈)</div>
+    <div style="padding: 10px 24px;font-size:16px;">后置副摄像头——200万像素的</div>
+    <button>关闭</button>
+  </div>
 </template>
 
 <style scoped>
@@ -288,15 +293,31 @@ ul li img {
   cursor: pointer;
 }
 
-#tag {
+#message {
   position: absolute;
-  top: -10px;
-  left: 200px;
-  pointer-events: none;
-  padding: 10px;
+  /* top: 0;
+  left: 252px; */
   color: #fff;
-  background-color: red;
-  border-radius: 5px;
-  width: 65px;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 0px;
+  /* 边框 */
+  background: linear-gradient(#00ffff, #00ffff) left top,
+    linear-gradient(#00ffff, #00ffff) left top,
+    linear-gradient(#00ffff, #00ffff) right bottom,
+    linear-gradient(#00ffff, #00ffff) right bottom;
+  background-repeat: no-repeat;
+  background-size: 2px 20px, 36px 2px;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  font-size: 18px;
+  padding: 8px 12px;
 }
+
+#message button {
+  position: absolute;
+  top: 0;
+  right: 0px;
+  cursor: pointer;
+}
+
 </style>

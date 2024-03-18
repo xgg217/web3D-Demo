@@ -74,15 +74,17 @@ const { getWPsition } = (() => {
 
   {
     setTimeout(() => {
-      const div = document.getElementById('tag')!;
+      const div = document.getElementById('message')!;
       console.log(div);
 
       const tag = new CSS2DObject(div);
       console.log(tag);
 
       // div.style.position = 'absolute';
-      // div.style.top = '-10px';
-      // div.style.pointerEvents = 'none';
+      div.style.top = '-10px';
+      div.style.left = '360px';
+
+      div.style.pointerEvents = 'none';
       sprite.add(tag);
       console.log(div);
     }, 1000);
