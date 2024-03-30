@@ -253,14 +253,12 @@ onUnmounted(() => {
   </ul>
 
   <!-- 场景标注 -->
-  <div id="message" style="width:350px;height:120px;">
-
-
-      <div style="padding: 10px 4px;font-size:18px;">双摄像头</div>
-      <div style="padding: 10px 24px;font-size:16px;">后置主摄像头——1300万像素(F/1.8光圈)</div>
-      <div style="padding: 10px 24px;font-size:16px;">后置副摄像头——200万像素的</div>
-      <button style="pointer-events: auto;">关闭</button>
-    </div>
+  <div id="message" style="width:350px;height:120px;visibility: hidden;">
+    <div style="padding: 10px 4px;font-size:18px;">双摄像头</div>
+    <div style="padding: 10px 24px;font-size:16px;">后置主摄像头——1300万像素(F/1.8光圈)</div>
+    <div style="padding: 10px 24px;font-size:16px;">后置副摄像头——200万像素的</div>
+    <button style="pointer-events: auto;">关闭</button>
+  </div>
 </template>
 
 <style scoped>

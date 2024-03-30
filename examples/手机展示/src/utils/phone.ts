@@ -46,6 +46,8 @@ const { setMeshColor } = (() => {
 // 手机摄像头位置标注
 const { getWPsition } = (() => {
   const dir = new THREE.Vector3(); // 后置摄像头世界坐标
+  let divDom:HTMLElement | null;
+  let buttonDom:HTMLButtonElement | null;
 
   // 后置摄像头 标注
   const spriteMaterial = new THREE.SpriteMaterial({
@@ -53,15 +55,6 @@ const { getWPsition } = (() => {
     map: texLoader.load('光点.png'),
     transparent: true
   });
-  // const image = new Image();
-  // // const tag = new CSS2DObject(div);
-  // image.src = gd;
-  // image.onload = function () {
-  //   console.log(gd);
-  // };
-
-  // const img = new CSS2DObject(image);
-  // phoneGroup.add(img);
 
   sprite = new THREE.Sprite(spriteMaterial);
   sprite.scale.set(6, 6, 1);
@@ -87,23 +80,28 @@ const { getWPsition } = (() => {
 
   {
     setTimeout(() => {
-      const div = document.getElementById('message')!;
-      console.log(div);
+      divDom = document.getElementById('message')!;
+      buttonDom = divDom.querySelector('button')!;
+      // console.log(div);
 
-      const tag = new CSS2DObject(div);
+      const tag = new CSS2DObject(divDom);
       console.log(tag);
 
       // div.style.position = 'absolute';
-      div.style.top = '-10px';
-      div.style.left = '360px';
+      divDom.style.top = '-10px';
+      divDom.style.left = '360px';
 
-      div.style.pointerEvents = 'none';
+      divDom.style.pointerEvents = 'none';
       sprite.add(tag);
-      console.log(div);
+
+      // 点击关闭提示
+      buttonDom?.addEventListener('click', () => {
+        console.log(11);
+
+        divDom!.style.display = 'none';
+      });
     }, 1000);
 
-    // const tag = new CSS2DObject(div);
-    // phoneGroup.add(tag);
   }
 
   // 获取世界坐标
