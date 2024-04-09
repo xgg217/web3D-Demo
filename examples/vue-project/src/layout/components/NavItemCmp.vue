@@ -3,11 +3,11 @@
 </template>
 
 <script setup lang="ts">
-import type { ILeftItem } from './../types'
+import type { ILeftItem } from "./../types";
 
 const props = defineProps<{
-  row: ILeftItem
-}>()
+  row: ILeftItem;
+}>();
 </script>
 
 <style scoped></style>

@@ -11,16 +11,16 @@
 </template>
 
 <script setup lang="ts">
-import type { ILeftItem } from './../types'
-import NavItemCmp from './NavItemCmp.vue'
+import type { ILeftItem } from "./../types";
+import NavItemCmp from "./NavItemCmp.vue";
 
 const arr = shallowRef<ILeftItem[]>([
   {
-    imgSrc: '@/views/AnimationSkinningMorph/AnimationSkinningMorph.jpg',
-    title: 'animation / skinning / morph',
-    routeName: 'AnimationSkinningMorph'
+    imgSrc: "@/views/AnimationSkinningMorph/AnimationSkinningMorph.jpg",
+    title: "animation / skinning / morph",
+    routeName: "AnimationSkinningMorph"
   }
-])
+]);
 </script>
 
 <style scoped>

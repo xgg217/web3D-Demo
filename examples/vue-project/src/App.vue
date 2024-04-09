@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { RouterView } from 'vue-router'
+import { RouterView } from "vue-router";
 // import LeftNav from '@/components/LeftNav.vue'
 </script>
 
