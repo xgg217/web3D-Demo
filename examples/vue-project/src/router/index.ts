@@ -22,7 +22,11 @@ const router = createRouter({
         {
           path: "/animationSkinningMorph",
           name: "AnimationSkinningMorph",
-          component: () => import("@/views/AnimationSkinningMorph/index.vue")
+          component: () => import("@/views/AnimationSkinningMorph/index.vue"),
+          meta: {
+            title: "animation / skinning / morph",
+            imgSrc: "AnimationSkinningMorph/AnimationSkinningMorph.jpg"
+          }
         }
       ]
     }

@@ -1,5 +1,10 @@
 <template>
-  <div>{{ props.row.title }}</div>
+  <div class="item avc">
+    <div class="imgs">
+      <img :src="props.row.imgSrc" alt="" />
+    </div>
+    <p>{{ props.row.title }}</p>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -10,4 +15,37 @@ const props = defineProps<{
 }>();
 </script>
 
-<style scoped></style>
+<style scoped>
+.item {
+  border: 1px solid transparent;
+  border-radius: 3px;
+  background-color: #f7f7f7;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  box-sizing: border-box;
+  margin-bottom: 16px;
+}
+
+.avc {
+  border-color: #049ef4;
+  border-width: 3px;
+}
+
+.imgs {
+  width: 260px;
+  height: 160px;
+  border: 1px solid #000;
+}
+
+p {
+  padding: 8px 12px 4px;
+  font-weight: 500;
+  color: #444;
+}
+
+.item:hover p {
+  color: #049ef4;
+}
+</style>
