@@ -34,9 +34,14 @@ const props = defineProps<{
 }
 
 .imgs {
-  width: 260px;
+  width: 254px;
   height: 160px;
-  border: 1px solid #000;
+  box-sizing: border-box;
+}
+
+.imgs img {
+  width: 100%;
+  max-height: 100%;
 }
 
 p {

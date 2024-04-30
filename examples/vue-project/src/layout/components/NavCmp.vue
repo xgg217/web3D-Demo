@@ -26,6 +26,7 @@ const arr = shallowRef<ILeftItem[]>([
 
 onMounted(() => {
   const list = router.options?.routes[0]?.children ?? [];
+  console.log(import.meta.glob, import.meta.url);
   // console.log(list);
   arr.value = list
     .filter(item => {
@@ -38,7 +39,7 @@ onMounted(() => {
       console.log(imgSrc);
 
       const obj: ILeftItem = {
-        imgSrc: meta?.imgSrc as string,
+        imgSrc,
         title: meta?.title as string,
         routeName: name as string
       };
