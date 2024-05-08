@@ -3,7 +3,7 @@
     <ul>
       <template v-for="item of arr" :key="item.imgSrc">
         <li>
-          <NavItemCmp :row="item" />
+          <NavItemCmp :row="item" @click="onPage" />
         </li>
       </template>
     </ul>
@@ -13,29 +13,22 @@
 <script setup lang="ts">
 import type { ILeftItem } from "./../types";
 import NavItemCmp from "./NavItemCmp.vue";
-// import routerList from "@/router/index";
+
 const router = useRouter();
 
-const arr = shallowRef<ILeftItem[]>([
-  // {
-  //   imgSrc: "@/views/AnimationSkinningMorph/AnimationSkinningMorph.jpg",
-  //   title: "animation / skinning / morph",
-  //   routeName: "AnimationSkinningMorph"
-  // }
-]);
+const arr = shallowRef<ILeftItem[]>([]);
 
-onMounted(() => {
+// 获取所有路由
+const getRouterArr = () => {
   const list = router.options?.routes[0]?.children ?? [];
-  // console.log(list);
-  arr.value = list
-    .filter(item => {
+
+  return list
+    .filter((item: any) => {
       return item.path !== "/home";
     })
-    .map(item => {
+    .map((item: any) => {
       const { name, meta } = item;
       const imgSrc = new URL(`/src/views/${meta?.imgSrc}`, import.meta.url).href;
-      // const a = import.meta.glob(`@/views/${meta?.imgSrc || ""}`);
-      console.log(imgSrc);
 
       const obj: ILeftItem = {
         imgSrc,
@@ -44,8 +37,23 @@ onMounted(() => {
       };
       return obj;
     });
+};
 
-  console.log(arr.value);
+// 页面跳转
+const onPage = (name: ILeftItem["routeName"]) => {
+  if (!name) {
+    return;
+  }
+  try {
+    router.push({ name });
+  } catch (error) {
+    console.error("当前路由不存在", error);
+    router.push("/404");
+  }
+};
+
+onMounted(() => {
+  arr.value = getRouterArr();
 });
 </script>
 

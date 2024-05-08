@@ -7,13 +7,13 @@
     "nightwatch.conf.*",
     "playwright.config.*",
     "src/**/*.ts",
-    "src/**/*.vue"
+    "src/**/*.vue",
+    "auto-imports.d.ts"
   ],
   "compilerOptions": {
     "composite": true,
     "noEmit": true,
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
-
     "module": "ESNext",
     "moduleResolution": "Bundler",
     "types": ["node"]
