@@ -20,6 +20,15 @@ const router = createRouter({
           component: Home
         },
         {
+          path: "/animationSkinningAdditiveBlending",
+          name: "AnimationSkinningAdditiveBlending",
+          component: () => import("@/views/AnimationSkinningAdditiveBlending/index.vue"),
+          meta: {
+            title: "animation / skinning / additive / blending",
+            imgSrc: "AnimationSkinningAdditiveBlending/AnimationSkinningAdditiveBlending.jpg"
+          }
+        },
+        {
           path: "/animationSkinningMorph",
           name: "AnimationSkinningMorph",
           component: () => import("@/views/AnimationSkinningMorph/index.vue"),

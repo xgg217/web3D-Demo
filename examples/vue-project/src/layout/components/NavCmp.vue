@@ -26,7 +26,6 @@ const arr = shallowRef<ILeftItem[]>([
 
 onMounted(() => {
   const list = router.options?.routes[0]?.children ?? [];
-  console.log(import.meta.glob, import.meta.url);
   // console.log(list);
   arr.value = list
     .filter(item => {
