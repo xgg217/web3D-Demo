@@ -44,12 +44,15 @@ const onPage = (name: ILeftItem["routeName"]) => {
   if (!name) {
     return;
   }
-  try {
+
+  const isBool = router.hasRoute(name);
+
+  if (isBool) {
     router.push({ name });
-  } catch (error) {
-    console.error("当前路由不存在", error);
-    router.push("/404");
+    return;
   }
+  console.error("当前路由不存在");
+  router.push("/404");
 };
 
 onMounted(() => {
