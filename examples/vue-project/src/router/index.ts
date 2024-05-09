@@ -36,6 +36,15 @@ const router = createRouter({
             title: "animation / skinning / morph",
             imgSrc: "AnimationSkinningMorph/AnimationSkinningMorph.jpg"
           }
+        },
+        {
+          path: "/test",
+          name: "Test",
+          component: () => import("@/views/test/index.vue"),
+          meta: {
+            title: "测试",
+            imgSrc: ""
+          }
         }
       ]
     },
