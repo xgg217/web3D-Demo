@@ -2,10 +2,10 @@ import * as THREE from "three";
 import type { Scene, PerspectiveCamera, WebGLRenderer, DirectionalLight } from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
-import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
+// import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
 // import { RGBELoader } from "three/examples/jsm/loaders/RGBELoader.js";
 
-export class CreateTwin {
+export default class CreateTwin {
   scene: Scene;
   camera: PerspectiveCamera;
   renderer: WebGLRenderer;
@@ -15,7 +15,8 @@ export class CreateTwin {
 
   constructor() {
     const mainDom = document.querySelector(".main")!;
-    const mainStyle = getComputedStyle(mainDom);
+
+    const mainStyle = window.getComputedStyle(mainDom);
 
     // 场景
     this.scene = new THREE.Scene();
@@ -55,11 +56,11 @@ export class CreateTwin {
     // });
 
     // gltf加载
-    const draco = new DRACOLoader();
-    draco.setDecoderPath("./draco/");
+    // const draco = new DRACOLoader();
+    // draco.setDecoderPath("./draco/");
     // 创建一个gltf的加载器对象
     this.GLTFLoader = new GLTFLoader();
-    this.GLTFLoader.setDRACOLoader(draco);
+    // this.GLTFLoader.setDRACOLoader(draco);
 
     // 相机控件
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);

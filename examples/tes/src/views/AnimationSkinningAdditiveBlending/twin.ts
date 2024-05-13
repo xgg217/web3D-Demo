@@ -1,5 +1,9 @@
-import { CreateTwin } from "@/utils/twin/createTwin";
+import CreateTwin from "@/utils/twin/createTwin";
 
-const twin = new CreateTwin();
+const init = () => {
+  const twin = new CreateTwin();
 
-export default twin;
+  return twin;
+};
+
+export default init;
