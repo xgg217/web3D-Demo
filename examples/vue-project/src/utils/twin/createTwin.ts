@@ -5,7 +5,7 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
 // import { RGBELoader } from "three/examples/jsm/loaders/RGBELoader.js";
 
-export default class CreateTwin {
+export class CreateTwin {
   scene: Scene;
   camera: PerspectiveCamera;
   renderer: WebGLRenderer;
