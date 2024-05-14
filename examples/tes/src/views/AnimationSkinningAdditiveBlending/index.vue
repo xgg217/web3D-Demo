@@ -24,7 +24,6 @@ const init3D = () => {
       return;
     }
   }
-  console.log(1);
 
   const twin = init();
 

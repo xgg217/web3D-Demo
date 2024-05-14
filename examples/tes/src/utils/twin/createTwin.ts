@@ -1,9 +1,7 @@
 import * as THREE from "three";
-import type { Scene, PerspectiveCamera, WebGLRenderer, DirectionalLight } from "three";
+import type { Scene, PerspectiveCamera, WebGLRenderer, DirectionalLight, CubeTextureLoader } from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
-// import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
-// import { RGBELoader } from "three/examples/jsm/loaders/RGBELoader.js";
 import type { IParams } from "./types";
 
 // 获取宽高
@@ -18,24 +16,19 @@ export default class CreateTwin {
   scene: Scene;
   camera: PerspectiveCamera;
   renderer: WebGLRenderer;
-  directionalLight: DirectionalLight;
-  controls: OrbitControls;
-  GLTFLoader: GLTFLoader;
+  directionalLight: DirectionalLight; // 平行光
+  controls: OrbitControls; // 相机控件
+  GLTFLoader: GLTFLoader; // gltf
+  textureCube: CubeTextureLoader; // 环境贴图
 
   constructor(params: IParams) {
     const mainDom = document.querySelector(`.main ${params.domName}`)!;
-    console.log(mainDom);
-
-    // const mainStyle = window.getComputedStyle(mainDom);
 
     // 场景
     this.scene = new THREE.Scene();
 
     // 相机
     const { width, height } = getWAndH(mainDom);
-    console.log(width, height);
-    // const width = parseInt(mainStyle.width);
-    // const height = parseInt(mainStyle.height);
     // 透视投影相机
     this.camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 3000);
     this.camera.position.set(1.24, 7.03, 52.5);
@@ -60,31 +53,20 @@ export default class CreateTwin {
     this.directionalLight.position.set(80, 100, 50);
     this.scene.add(this.directionalLight);
 
-    // 设置.envMap
-    // const rgbeLoader = new RGBELoader();
-    // rgbeLoader.load("./envMap.hdr", envMap => {
-    //   this.scene.environment = envMap;
-    //   envMap.mapping = THREE.EquirectangularReflectionMapping;
-    // });
+    // 环境贴图
+    this.textureCube = new THREE.CubeTextureLoader();
 
     // gltf加载
-    // const draco = new DRACOLoader();
-    // draco.setDecoderPath("./draco/");
-    // 创建一个gltf的加载器对象
     this.GLTFLoader = new GLTFLoader();
-    // this.GLTFLoader.setDRACOLoader(draco);
 
     // 相机控件
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
     this.controls.target.set(0, 0, 0);
     this.controls.update();
+
     // 画布尺寸随着窗口变化
     window.addEventListener("resize", () => {
       const { width, height } = getWAndH(mainDom);
-      // const mainStyle = getComputedStyle(mainDom);
-      // const width = parseInt(mainStyle.width);
-      // const height = parseInt(mainStyle.height);
-      console.log(width, height);
 
       this.renderer.setSize(width, height);
       this.camera.aspect = width / height;
