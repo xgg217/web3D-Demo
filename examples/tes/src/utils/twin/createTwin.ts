@@ -34,7 +34,7 @@ export default class CreateTwin {
       antialias: true,
       logarithmicDepthBuffer: true
     });
-    this.renderer.setPixelRatio(window.devicePixelRatio);
+    this.renderer.setPixelRatio(window.devicePixelRatio); //防止输出模糊
     this.renderer.setSize(width, height);
     mainDom.appendChild(this.renderer.domElement);
 
