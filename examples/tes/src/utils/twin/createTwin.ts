@@ -4,6 +4,15 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 // import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
 // import { RGBELoader } from "three/examples/jsm/loaders/RGBELoader.js";
+import type { IParams } from "./types";
+
+// 获取宽高
+const getWAndH = (el: Element) => {
+  const mainStyle = window.getComputedStyle(el);
+  const width = parseInt(mainStyle.width);
+  const height = parseInt(mainStyle.height);
+  return { width, height };
+};
 
 export default class CreateTwin {
   scene: Scene;
@@ -13,17 +22,20 @@ export default class CreateTwin {
   controls: OrbitControls;
   GLTFLoader: GLTFLoader;
 
-  constructor() {
-    const mainDom = document.querySelector(".main")!;
+  constructor(params: IParams) {
+    const mainDom = document.querySelector(`.main ${params.domName}`)!;
+    console.log(mainDom);
 
-    const mainStyle = window.getComputedStyle(mainDom);
+    // const mainStyle = window.getComputedStyle(mainDom);
 
     // 场景
     this.scene = new THREE.Scene();
 
     // 相机
-    const width = parseInt(mainStyle.width);
-    const height = parseInt(mainStyle.height);
+    const { width, height } = getWAndH(mainDom);
+    console.log(width, height);
+    // const width = parseInt(mainStyle.width);
+    // const height = parseInt(mainStyle.height);
     // 透视投影相机
     this.camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 3000);
     this.camera.position.set(1.24, 7.03, 52.5);
@@ -67,10 +79,12 @@ export default class CreateTwin {
     this.controls.target.set(0, 0, 0);
     this.controls.update();
     // 画布尺寸随着窗口变化
-    mainDom.addEventListener("resize", () => {
-      const mainStyle = getComputedStyle(mainDom);
-      const width = parseInt(mainStyle.width);
-      const height = parseInt(mainStyle.height);
+    window.addEventListener("resize", () => {
+      const { width, height } = getWAndH(mainDom);
+      // const mainStyle = getComputedStyle(mainDom);
+      // const width = parseInt(mainStyle.width);
+      // const height = parseInt(mainStyle.height);
+      console.log(width, height);
 
       this.renderer.setSize(width, height);
       this.camera.aspect = width / height;

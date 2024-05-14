@@ -14,7 +14,7 @@ const mesh = () => {
 };
 
 const init = () => {
-  const twin = new CreateTwin();
+  const twin = new CreateTwin({ domName: ".animationSkinningAdditiveBlending" });
 
   // 投影 平面
   const m = mesh();

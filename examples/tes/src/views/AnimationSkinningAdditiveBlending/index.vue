@@ -1,11 +1,31 @@
 <template>
-  <div></div>
+  <div class="animationSkinningAdditiveBlending"></div>
 </template>
 
 <script setup lang="ts">
 import init from "./twin";
 
+// 判断当前canvas 是否存在 是否是three
+const isCanvas = () => {
+  const can = document.querySelector(".main .animationSkinningAdditiveBlending canvas");
+  console.log(can);
+  //
+  if (can === null) {
+    // 当前有没添加
+    return false;
+  }
+  return true;
+};
+
 const init3D = () => {
+  {
+    const isBool = isCanvas();
+    if (isBool) {
+      return;
+    }
+  }
+  console.log(1);
+
   const twin = init();
 
   // 相机调整
@@ -41,9 +61,16 @@ const init3D = () => {
   });
 };
 
+// 页面加载
 onMounted(() => {
   init3D();
 });
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+.animationSkinningAdditiveBlending {
+  width: 100%;
+  height: 100%;
+  border: 1px solid blue;
+}
+</style>
