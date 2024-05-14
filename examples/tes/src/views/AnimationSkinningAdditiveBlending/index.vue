@@ -11,18 +11,10 @@ import init from "./twin";
 const init3D = () => {
   const twin = init();
   const url = new URL("./Xbot.glb", import.meta.url).href;
-  console.log(url);
   twin.GLTFLoader.load(url, gltf => {
-    console.log(gltf);
+    // console.log(gltf);
     twin.scene.add(gltf.scene);
   });
-
-  // console.log(
-  //   twin.GLTFLoader.load(url, gltf => {
-  //     console.log(gltf);
-  //     twin.scene.add(gltf.scene);
-  //   })
-  // );
 };
 
 onMounted(() => {
