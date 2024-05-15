@@ -1,5 +1,7 @@
 import CreateTwin from "@/utils/twin/createTwin";
 import * as THREE from "three";
+// import Helper from "@/utils/twin/helpers";
+import type { IParams } from "@/utils/twin/types";
 
 // 投影 平面
 const mesh = () => {
@@ -14,15 +16,15 @@ const mesh = () => {
 };
 
 const init = () => {
-  const twin = new CreateTwin({ domName: ".animationSkinningAdditiveBlending" });
+  const query: IParams = {
+    domName: ".animationSkinningAdditiveBlending"
+  };
+
+  const twin = new CreateTwin(query);
 
   // 投影 平面
   const m = mesh();
   twin.scene.add(m);
-
-  //辅助观察的坐标系
-  const axesHelper = new THREE.AxesHelper(100);
-  twin.scene.add(axesHelper);
 
   return twin;
 };

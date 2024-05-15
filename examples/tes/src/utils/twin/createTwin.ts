@@ -2,6 +2,7 @@ import * as THREE from "three";
 import type { Scene, PerspectiveCamera, WebGLRenderer, DirectionalLight, CubeTextureLoader } from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+import Helper from "./helpers";
 import type { IParams } from "./types";
 
 // 获取宽高
@@ -25,6 +26,8 @@ export default class CreateTwin {
 
     const mainDom = document.querySelector(`.main ${domName}`)!;
 
+    console.log(mainDom);
+
     // 场景
     this.scene = new THREE.Scene();
 
@@ -44,11 +47,6 @@ export default class CreateTwin {
     this.renderer.setSize(width, height);
     mainDom.appendChild(this.renderer.domElement);
 
-    // 渲染循环 setAnimationLoop 内置方法用于代替requestAnimationFrame
-    this.renderer.setAnimationLoop(() => {
-      this.renderer.render(this.scene, this.camera);
-    });
-
     // 平行光
     this.directionalLight = new THREE.DirectionalLight(0xffffff, 3.0);
     this.directionalLight.position.set(80, 100, 50);
@@ -66,6 +64,17 @@ export default class CreateTwin {
     this.controls.update();
     // this.controls.addEventListener('change', () => {
     // })
+
+    //辅助观察的坐标系
+    const helper = new Helper(this.scene, this.directionalLight, { domName: ".animationSkinningAdditiveBlending" });
+
+    // 渲染循环 setAnimationLoop 内置方法用于代替requestAnimationFrame
+    this.renderer.setAnimationLoop(() => {
+      // console.log(2);
+      helper.stats.update();
+
+      this.renderer.render(this.scene, this.camera);
+    });
 
     // 画布尺寸随着窗口变化
     window.addEventListener("resize", () => {

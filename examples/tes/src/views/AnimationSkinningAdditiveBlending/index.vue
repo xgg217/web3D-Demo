@@ -5,7 +5,7 @@
 <script setup lang="ts">
 import init from "./twin";
 
-// 判断当前canvas 是否存在 是否是three
+// 判断当前有没是否添加了模型
 const isCanvas = () => {
   const can = document.querySelector(".main .animationSkinningAdditiveBlending canvas");
   console.log(can);
@@ -14,6 +14,7 @@ const isCanvas = () => {
     // 当前有没添加
     return false;
   }
+
   return true;
 };
 
@@ -21,11 +22,12 @@ const init3D = () => {
   {
     const isBool = isCanvas();
     if (isBool) {
-      return;
+      // return;
     }
   }
 
   const twin = init();
+  console.log(twin);
 
   // 相机调整
   twin.camera.position.set(-2, 4, 4);
