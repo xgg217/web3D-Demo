@@ -5,10 +5,9 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import type { IParams } from "./types";
 
 // 获取宽高
-const getWAndH = (el: Element) => {
-  const mainStyle = window.getComputedStyle(el);
-  const width = parseInt(mainStyle.width);
-  const height = parseInt(mainStyle.height);
+const getWAndH = () => {
+  const width = window.innerWidth - 300 - 15;
+  const height = window.innerHeight - 15;
   return { width, height };
 };
 
@@ -22,13 +21,15 @@ export default class CreateTwin {
   textureCube: CubeTextureLoader; // 环境贴图
 
   constructor(params: IParams) {
-    const mainDom = document.querySelector(`.main ${params.domName}`)!;
+    const { domName } = params;
+
+    const mainDom = document.querySelector(`.main ${domName}`)!;
 
     // 场景
     this.scene = new THREE.Scene();
 
     // 相机
-    const { width, height } = getWAndH(mainDom);
+    const { width, height } = getWAndH();
     // 透视投影相机
     this.camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 3000);
     this.camera.position.set(1.24, 7.03, 52.5);
@@ -63,10 +64,13 @@ export default class CreateTwin {
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
     this.controls.target.set(0, 0, 0);
     this.controls.update();
+    // this.controls.addEventListener('change', () => {
+    // })
 
     // 画布尺寸随着窗口变化
     window.addEventListener("resize", () => {
-      const { width, height } = getWAndH(mainDom);
+      const { width, height } = getWAndH();
+      // console.log(width);
 
       this.renderer.setSize(width, height);
       this.camera.aspect = width / height;
