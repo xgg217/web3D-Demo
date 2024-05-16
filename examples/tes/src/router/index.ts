@@ -39,7 +39,7 @@ const router = createRouter({
             title: "animation / skinning / morph",
             imgSrc: "AnimationSkinningMorph/AnimationSkinningMorph.jpg"
           }
-        },
+        }
         // {
         //   path: "/test",
         //   name: "Test",

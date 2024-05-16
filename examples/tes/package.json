@@ -13,6 +13,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "element-plus": "^2.7.3",
     "pinia": "^2.1.7",
     "three": "^0.164.1",
     "vue": "^3.4.21",
@@ -37,5 +38,8 @@
     "vite": "^5.2.8",
     "vite-plugin-vue-devtools": "^7.0.25",
     "vue-tsc": "^2.0.11"
+  },
+  "volta": {
+    "node": "22.2.0"
   }
 }
