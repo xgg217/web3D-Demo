@@ -13,6 +13,7 @@ export default class Helper {
     const { domName } = params;
     const mainDom = document.querySelector(`.main ${domName}`)!;
 
+    // 坐标系辅助工具
     scene.add(new THREE.AxesHelper(200));
 
     // 查看帧率

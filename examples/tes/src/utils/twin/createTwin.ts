@@ -12,6 +12,8 @@ const getWAndH = () => {
   return { width, height };
 };
 
+type IHelper = typeof Helper;
+
 export default class CreateTwin {
   scene: Scene;
   camera: PerspectiveCamera;
@@ -20,6 +22,7 @@ export default class CreateTwin {
   controls: OrbitControls; // 相机控件
   GLTFLoader: GLTFLoader; // gltf
   textureCube: CubeTextureLoader; // 环境贴图
+  helper: IHelper; // 辅助工具
 
   constructor(params: IParams) {
     const { domName } = params;
@@ -62,8 +65,6 @@ export default class CreateTwin {
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
     this.controls.target.set(0, 0, 0);
     this.controls.update();
-    // this.controls.addEventListener('change', () => {
-    // })
 
     //辅助观察的坐标系
     const helper = new Helper(this.scene, this.directionalLight, { domName: ".animationSkinningAdditiveBlending" });
@@ -75,6 +76,10 @@ export default class CreateTwin {
 
       this.renderer.render(this.scene, this.camera);
     });
+
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+    this.helper = helper;
 
     // 画布尺寸随着窗口变化
     window.addEventListener("resize", () => {
