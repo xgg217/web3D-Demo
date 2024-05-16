@@ -22,6 +22,7 @@ export default class Helper {
 
     // 辅助调试
     this.gui = new GUI();
+    mainDom.appendChild(this.gui.domElement);
     this.gui.domElement.style.right = "0px";
     this.gui.domElement.style.width = "500px";
     this.gui.domElement.style.fontSize = "16px";
