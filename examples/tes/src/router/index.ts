@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
-import layout from "@/layout/index.vue";
+import layoutExamples from "@/views/examples/layout/index.vue";
 import Home from "@/views/Home/index.vue";
 
 const router = createRouter({
@@ -7,45 +7,48 @@ const router = createRouter({
   routes: [
     {
       path: "/",
-      component: layout,
+      name: "Home",
+      component: Home,
       meta: {
         title: "首页"
+      }
+    },
+    {
+      path: "/examples",
+      component: layoutExamples,
+      meta: {
+        title: "官方示例"
       },
-      redirect: "/home",
+      redirect: "/examples/animationSkinningAdditiveBlending",
 
       children: [
         {
-          path: "/home",
-          name: "Home",
-          component: Home
-        },
-        {
-          path: "/animationSkinningAdditiveBlending",
+          path: "animationSkinningAdditiveBlending",
           name: "AnimationSkinningAdditiveBlending",
-          component: () => import("@/views/AnimationSkinningAdditiveBlending/index.vue"),
+          component: () => import("@/views/examples/AnimationSkinningAdditiveBlending/index.vue"),
           meta: {
             title: "animation / skinning / additive / blending",
             imgSrc: "AnimationSkinningAdditiveBlending/AnimationSkinningAdditiveBlending.jpg"
           }
         },
         {
-          path: "/animationSkinningMorph",
+          path: "animationSkinningMorph",
           name: "AnimationSkinningMorph",
-          component: () => import("@/views/AnimationSkinningMorph/index.vue"),
+          component: () => import("@/views/examples/AnimationSkinningMorph/index.vue"),
           meta: {
             title: "animation / skinning / morph",
             imgSrc: "AnimationSkinningMorph/AnimationSkinningMorph.jpg"
           }
         },
-        {
-          path: "/test",
-          name: "Test",
-          component: () => import("@/views/test/index.vue"),
-          meta: {
-            title: "测试",
-            imgSrc: ""
-          }
-        }
+        // {
+        //   path: "/test",
+        //   name: "Test",
+        //   component: () => import("@/views/test/index.vue"),
+        //   meta: {
+        //     title: "测试",
+        //     imgSrc: ""
+        //   }
+        // }
       ]
     },
     {
