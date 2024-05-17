@@ -43,7 +43,7 @@ export default class CreateTwin {
 
     // 渲染器
     this.renderer = new THREE.WebGLRenderer({
-      antialias: true,
+      antialias: true, // 锯齿模糊
       logarithmicDepthBuffer: true
     });
     this.renderer.setPixelRatio(window.devicePixelRatio); //防止输出模糊
