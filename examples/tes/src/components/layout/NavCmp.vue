@@ -11,8 +11,12 @@
 </template>
 
 <script setup lang="ts">
-import type { ILeftItem } from "./../types";
+import type { ILeftItem } from "./types";
 import NavItemCmp from "./NavItemCmp.vue";
+
+const props = defineProps<{
+  pathName: string;
+}>();
 
 const router = useRouter();
 
@@ -26,12 +30,12 @@ const getRouterArr = () => {
 
   const arr = list
     .filter((item: any) => {
-      return item.path === "/examples";
+      return item.path === `/${props.pathName}`;
     });
 
     return arr[0].children.map((item: any) => {
       const { name, meta } = item;
-      const imgSrc = new URL(`/src/views/examples/${meta?.imgSrc}`, import.meta.url).href;
+      const imgSrc = new URL(`/src/views/${props.pathName}/${meta?.imgSrc}`, import.meta.url).href;
 
       const obj: ILeftItem = {
         imgSrc,
