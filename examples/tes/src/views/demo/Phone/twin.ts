@@ -36,6 +36,7 @@ const init = () => {
       const phoneGltf = gltf.scene; // 玩家角色模型
       // twin.scene.add(gltf.scene);
       phoneGroup.add(phoneGltf);
+      twin.scene.add(phoneGroup);
 
       // 模型中包含两个空对象分别是手机前/后摄像头位置，主要是为了方便读取摄像头的世界坐标
       {
