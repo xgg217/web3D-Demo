@@ -96,25 +96,25 @@ group.add(mesh);
   })();
 
   // 姿态
-  const {} = (() => {
-    // 对应动作的动作
-    const attitude = {
-      headShake: { name: '左右摇头', key: 'headShake', action: null },
-      sad_pose: { name: '点头', key: 'sad_pose', action: null },
-      sneak_pose: { name: '紧张', key: 'sneak_pose', action: null },
-    }
+  // const {} = (() => {
+  //   // 对应动作的动作
+  //   const attitude = {
+  //     headShake: { name: '左右摇头', key: 'headShake', action: null },
+  //     sad_pose: { name: '点头', key: 'sad_pose', action: null },
+  //     sneak_pose: { name: '紧张', key: 'sneak_pose', action: null },
+  //   }
 
-    // folder2.add()
+  //   // folder2.add()
 
 
-    // 展示的动作
-    const baseActionsStr = {
-      // 左右摇头: baseActions['headShake'].key,
-      // 点头: baseActions['sad_pose'].key,
-      // 紧张: baseActions['sneak_pose'].key,
-    };
+  //   // 展示的动作
+  //   const baseActionsStr = {
+  //     // 左右摇头: baseActions['headShake'].key,
+  //     // 点头: baseActions['sad_pose'].key,
+  //     // 紧张: baseActions['sneak_pose'].key,
+  //   };
 
-  })();
+  // })();
 
 
 
