@@ -33,6 +33,7 @@ export default class CreateTwin {
 
     // 场景
     this.scene = new THREE.Scene();
+    this.scene.background = new THREE.Color( 0xa0a0a0 );
 
     // 相机
     const { width, height } = getWAndH();
@@ -52,7 +53,7 @@ export default class CreateTwin {
 
     // 平行光
     this.directionalLight = new THREE.DirectionalLight(0xffffff, 3.0);
-    this.directionalLight.position.set(80, 100, 50);
+    this.directionalLight.position.set(3, 10, 10);
     this.scene.add(this.directionalLight);
 
     // 环境贴图

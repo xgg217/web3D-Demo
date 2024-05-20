@@ -6,11 +6,10 @@ import type { IParams } from "@/utils/twin/types";
 // 投影 平面
 const mesh = () => {
   const mesh = new THREE.Mesh(
-    new THREE.PlaneGeometry(5, 5),
-    new THREE.MeshLambertMaterial({ color: 0xcbcbcb, depthWrite: false })
+    new THREE.PlaneGeometry(8, 8),
+    new THREE.MeshPhongMaterial({ color: 0xcbcbcb, depthWrite: false })
   );
   mesh.rotation.x = -Math.PI / 2;
-  // mesh.castShadow = true;
   mesh.receiveShadow = true;
   return mesh;
 };
