@@ -28,22 +28,23 @@ const getRouterArr = () => {
   console.log(router.getRoutes());
   const list = router.getRoutes(); // 获取所有路由
 
-  const arr = list
-    .filter((item: any) => {
-      return item.path === `/${props.pathName}`;
-    });
+  const arr = list.filter((item: any) => {
+    return item.path === `/${props.pathName}`;
+  });
 
-    return arr[0].children.map((item: any) => {
-      const { name, meta } = item;
-      const imgSrc = new URL(`/src/views/${props.pathName}/${meta?.imgSrc}`, import.meta.url).href;
+  return arr[0].children.map((item: any) => {
+    const { name, meta } = item;
+    console.log(item);
 
-      const obj: ILeftItem = {
-        imgSrc,
-        title: meta?.title as string,
-        routeName: name as string
-      };
-      return obj;
-    });
+    const imgSrc = new URL(`/src/views/${props.pathName}/${meta?.imgSrc}`, import.meta.url).href;
+
+    const obj: ILeftItem = {
+      imgSrc,
+      title: meta?.title as string,
+      routeName: name as string
+    };
+    return obj;
+  });
 };
 
 // 页面跳转
@@ -64,7 +65,6 @@ const onPage = (name: ILeftItem["routeName"]) => {
 
 onMounted(() => {
   arr.value = getRouterArr();
-
 });
 </script>
 

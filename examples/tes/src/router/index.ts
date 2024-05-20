@@ -33,6 +33,15 @@ const router = createRouter({
           }
         },
         {
+          path: "animationSkinningIk",
+          name: "AnimationSkinningIk",
+          component: () => import("@/views/examples/AnimationSkinningIk/index.vue"),
+          meta: {
+            title: "animation / skinning / ik",
+            imgSrc: "AnimationSkinningIk/AnimationSkinningIk.jpg"
+          }
+        },
+        {
           path: "animationSkinningMorph",
           name: "AnimationSkinningMorph",
           component: () => import("@/views/examples/AnimationSkinningMorph/index.vue"),
@@ -67,7 +76,7 @@ const router = createRouter({
           component: () => import("@/views/demo/Phone/index.vue"),
           meta: {
             title: "手机展示",
-            imgSrc: ""
+            imgSrc: "Phone/Phone.png"
           }
         }
       ]

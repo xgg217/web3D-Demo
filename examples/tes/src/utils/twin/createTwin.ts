@@ -4,6 +4,7 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import Helper from "./helpers";
 import type { IParams } from "./types";
+import { DRACOLoader } from "three/addons/loaders/DRACOLoader.js";
 
 // 获取宽高
 export const getWAndH = () => {
@@ -33,7 +34,7 @@ export default class CreateTwin {
 
     // 场景
     this.scene = new THREE.Scene();
-    this.scene.background = new THREE.Color( 0xa0a0a0 );
+    this.scene.background = new THREE.Color(0xa0a0a0);
 
     // 相机
     const { width, height } = getWAndH();
@@ -59,8 +60,13 @@ export default class CreateTwin {
     // 环境贴图
     this.textureCube = new THREE.CubeTextureLoader();
 
+    const dracoLoader = new DRACOLoader();
+    // // DRACOLoader依赖examples\jsm\libs\draco\gltf里面多个解压文件
+    dracoLoader.setDecoderPath("./draco/");
+
     // gltf加载
     this.GLTFLoader = new GLTFLoader();
+    this.GLTFLoader.setDRACOLoader(dracoLoader);
 
     // 相机控件
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
