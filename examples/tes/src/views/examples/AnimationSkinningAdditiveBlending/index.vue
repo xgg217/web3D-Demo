@@ -6,23 +6,11 @@
 import {AnimationMixer,AnimationAction,AnimationClip,Clock} from "three";
 import init from "./twin";
 import type { GLTF } from "three/examples/jsm/Addons.js";
-
-// 判断当前有没是否添加了模型
-const isCanvas = () => {
-  const can = document.querySelector(".main .animationSkinningAdditiveBlending canvas");
-  console.log(can);
-  //
-  if (can === null) {
-    // 当前有没添加
-    return false;
-  }
-
-  return true;
-};
+import { isCanvas } from "@/utils/isCanvas"
 
 const init3D = () => {
   {
-    const isBool = isCanvas();
+    const isBool = isCanvas(".main .animationSkinningAdditiveBlending");
     if (isBool) {
       // return;
     }

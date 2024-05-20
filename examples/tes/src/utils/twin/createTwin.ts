@@ -68,7 +68,7 @@ export default class CreateTwin {
     this.controls.update();
 
     //辅助观察的坐标系
-    const helper = new Helper(this.scene, this.directionalLight, { domName: ".animationSkinningAdditiveBlending" });
+    const helper = new Helper(this.scene, this.directionalLight, { domName: domName });
 
     // 渲染循环 setAnimationLoop 内置方法用于代替requestAnimationFrame
     this.renderer.setAnimationLoop(() => {

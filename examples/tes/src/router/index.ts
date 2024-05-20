@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import layoutExamples from "@/views/examples/layout/index.vue";
+import layoutDemo from "@/views/demo/layout/index.vue";
 import Home from "@/views/Home/index.vue";
 
 const router = createRouter({
@@ -49,6 +50,26 @@ const router = createRouter({
         //     imgSrc: ""
         //   }
         // }
+      ]
+    },
+
+    {
+      path: "/demo",
+      component: layoutDemo,
+      meta: {
+        title: "demo"
+      },
+      redirect: "/demo/phone",
+      children: [
+        {
+          path: "phone",
+          name: "Phone",
+          component: () => import("@/views/demo/Phone/index.vue"),
+          meta: {
+            title: "手机展示",
+            imgSrc: ""
+          }
+        }
       ]
     },
     {
