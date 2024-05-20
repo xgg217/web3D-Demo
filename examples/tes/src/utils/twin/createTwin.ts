@@ -6,7 +6,7 @@ import Helper from "./helpers";
 import type { IParams } from "./types";
 
 // 获取宽高
-const getWAndH = () => {
+export const getWAndH = () => {
   const width = window.innerWidth - 300 - 15;
   const height = window.innerHeight - 15;
   return { width, height };

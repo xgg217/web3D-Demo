@@ -30,8 +30,11 @@
 </template>
 
 <script setup lang="ts">
-import init, {setMeshColor} from "./twin";
+import init, {setMeshColor, css2Renderer,phoneGroup} from "./twin";
+import CreateTwin from "@/utils/twin/createTwin";
 import { isCanvas } from "@/utils/isCanvas"
+
+const twinVal = ref<typeof CreateTwin>();
 
 const init3D = () => {
   {
@@ -47,7 +50,23 @@ const init3D = () => {
   twin.camera.position.set(350, 160, 300);
   twin.camera.lookAt(0, 0, 0);
 
+  const p = document.querySelector(".phone");
+  p?.appendChild(css2Renderer.domElement);
+
+  twinVal.value = twin;
+
+  render()
 };
+
+// 渲染循环
+const render = () => {
+  if (isRotateY.value) {
+    phoneGroup.rotateY(0.005);
+  }
+  css2Renderer.render(twinVal.value.scene, twinVal.value.camera);
+
+  requestAnimationFrame(render);
+}
 
 // 旋转控制
 const { rTitle, isRotateY, onRotateY } = (() => {

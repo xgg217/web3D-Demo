@@ -1,8 +1,10 @@
-import CreateTwin from "@/utils/twin/createTwin";
+import CreateTwin, {getWAndH} from "@/utils/twin/createTwin";
 import * as THREE from "three";
 import TWEEN from '@tweenjs/tween.js';
 // import Helper from "@/utils/twin/helpers";
 import type { IParams } from "@/utils/twin/types";
+import { CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
+import { CSS2DRenderer } from 'three/addons/renderers/CSS2DRenderer.js';
 
 let sprite: THREE.Sprite;
 const texLoader = new THREE.TextureLoader();
@@ -71,6 +73,9 @@ const init = () => {
       }
     });
   }
+
+  // const p = document.querySelector(`${query.domName}`);
+  // p?.appendChild(css2Renderer.domElement);
 
   return twin;
 };
@@ -152,11 +157,27 @@ const setMesh = (() => {
   }
 })();
 
+// CSS2渲染器CSS2DRenderer
+const css2Renderer = (() => {
+  // 创建一个CSS2渲染器CSS2DRenderer
+  const css2Renderer = new CSS2DRenderer();
+  const { width, height } =  getWAndH();
+  css2Renderer.setSize(width, height);
+  // HTML标签<div id="tag"></div>外面父元素叠加到canvas画布上且重合
+  css2Renderer.domElement.style.position = 'absolute';
+  css2Renderer.domElement.style.top = '0px';
+  //设置.pointerEvents=none，解决HTML元素标签对threejs canvas画布鼠标事件的遮挡
+  css2Renderer.domElement.style.pointerEvents = 'none';
+  // document.body.appendChild(css2Renderer.domElement);
+
+  return css2Renderer;
+})();
+
 // 手机摄像头位置标注
 const { getWPsition } = (() => {
   const dir = new THREE.Vector3(); // 后置摄像头世界坐标
-  // let divDom:HTMLElement | null;
-  // let buttonDom:HTMLButtonElement | null;
+  let divDom:HTMLElement | null;
+  let buttonDom:HTMLButtonElement | null;
   const imgUrl = new URL('./assets/光点.png', import.meta.url).href;
 
   // 后置摄像头 标注
@@ -187,31 +208,31 @@ const { getWPsition } = (() => {
 
   phoneGroup.add(sprite);
 
-  // {
-  //   setTimeout(() => {
-  //     divDom = document.getElementById('message')!;
-  //     buttonDom = divDom.querySelector('button')!;
-  //     // console.log(div);
+  {
+    setTimeout(() => {
+      divDom = document.getElementById('message')!;
+      buttonDom = divDom.querySelector('button')!;
+      // console.log(div);
 
-  //     const tag = new CSS2DObject(divDom);
-  //     console.log(tag);
+      const tag = new CSS2DObject(divDom);
+      console.log(tag);
 
-  //     // div.style.position = 'absolute';
-  //     divDom.style.top = '-10px';
-  //     divDom.style.left = '360px';
+      // div.style.position = 'absolute';
+      divDom.style.top = '-10px';
+      divDom.style.left = '360px';
 
-  //     divDom.style.pointerEvents = 'none';
-  //     sprite.add(tag);
+      divDom.style.pointerEvents = 'none';
+      sprite.add(tag);
 
-  //     // 点击关闭提示
-  //     buttonDom?.addEventListener('click', () => {
-  //       console.log(11);
+      // 点击关闭提示
+      buttonDom?.addEventListener('click', () => {
+        console.log(11);
 
-  //       divDom!.style.display = 'none';
-  //     });
-  //   }, 1000);
+        divDom!.style.display = 'none';
+      });
+    }, 1000);
 
-  // }
+  }
 
   // 获取世界坐标
   const getWPsition = (group: THREE.Object3D<THREE.Object3DEventMap>) => {
@@ -242,5 +263,7 @@ const { getWPsition } = (() => {
 export default init;
 
 export {
-  setMeshColor
+  setMeshColor,
+  css2Renderer,
+  phoneGroup
 }
