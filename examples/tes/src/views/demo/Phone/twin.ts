@@ -49,6 +49,8 @@ const init = () => {
 
       {
         const mesh = phoneGltf.getObjectByName('手机')!;
+        console.log(mesh);
+
         mobilePhoneMesh = mesh;
 
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -116,7 +118,7 @@ const { setMeshColor } = (() => {
   };
 })();
 
-const setMesh = (() => {
+const {setMesh } = (() => {
 
   const baseColorUrl = new URL("./assets/model/basecolor.png", import.meta.url).href;
   const roughnessUrl = new URL("./assets/model/roughness.png", import.meta.url).href;
@@ -124,13 +126,16 @@ const setMesh = (() => {
   const normalUrl = new URL("./assets/model/normal.png", import.meta.url).href;
   const opacityUrl = new URL("./assets/model/opacity.png", import.meta.url).href;
 
+  const eUrl = new URL("./assets/model/envMap/", import.meta.url).href;
+  console.log(eUrl);
+
   // 加载环境贴图
   const textureCube = new THREE.CubeTextureLoader()
-  .setPath('./model/envMap/')
+  .setPath(eUrl)
   .load(['px.jpg', 'nx.jpg', 'py.jpg', 'ny.jpg', 'pz.jpg', 'nz.jpg']);
 
   const setMesh = () => {
-    new THREE.MeshStandardMaterial({
+    return new THREE.MeshStandardMaterial({
       metalness: 1.0, //Mesh表面金属度，默认值0.5
       roughness: 1.0, //Mesh表面粗糙度，默认值0.5
 
