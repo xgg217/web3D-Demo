@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import type { Scene, PerspectiveCamera, WebGLRenderer, DirectionalLight, CubeTextureLoader } from "three";
+// import type { Scene, PerspectiveCamera, WebGLRenderer, DirectionalLight, CubeTextureLoader } from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import Helper from "./helpers";
@@ -16,13 +16,13 @@ export const getWAndH = () => {
 type IHelper = typeof Helper;
 
 export default class CreateTwin {
-  scene: Scene;
-  camera: PerspectiveCamera;
-  renderer: WebGLRenderer;
-  directionalLight: DirectionalLight; // 平行光
+  scene: THREE.Scene;
+  camera: THREE.PerspectiveCamera;
+  renderer: THREE.WebGLRenderer;
+  directionalLight: THREE.DirectionalLight; // 平行光
   controls: OrbitControls; // 相机控件
   GLTFLoader: GLTFLoader; // gltf
-  textureCube: CubeTextureLoader; // 环境贴图
+  textureCube: THREE.CubeTextureLoader; // 环境贴图
   helper: IHelper; // 辅助工具
 
   constructor(params: IParams) {
