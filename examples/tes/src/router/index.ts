@@ -24,6 +24,15 @@ const router = createRouter({
 
       children: [
         {
+          path: "animationKeyframes",
+          name: "AnimationKeyframes",
+          component: () => import("@/views/examples/AnimationKeyframes/index.vue"),
+          meta: {
+            title: "animation / keyframes",
+            imgSrc: "AnimationKeyframes/AnimationKeyframes.jpg"
+          }
+        },
+        {
           path: "animationSkinningAdditiveBlending",
           name: "AnimationSkinningAdditiveBlending",
           component: () => import("@/views/examples/AnimationSkinningAdditiveBlending/index.vue"),

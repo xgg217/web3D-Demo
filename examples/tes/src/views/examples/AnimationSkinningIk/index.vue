@@ -2,7 +2,7 @@
   <div class="animationSkinningIk"></div>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts" name="AnimationSkinningIk">
 import init from "./twin";
 import { isCanvas } from "@/utils/isCanvas";
 

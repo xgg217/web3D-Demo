@@ -2,11 +2,11 @@
   <div class="animationSkinningAdditiveBlending"></div>
 </template>
 
-<script setup lang="ts">
-import {AnimationMixer,AnimationAction,AnimationClip,Clock} from "three";
+<script setup lang="ts" name="AnimationSkinningAdditiveBlending">
+import { AnimationMixer, AnimationAction, AnimationClip, Clock } from "three";
 import init from "./twin";
 import type { GLTF } from "three/examples/jsm/Addons.js";
-import { isCanvas } from "@/utils/isCanvas"
+import { isCanvas } from "@/utils/isCanvas";
 
 const init3D = () => {
   {
@@ -52,55 +52,54 @@ const init3D = () => {
 
     // 动画
     setDefaultAction(gltf);
-
   });
 };
 
 // 动画设置
-const {setDefaultAction} = (() => {
+const { setDefaultAction } = (() => {
   type IIitemActions = {
-    [key:string]: {
-      name: string,
-      key: string, // 动作的key
-      action: AnimationClip | null,
-    }
-  }
+    [key: string]: {
+      name: string;
+      key: string; // 动作的key
+      action: AnimationClip | null;
+    };
+  };
 
-  let mixer:AnimationMixer = null;
-  let currentAction:AnimationAction | null = null; // 正在播放的动作
+  let mixer: AnimationMixer = null;
+  let currentAction: AnimationAction | null = null; // 正在播放的动作
 
   // 对应动作的动画
-  const baseActions:IIitemActions = {
+  const baseActions: IIitemActions = {
     // headShake: { name: '左右摇头', key: 'headShake', action: null },
     // sad_pose: { name: '点头', key: 'sad_pose', action: null },
     // sneak_pose: { name: '紧张', key: 'sneak_pose', action: null },
-    idle: { name: '休闲', key: 'idle', action: null },
-    walk: { name: '走路', key: 'walk', action: null },
-    run: { name: '跑步', key: 'run', action: null }
+    idle: { name: "休闲", key: "idle", action: null },
+    walk: { name: "走路", key: "walk", action: null },
+    run: { name: "跑步", key: "run", action: null }
   };
 
   // 设置默认动作
-  const setDefaultAction = (gltf:GLTF) => {
+  const setDefaultAction = (gltf: GLTF) => {
     mixer = new AnimationMixer(gltf.scene);
     const animations = gltf.animations;
     // 获取指定动作的动画
     animations.forEach(item => {
       const name = item.name;
 
-      if(baseActions[name] && (baseActions[name].action === null)) {
+      if (baseActions[name] && baseActions[name].action === null) {
         // console.log(item);
         baseActions[name].action = item;
       }
     });
 
     // 播放默认动作
-    if(baseActions['idle'].action) {
-      currentAction = mixer.clipAction( baseActions['idle'].action );
+    if (baseActions["idle"].action) {
+      currentAction = mixer.clipAction(baseActions["idle"].action);
       currentAction.play();
     }
 
     loop();
-  }
+  };
 
   const clock = new Clock();
 
@@ -113,8 +112,7 @@ const {setDefaultAction} = (() => {
 
   return {
     setDefaultAction
-  }
-
+  };
 })();
 
 // 页面加载

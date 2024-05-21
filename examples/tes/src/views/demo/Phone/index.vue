@@ -21,18 +21,18 @@
   </ul>
 
   <!-- 场景标注 -->
-  <div id="message" style="width:350px;height:120px;visibility: hidden;">
-    <div style="padding: 10px 4px;font-size:18px;">双摄像头</div>
-    <div style="padding: 10px 24px;font-size:16px;">后置主摄像头——1300万像素(F/1.8光圈)</div>
-    <div style="padding: 10px 24px;font-size:16px;">后置副摄像头——200万像素的</div>
-    <button style="pointer-events: auto;">关闭</button>
+  <div id="message" style="width: 350px; height: 120px; visibility: hidden">
+    <div style="padding: 10px 4px; font-size: 18px">双摄像头</div>
+    <div style="padding: 10px 24px; font-size: 16px">后置主摄像头——1300万像素(F/1.8光圈)</div>
+    <div style="padding: 10px 24px; font-size: 16px">后置副摄像头——200万像素的</div>
+    <button style="pointer-events: auto">关闭</button>
   </div>
 </template>
 
-<script setup lang="ts">
-import init, {setMeshColor, css2Renderer,phoneGroup} from "./twin";
+<script setup lang="ts" name="Phone">
+import init, { setMeshColor, css2Renderer, phoneGroup } from "./twin";
 import CreateTwin from "@/utils/twin/createTwin";
-import { isCanvas } from "@/utils/isCanvas"
+import { isCanvas } from "@/utils/isCanvas";
 
 const twinVal = ref<typeof CreateTwin>();
 
@@ -55,7 +55,7 @@ const init3D = () => {
 
   twinVal.value = twin;
 
-  render()
+  render();
 };
 
 // 渲染循环
@@ -66,27 +66,27 @@ const render = () => {
   css2Renderer.render(twinVal.value.scene, twinVal.value.camera);
 
   requestAnimationFrame(render);
-}
+};
 
 // 旋转控制
 const { rTitle, isRotateY, onRotateY } = (() => {
-  const sVal = '开始旋转';
-  const eVal = '停止旋转';
-  const rTitle = ref('开始旋转');
+  const sVal = "开始旋转";
+  const eVal = "停止旋转";
+  const rTitle = ref("开始旋转");
   const isRotateY = ref(false);
 
   // 设置 开始/停止 旋转
   const onRotateY = () => {
     // 开始旋转
     if (isRotateY.value) {
-      console.log('开始旋转 --> 停止旋转');
+      console.log("开始旋转 --> 停止旋转");
 
       // 开始旋转 --> 停止旋转
       isRotateY.value = false;
       rTitle.value = sVal;
     } else {
       // 停止旋转 --> 开始旋转
-      console.log('停止旋转 --> 开始旋转');
+      console.log("停止旋转 --> 开始旋转");
       isRotateY.value = true;
       rTitle.value = eVal;
     }
@@ -117,7 +117,6 @@ onMounted(() => {
 </script>
 
 <style scoped>
-
 .but {
   position: fixed;
   right: 10%;
@@ -152,12 +151,15 @@ ul li img {
   background: rgba(0, 0, 0, 0.5);
   padding: 0px;
   /* 边框 */
-  background: linear-gradient(#00ffff, #00ffff) left top,
+  background:
+    linear-gradient(#00ffff, #00ffff) left top,
     linear-gradient(#00ffff, #00ffff) left top,
     linear-gradient(#00ffff, #00ffff) right bottom,
     linear-gradient(#00ffff, #00ffff) right bottom;
   background-repeat: no-repeat;
-  background-size: 2px 20px, 36px 2px;
+  background-size:
+    2px 20px,
+    36px 2px;
   background-color: rgba(255, 255, 255, 0.1);
   color: #ffffff;
   font-size: 18px;
