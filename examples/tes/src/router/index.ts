@@ -20,7 +20,7 @@ const router = createRouter({
       meta: {
         title: "官方示例"
       },
-      redirect: "/examples/animationSkinningAdditiveBlending",
+      redirect: "/examples/animationKeyframes",
 
       children: [
         {

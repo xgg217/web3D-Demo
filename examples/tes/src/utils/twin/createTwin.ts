@@ -40,7 +40,7 @@ export default class CreateTwin {
     const { width, height } = getWAndH();
     // 透视投影相机
     this.camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 3000);
-    this.camera.position.set(1.24, 7.03, 52.5);
+    this.camera.position.set(100, 100, 100.5);
     this.camera.lookAt(0, 0, 0);
 
     // 渲染器
@@ -62,7 +62,7 @@ export default class CreateTwin {
 
     const dracoLoader = new DRACOLoader();
     // DRACOLoader依赖examples\jsm\libs\draco\gltf里面多个解压文件
-    dracoLoader.setDecoderPath("./draco/");
+    dracoLoader.setDecoderPath("/draco/");
 
     // gltf加载
     this.GLTFLoader = new GLTFLoader();
@@ -72,6 +72,11 @@ export default class CreateTwin {
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
     this.controls.target.set(0, 0, 0);
     this.controls.update();
+
+    // this.controls.addEventListener("change", () => {
+    //   // console.log(e);
+    //   console.log("camera.position", this.camera.position);
+    // });
 
     //辅助观察的坐标系
     const helper = new Helper(this.scene, this.directionalLight, { domName: domName });

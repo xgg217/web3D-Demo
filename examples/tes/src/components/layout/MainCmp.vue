@@ -8,12 +8,11 @@
   </main>
 </template>
 
-<script setup lang="ts">
-</script>
+<script setup lang="ts"></script>
 
 <style scoped>
 main {
   flex: 1;
-  border: 1px solid red;
+  /* border: 1px solid red; */
 }
 </style>
