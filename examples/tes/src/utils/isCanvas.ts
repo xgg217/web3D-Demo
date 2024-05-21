@@ -3,7 +3,7 @@
 export const isCanvas = (name: string) => {
   // const can = document.querySelector(".main .animationSkinningAdditiveBlending canvas");
   const can = document.querySelector(`${name} canvas`);
-  console.log(can);
+  // console.log(can);
   //
   if (can === null) {
     // 当前有没添加

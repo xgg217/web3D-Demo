@@ -31,7 +31,7 @@ const init = () => {
 
   const dracoLoader = new DRACOLoader();
   dracoLoader.setDecoderPath("./draco/");
-  twin.G;
+  twin.GLTFLoader.setDRACOLoader(dracoLoader);
 
   return twin;
 };

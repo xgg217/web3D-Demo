@@ -25,7 +25,7 @@ const arr = shallowRef<ILeftItem[]>([]);
 // 获取所有路由
 const getRouterArr = () => {
   // const list = router.options?.routes[0]?.children ?? [];
-  console.log(router.getRoutes());
+  // console.log(router.getRoutes());
   const list = router.getRoutes(); // 获取所有路由
 
   const arr = list.filter((item: any) => {
@@ -34,7 +34,7 @@ const getRouterArr = () => {
 
   return arr[0].children.map((item: any) => {
     const { name, meta } = item;
-    console.log(item);
+    // console.log(item);
 
     const imgSrc = new URL(`/src/views/${props.pathName}/${meta?.imgSrc}`, import.meta.url).href;
 
@@ -71,8 +71,8 @@ onMounted(() => {
 <style scoped>
 nav {
   width: 300px;
-  border: 1px solid blue;
   height: 100vh;
+  overflow-y: scroll;
   padding: 0 16px 16px 16px;
 }
 ul {

@@ -30,7 +30,7 @@ export default class CreateTwin {
 
     const mainDom = document.querySelector(`.main ${domName}`)!;
 
-    console.log(mainDom);
+    // console.log(mainDom);
 
     // 场景
     this.scene = new THREE.Scene();
@@ -61,7 +61,7 @@ export default class CreateTwin {
     this.textureCube = new THREE.CubeTextureLoader();
 
     const dracoLoader = new DRACOLoader();
-    // // DRACOLoader依赖examples\jsm\libs\draco\gltf里面多个解压文件
+    // DRACOLoader依赖examples\jsm\libs\draco\gltf里面多个解压文件
     dracoLoader.setDecoderPath("./draco/");
 
     // gltf加载
