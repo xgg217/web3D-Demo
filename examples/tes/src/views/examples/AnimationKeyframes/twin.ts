@@ -2,26 +2,34 @@ import CreateTwin from "@/utils/twin/createTwin";
 import * as THREE from "three";
 // import Helper from "@/utils/twin/helpers";
 import type { IParams } from "@/utils/twin/types";
-import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
+// import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 
-const init = () => {
-  const query: IParams = {
-    domName: ".animationKeyframes"
-  };
+class Twin extends CreateTwin {
 
-  const twin = new CreateTwin(query);
+  constructor(query: IParams) {
+    super(query);
 
-  const pmremGenerator = new THREE.PMREMGenerator(twin.renderer);
+    this.init();
+  }
 
-  twin.scene.background = new THREE.Color(0xbfe3dd);
-  twin.scene.environment = pmremGenerator.fromScene(new RoomEnvironment(twin.renderer), 0.04).texture;
+  init() {
+    this.scene.background = new THREE.Color(0xbfe3dd);
 
-  twin.camera.near = 1;
-  twin.camera.far = 100;
-  twin.camera.position.set(640, 200, 800);
-  twin.camera.lookAt(0, 0, 0);
+    // 相机设置
+    this.camera.near = 1;
+    this.camera.far = 100;
+    this.camera.position.set(640, 200, 800);
+    this.camera.lookAt(0, 0, 0);
 
-  return twin;
-};
+    // 加载外部gltf
+    const url = new URL("./LittlestTokyo.glb", import.meta.url).href;
+    this.GLTFLoader.load(url, gltf => {
+      const model = gltf.scene;
+      model.position.set(1, 1, 0);
 
-export default init;
+      this.scene.add(model);
+    })
+  }
+}
+
+export default Twin;
