@@ -1,8 +1,7 @@
 import * as THREE from "three";
-// import type { Scene, PerspectiveCamera, WebGLRenderer, DirectionalLight, CubeTextureLoader } from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
-import Helper from "./helpers";
+
 import type { IParams } from "./types";
 import { DRACOLoader } from "three/addons/loaders/DRACOLoader.js";
 
@@ -13,8 +12,6 @@ export const getWAndH = () => {
   return { width, height };
 };
 
-type IHelper = typeof Helper;
-
 export default class CreateTwin {
   scene: THREE.Scene;
   camera: THREE.PerspectiveCamera;
@@ -23,7 +20,6 @@ export default class CreateTwin {
   controls: OrbitControls; // 相机控件
   GLTFLoader: GLTFLoader; // gltf
   textureCube: THREE.CubeTextureLoader; // 环境贴图
-  helper: IHelper; // 辅助工具
 
   constructor(params: IParams) {
     const { domName } = params;
@@ -78,13 +74,10 @@ export default class CreateTwin {
     //   console.log("camera.position", this.camera.position);
     // });
 
-    //辅助观察的坐标系
-    const helper = new Helper(this.scene, this.directionalLight, { domName: domName });
-
     // 渲染循环 setAnimationLoop 内置方法用于代替requestAnimationFrame
     this.renderer.setAnimationLoop(() => {
       // console.log(2);
-      helper.stats.update();
+      // helper.stats.update();
 
       this.renderer.render(this.scene, this.camera);
     });

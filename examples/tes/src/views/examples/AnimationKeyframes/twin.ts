@@ -1,18 +1,25 @@
 import CreateTwin from "@/utils/twin/createTwin";
 import * as THREE from "three";
-// import Helper from "@/utils/twin/helpers";
 import type { IParams } from "@/utils/twin/types";
 // import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
+import Helper from "@/utils/twin/helpers";
+
+// type IHelper = typeof Helper;
 
 class Twin extends CreateTwin {
+
+  // helper: IHelper; // 辅助工具
 
   constructor(query: IParams) {
     super(query);
 
-    this.init();
+    this.init(query);
   }
 
-  init() {
+  // 初始化
+  init(query: IParams) {
+    const { domName } = query;
+
     this.scene.background = new THREE.Color(0xbfe3dd);
 
     // 相机设置
@@ -28,7 +35,10 @@ class Twin extends CreateTwin {
       model.position.set(1, 1, 0);
 
       this.scene.add(model);
-    })
+    });
+
+    // 添加辅助观察的坐标系
+    new Helper(this.scene, this.directionalLight, { domName });
   }
 }
 
