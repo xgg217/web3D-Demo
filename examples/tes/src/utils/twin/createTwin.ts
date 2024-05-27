@@ -56,6 +56,7 @@ export default class CreateTwin {
     // 环境贴图
     this.textureCube = new THREE.CubeTextureLoader();
 
+    // 加载压缩的gltf
     const dracoLoader = new DRACOLoader();
     // DRACOLoader依赖examples\jsm\libs\draco\gltf里面多个解压文件
     dracoLoader.setDecoderPath("/draco/");
