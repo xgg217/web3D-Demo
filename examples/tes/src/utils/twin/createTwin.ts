@@ -70,11 +70,6 @@ export default class CreateTwin {
     this.controls.target.set(0, 0, 0);
     this.controls.update();
 
-    // this.controls.addEventListener("change", () => {
-    //   // console.log(e);
-    //   console.log("camera.position", this.camera.position);
-    // });
-
     // 渲染循环 setAnimationLoop 内置方法用于代替requestAnimationFrame
     this.renderer.setAnimationLoop(() => {
       // console.log(2);
@@ -83,15 +78,9 @@ export default class CreateTwin {
       this.renderer.render(this.scene, this.camera);
     });
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-expect-error
-    this.helper = helper;
-
     // 画布尺寸随着窗口变化
     window.addEventListener("resize", () => {
       const { width, height } = getWAndH();
-      // console.log(width);
-
       this.renderer.setSize(width, height);
       this.camera.aspect = width / height;
       this.camera.updateProjectionMatrix();
