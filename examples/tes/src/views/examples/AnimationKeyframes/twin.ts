@@ -59,7 +59,7 @@ class Twin extends CreateTwin {
     // console.log(this);
     requestAnimationFrame(() => this.animate());
     const frameT = clock.getDelta(); // 更新播放器相关的时间
-    console.log(this.mixer);
+    // console.log(this.mixer);
 
     this.mixer!.update(frameT);
   }
