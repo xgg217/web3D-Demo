@@ -3,7 +3,7 @@
     <ul>
       <template v-for="item of arr" :key="item.imgSrc">
         <li>
-          <NavItemCmp :row="item" @click="onPage" />
+          <NavItemCmp :row="item" @click="onPage" :is-avc="avcRouteName === item.routeName" />
         </li>
       </template>
     </ul>
@@ -19,13 +19,14 @@ const props = defineProps<{
 }>();
 
 const router = useRouter();
+const route = useRoute();
+
+const avcRouteName = ref(""); // 当前被激活的路由名称
 
 const arr = shallowRef<ILeftItem[]>([]);
 
 // 获取所有路由
 const getRouterArr = () => {
-  // const list = router.options?.routes[0]?.children ?? [];
-  // console.log(router.getRoutes());
   const list = router.getRoutes(); // 获取所有路由
 
   const arr = list.filter((item: any) => {
@@ -34,7 +35,6 @@ const getRouterArr = () => {
 
   return arr[0].children.map((item: any) => {
     const { name, meta } = item;
-    // console.log(item);
 
     const imgSrc = new URL(`/src/views/${props.pathName}/${meta?.imgSrc}`, import.meta.url).href;
 
@@ -46,6 +46,17 @@ const getRouterArr = () => {
     return obj;
   });
 };
+
+watch(
+  () => route.name,
+  val => {
+    avcRouteName.value = val as string;
+  },
+  {
+    // deep: true,
+    immediate: true
+  }
+);
 
 // 页面跳转
 const onPage = (name: ILeftItem["routeName"]) => {

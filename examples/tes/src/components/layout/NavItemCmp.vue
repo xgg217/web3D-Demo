@@ -1,5 +1,5 @@
 <template>
-  <div class="item" @click="emit('click', props.row.routeName)">
+  <div class="item" @click="emit('click', props.row.routeName)" :class="{ avc: props.isAvc }">
     <div class="imgs">
       <img :src="props.row.imgSrc" alt="" />
     </div>
@@ -12,6 +12,7 @@ import type { ILeftItem } from "./types";
 
 const props = defineProps<{
   row: ILeftItem;
+  isAvc: boolean;
 }>();
 
 const emit = defineEmits<{
