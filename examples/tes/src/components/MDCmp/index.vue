@@ -2,31 +2,27 @@
   <div>
     <div class="md" @click="onShow">说明</div>
 
-    <ElDrawer
-      v-model="drawer"
-      title="备注说明"
-      size="50%"
-    >
+    <ElDrawer v-model="drawer" title="备注说明" size="50%">
       <MDShowCmp :path="props.path" />
     </ElDrawer>
   </div>
 </template>
 
 <script setup lang="ts">
-import {ElDrawer} from "element-plus";
+import { ElDrawer } from "element-plus";
 // import MDShowCmp from "./MDShowCmp.vue";
 
-const MDShowCmp = defineAsyncComponent(() => import('./MDShowCmp.vue'))
+const MDShowCmp = defineAsyncComponent(() => import("./MDShowCmp.vue"));
 
-const props = defineProps({
-  path: String
-});
+const props = defineProps<{
+  path: string;
+}>();
 
 const drawer = ref(true);
 
 const onShow = () => {
-  drawer.value = true
-}
+  drawer.value = true;
+};
 </script>
 
 <style scoped>
