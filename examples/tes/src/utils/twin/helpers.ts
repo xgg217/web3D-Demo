@@ -29,26 +29,26 @@ export default class Helper {
     this.gui.domElement.style.fontSize = "16px";
 
     // 平行光调试
-    const dirFolder = this.gui.addFolder("平行光"); //创建一个子菜单
-    dirFolder.add(directionalLight, "intensity", 0, 5);
-    const R = 100;
-    dirFolder
-      .add({ angle: 45 }, "angle", 0, 360)
-      .onChange(v => {
-        const rad = THREE.MathUtils.degToRad(v);
-        directionalLight.position.x = R * Math.cos(rad);
-        directionalLight.position.z = R * Math.sin(rad);
-      })
-      .name("旋转角度");
+    // const dirFolder = this.gui.addFolder("平行光"); //创建一个子菜单
+    // dirFolder.add(directionalLight, "intensity", 0, 5);
+    // const R = 100;
+    // dirFolder
+    //   .add({ angle: 45 }, "angle", 0, 360)
+    //   .onChange(v => {
+    //     const rad = THREE.MathUtils.degToRad(v);
+    //     directionalLight.position.x = R * Math.cos(rad);
+    //     directionalLight.position.z = R * Math.sin(rad);
+    //   })
+    //   .name("旋转角度");
 
-    dirFolder
-      .add({ angle: 45 }, "angle", 0, 89)
-      .onChange(v => {
-        const rad = THREE.MathUtils.degToRad(v);
-        directionalLight.position.y = R * Math.tan(rad);
-      })
-      .name("照射角度");
+    // dirFolder
+    //   .add({ angle: 45 }, "angle", 0, 89)
+    //   .onChange(v => {
+    //     const rad = THREE.MathUtils.degToRad(v);
+    //     directionalLight.position.y = R * Math.tan(rad);
+    //   })
+    //   .name("照射角度");
 
-    dirFolder.close();
+    // dirFolder.close();
   }
 }
