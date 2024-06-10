@@ -1,6 +1,6 @@
 <template>
   <div class="box">
-    <pre><code v-html="htmlVal"></code></pre>
+    <div v-html="htmlVal"></div>
   </div>
 </template>
 

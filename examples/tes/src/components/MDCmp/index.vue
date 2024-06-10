@@ -18,7 +18,7 @@ const props = defineProps<{
   path: string;
 }>();
 
-const drawer = ref(true);
+const drawer = ref(false);
 
 const onShow = () => {
   drawer.value = true;

@@ -4,16 +4,16 @@ import type { IParams } from "@/utils/twin/types";
 import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 import Helper from "@/utils/twin/helpers";
 
-const clock = new THREE.Clock();
-
 class Twin extends CreateTwin {
   mixer?: THREE.AnimationMixer;
   helper: Helper;
+  clock: THREE.Clock;
   constructor(query: IParams) {
     super(query);
 
     // 添加辅助观察的坐标系
     this.helper = new Helper(this.scene, this.directionalLight, { domName: query.domName });
+    this.clock = new THREE.Clock();
 
     this.init();
   }
@@ -54,7 +54,7 @@ class Twin extends CreateTwin {
   animate() {
     // console.log(this);
     requestAnimationFrame(() => this.animate());
-    const frameT = clock.getDelta(); // 更新播放器相关的时间
+    const frameT = this.clock.getDelta(); // 更新播放器相关的时间
     // console.log(this.mixer);
 
     this.helper.stats.update();

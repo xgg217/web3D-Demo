@@ -10,13 +10,19 @@ const query: IParams = {
   domName: ".animationSkinningBlending"
 };
 
+const twin3D = ref<Twin | null>();
+
 const init3D = () => {
-  const twin = new Twin(query);
-  console.log(twin);
+  twin3D.value = new Twin(query);
+  console.log(twin3D.value);
 };
 
 onMounted(() => {
   init3D();
+});
+
+onUnmounted(() => {
+  twin3D.value = null;
 });
 </script>
 
