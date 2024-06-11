@@ -47,7 +47,7 @@ class Twin extends CreateTwin {
       model.traverse(object => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-expect-error
-        if (object.isMesh) object.castShadow = true;
+        if (object.isMesh) object.castShadow = true; // 设置产生投影的网格模型
       });
 
       // 骨骼模型
@@ -83,16 +83,36 @@ class Twin extends CreateTwin {
 
   // 添加阴影
   addShadow() {
-    const dirLight = new THREE.DirectionalLight(0xffffff, 3);
-    dirLight.position.set(-3, 10, -10);
-    dirLight.castShadow = true;
-    dirLight.shadow.camera.top = 2;
-    dirLight.shadow.camera.bottom = -2;
-    dirLight.shadow.camera.left = -2;
-    dirLight.shadow.camera.right = 2;
-    dirLight.shadow.camera.near = 0.1;
-    dirLight.shadow.camera.far = 40;
-    this.scene.add(dirLight);
+    const dirHelper = new THREE.DirectionalLightHelper(this.directionalLight, 5);
+    this.scene.add(dirHelper);
+
+    this.directionalLight.position.set(-3, 10, -10);
+
+    // 1. 设置产生阴影的模型对象 - 已在模型中设置了投射阴影
+
+    // 2. 设置产生阴影的光源对象
+    this.directionalLight.castShadow = true;
+
+    // const dirLight = new THREE.DirectionalLight(0xffffff, 3);
+    // 3. 设置接收阴影效果的模型对象
+    const mesh = new THREE.Mesh(
+      new THREE.PlaneGeometry(8, 8),
+      new THREE.MeshPhongMaterial({ color: 0xcbcbcb, depthWrite: false })
+    );
+    mesh.rotation.x = -Math.PI / 2;
+    mesh.receiveShadow = true;
+    this.scene.add(mesh);
+
+    // 4. 允许渲染器渲染阴影 .shadowMap.enabled
+    this.renderer.shadowMap.enabled = true;
+
+    // 5. 平行光阴影相机属性
+    this.directionalLight.shadow.camera.top = 2;
+    this.directionalLight.shadow.camera.bottom = -2;
+    this.directionalLight.shadow.camera.left = -2;
+    this.directionalLight.shadow.camera.right = 2;
+    this.directionalLight.shadow.camera.near = 0.1;
+    this.directionalLight.shadow.camera.far = 40;
   }
 
   // 动画

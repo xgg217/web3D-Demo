@@ -50,8 +50,11 @@ export default class CreateTwin {
 
     // 平行光
     this.directionalLight = new THREE.DirectionalLight(0xffffff, 3.0);
-    this.directionalLight.position.set(3, 10, 10);
+
     this.scene.add(this.directionalLight);
+
+    // const dirHelper = new THREE.DirectionalLightHelper(this.directionalLight, 5);
+    // this.scene.add(dirHelper);
 
     // 环境贴图
     this.textureCube = new THREE.CubeTextureLoader();
