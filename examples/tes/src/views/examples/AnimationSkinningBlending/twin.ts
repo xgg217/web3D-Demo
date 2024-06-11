@@ -83,8 +83,8 @@ class Twin extends CreateTwin {
 
   // 添加阴影
   addShadow() {
-    const dirHelper = new THREE.DirectionalLightHelper(this.directionalLight, 5);
-    this.scene.add(dirHelper);
+    // const dirHelper = new THREE.DirectionalLightHelper(this.directionalLight, 5);
+    // this.scene.add(dirHelper);
 
     this.directionalLight.position.set(-3, 10, -10);
 
