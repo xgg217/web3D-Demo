@@ -8,12 +8,16 @@ class Twin extends CreateTwin {
   mixer?: THREE.AnimationMixer;
   helper: Helper;
   clock: THREE.Clock;
+  model?: THREE.Group<THREE.Object3DEventMap>; // 模型
+  skeletonHelper?: THREE.SkeletonHelper; // 骨骼模型
   constructor(query: IParams) {
     super(query);
 
     // 添加辅助观察的坐标系
     this.helper = new Helper(this.scene, this.directionalLight, { domName: query.domName });
     this.clock = new THREE.Clock();
+    this.model = undefined;
+    this.skeletonHelper = undefined;
 
     this.init();
   }
@@ -37,7 +41,20 @@ class Twin extends CreateTwin {
     const url = new URL("./Soldier.glb", import.meta.url).href;
     this.GLTFLoader.load(url, gltf => {
       const model = gltf.scene;
+      this.model = model;
+      this.scene.add(model);
+
+      model.traverse(object => {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
+        if (object.isMesh) object.castShadow = true;
+      });
+
+      // 骨骼模型
+      this.skeletonHelper = new THREE.SkeletonHelper(model);
       // console.log(gltf);
+      this.skeletonHelper.visible = false;
+      this.scene.add(this.skeletonHelper);
 
       model.rotateY(-Math.PI * 0.8); // 旋转180度
 
@@ -46,8 +63,6 @@ class Twin extends CreateTwin {
       const clipAction = this.mixer.clipAction(gltf.animations[3]);
       clipAction.play();
       this.animate();
-
-      this.scene.add(model);
     });
 
     // 添加控制面板
@@ -96,13 +111,30 @@ class Twin extends CreateTwin {
   onControlsChange() {
     // 添加分组
 
+    const setTools = {
+      showModel: true,
+      showSkeleton: false
+    };
+
     // 模型显示隐藏+是否显示骨骼线条
     {
       const folder1 = this.helper.gui.addFolder("显示隐藏");
-      console.log(folder1);
 
-      // folder1.add('模型显示/关闭', this, 'showModel').listen();
-      // folder1.add('骨骼线条', this, 'showBones').listen();
+      folder1
+        .add(setTools, "showModel")
+        .name("模型显示/关闭")
+        .onChange(val => {
+          // console.log(val);
+          this.model!.visible = val;
+        });
+
+      folder1
+        .add(setTools, "showSkeleton")
+        .name("骨骼线条显示/关闭")
+        .onChange(val => {
+          // console.log(val);
+          this.skeletonHelper!.visible = val;
+        });
     }
   }
 }
