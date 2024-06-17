@@ -4,12 +4,25 @@ import type { IParams } from "@/utils/twin/types";
 import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 import Helper from "@/utils/twin/helpers";
 
+// 运动动作
+type IAnimateObj = {
+  idle: undefined | THREE.AnimationClip; // 空闲
+  walk: undefined | THREE.AnimationClip; // 走路
+  run: undefined | THREE.AnimationClip; // 跑步
+};
+
+// 运动集合
+type IAnimationArr = [IAnimateObj["idle"], IAnimateObj["walk"], IAnimateObj["run"]];
+
 class Twin extends CreateTwin {
   mixer?: THREE.AnimationMixer;
   helper: Helper;
   clock: THREE.Clock;
+  clipAction?: THREE.AnimationAction;
   model?: THREE.Group<THREE.Object3DEventMap>; // 模型
   skeletonHelper?: THREE.SkeletonHelper; // 骨骼模型
+  animateObj: IAnimateObj; // 所有运动对象
+  animationArr: IAnimationArr; // 所有运动数组
   constructor(query: IParams) {
     super(query);
 
@@ -18,6 +31,15 @@ class Twin extends CreateTwin {
     this.clock = new THREE.Clock();
     this.model = undefined;
     this.skeletonHelper = undefined;
+
+    // 动作
+    this.animateObj = {
+      idle: undefined,
+      walk: undefined,
+      run: undefined
+    };
+
+    this.animationArr = [undefined, undefined, undefined];
 
     this.init();
   }
@@ -58,11 +80,27 @@ class Twin extends CreateTwin {
 
       model.rotateY(-Math.PI * 0.8); // 旋转180度
 
-      this.mixer = new THREE.AnimationMixer(model);
-      // 获取gltf.animations[0]的第一个clip动画对象
-      const clipAction = this.mixer.clipAction(gltf.animations[3]);
-      clipAction.play();
-      this.animate();
+      // 动画相关
+      {
+        this.mixer = new THREE.AnimationMixer(model);
+        const idle = gltf.animations[0];
+        const walk = gltf.animations[3];
+        const run = gltf.animations[1];
+
+        this.animateObj.idle = idle;
+        this.animateObj.walk = walk;
+        this.animateObj.run = run;
+
+        this.animationArr[0] = idle;
+        this.animationArr[1] = walk;
+        this.animationArr[2] = run;
+
+        // 默认播放 走路动画
+        const clipAction = this.mixer.clipAction(walk);
+        this.clipAction = clipAction;
+        clipAction.play();
+        this.animate(); // 循环播放动画
+      }
     });
 
     // 添加控制面板
@@ -133,14 +171,17 @@ class Twin extends CreateTwin {
 
     const setTools = {
       showModel: true,
-      showSkeleton: false
+      showSkeleton: false,
+      clipActionStart: true, // 停止/开始动作
+      pauseContinueStart: true, // 播放/暂停动作
+      makeSingleStep: false // 单步播放
     };
 
     // 模型显示隐藏+是否显示骨骼线条
     {
-      const folder1 = this.helper.gui.addFolder("显示隐藏");
+      const folder = this.helper.gui.addFolder("显示隐藏");
 
-      folder1
+      folder
         .add(setTools, "showModel")
         .name("模型显示/关闭")
         .onChange(val => {
@@ -148,12 +189,54 @@ class Twin extends CreateTwin {
           this.model!.visible = val;
         });
 
-      folder1
+      folder
         .add(setTools, "showSkeleton")
         .name("骨骼线条显示/关闭")
         .onChange(val => {
           // console.log(val);
           this.skeletonHelper!.visible = val;
+        });
+    }
+
+    // 关闭开启动作
+    {
+      const folder = this.helper.gui.addFolder("动作相关");
+      folder
+        .add(setTools, "clipActionStart")
+        .name("开启/关闭")
+        .onChange(val => {
+          console.log(val);
+          if (val) {
+            // 播放
+            this.clipAction!.play();
+          } else {
+            // 停止
+            this.clipAction!.stop();
+          }
+        });
+
+      folder
+        .add(setTools, "pauseContinueStart")
+        .name("播放/暂停")
+        .onChange(val => {
+          this.clipAction!.paused = !val;
+        });
+
+      folder
+        .add(setTools, "makeSingleStep")
+        .name("单步播放")
+        .onChange(val => {
+          const clipAction = this.clipAction!;
+
+          // 如果正在播放则暂停
+          if (setTools.pauseContinueStart) {
+            clipAction!.paused = true;
+          }
+
+          // 循环播放
+          clipAction.loop = THREE.LoopPingPong;
+          clipAction!.time += 0.1;
+          clipAction!.clampWhenFinished = true;
         });
     }
   }
