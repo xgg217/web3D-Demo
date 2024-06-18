@@ -4,15 +4,21 @@ import type { IParams } from "@/utils/twin/types";
 import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 import Helper from "@/utils/twin/helpers";
 
+type IAnimateType = {
+  animation: undefined | THREE.AnimationClip;
+  duration: number; // 动画总时长
+  isActive: boolean; // 是否激活
+}
+
 // 运动动作
 type IAnimateObj = {
-  idle: undefined | THREE.AnimationClip; // 空闲
-  walk: undefined | THREE.AnimationClip; // 走路
-  run: undefined | THREE.AnimationClip; // 跑步
+  idle: IAnimateType // 空闲
+  walk: IAnimateType // 走路
+  run: IAnimateType // 跑步
 };
 
 // 运动集合
-type IAnimationArr = [IAnimateObj["idle"], IAnimateObj["walk"], IAnimateObj["run"]];
+// type IAnimationArr = [IAnimateObj["idle"], IAnimateObj["walk"], IAnimateObj["run"]];
 
 class Twin extends CreateTwin {
   mixer?: THREE.AnimationMixer;
@@ -22,7 +28,7 @@ class Twin extends CreateTwin {
   model?: THREE.Group<THREE.Object3DEventMap>; // 模型
   skeletonHelper?: THREE.SkeletonHelper; // 骨骼模型
   animateObj: IAnimateObj; // 所有运动对象
-  animationArr: IAnimationArr; // 所有运动数组
+  // animationArr: IAnimationArr; // 所有运动数组
   constructor(query: IParams) {
     super(query);
 
@@ -34,12 +40,24 @@ class Twin extends CreateTwin {
 
     // 动作
     this.animateObj = {
-      idle: undefined,
-      walk: undefined,
-      run: undefined
+      idle: {
+        animation: undefined,
+        duration: 0,
+        isActive: false
+      },
+      walk: {
+        animation: undefined,
+        duration: 0,
+        isActive: false
+      },
+      run: {
+        animation: undefined,
+        duration: 0,
+        isActive: false
+      },
     };
 
-    this.animationArr = [undefined, undefined, undefined];
+    // this.animationArr = [undefined, undefined, undefined];
 
     this.init();
   }
@@ -87,13 +105,21 @@ class Twin extends CreateTwin {
         const walk = gltf.animations[3];
         const run = gltf.animations[1];
 
-        this.animateObj.idle = idle;
-        this.animateObj.walk = walk;
-        this.animateObj.run = run;
+        this.animateObj.idle.animation = idle;
+        this.animateObj.walk.animation = walk;
+        this.animateObj.run.animation = run;
 
-        this.animationArr[0] = idle;
-        this.animationArr[1] = walk;
-        this.animationArr[2] = run;
+        this.animateObj.idle.duration = idle.duration;
+        this.animateObj.walk.duration = walk.duration;
+        this.animateObj.run.duration = run.duration;
+
+        this.animateObj.walk.isActive = true; // 正在激活
+
+        // this.animationArr[0] = idle;
+        // this.animationArr[1] = walk;
+        // this.animationArr[2] = run;
+
+        console.log(walk.duration, run.duration);
 
         // 默认播放 走路动画
         const clipAction = this.mixer.clipAction(walk);
