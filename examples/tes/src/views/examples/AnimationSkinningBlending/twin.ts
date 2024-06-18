@@ -3,22 +3,7 @@ import * as THREE from "three";
 import type { IParams } from "@/utils/twin/types";
 import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 import Helper from "@/utils/twin/helpers";
-
-type IAnimateType = {
-  animation: undefined | THREE.AnimationClip;
-  duration: number; // 动画总时长
-  isActive: boolean; // 是否激活
-}
-
-// 运动动作
-type IAnimateObj = {
-  idle: IAnimateType // 空闲
-  walk: IAnimateType // 走路
-  run: IAnimateType // 跑步
-};
-
-// 运动集合
-// type IAnimationArr = [IAnimateObj["idle"], IAnimateObj["walk"], IAnimateObj["run"]];
+import type { IAnimationName, IAnimateObj } from "./types";
 
 class Twin extends CreateTwin {
   mixer?: THREE.AnimationMixer;
@@ -27,8 +12,7 @@ class Twin extends CreateTwin {
   clipAction?: THREE.AnimationAction;
   model?: THREE.Group<THREE.Object3DEventMap>; // 模型
   skeletonHelper?: THREE.SkeletonHelper; // 骨骼模型
-  animateObj: IAnimateObj; // 所有运动对象
-  // animationArr: IAnimationArr; // 所有运动数组
+  private animateObj: IAnimateObj; // 所有运动对象
   constructor(query: IParams) {
     super(query);
 
@@ -43,18 +27,21 @@ class Twin extends CreateTwin {
       idle: {
         animation: undefined,
         duration: 0,
-        isActive: false
+        isActive: false,
+        name: "idle"
       },
       walk: {
         animation: undefined,
         duration: 0,
-        isActive: false
+        isActive: false,
+        name: "walk"
       },
       run: {
         animation: undefined,
         duration: 0,
-        isActive: false
-      },
+        isActive: false,
+        name: "run"
+      }
     };
 
     // this.animationArr = [undefined, undefined, undefined];
@@ -119,7 +106,7 @@ class Twin extends CreateTwin {
         // this.animationArr[1] = walk;
         // this.animationArr[2] = run;
 
-        console.log(walk.duration, run.duration);
+        // console.log(walk.duration, run.duration);
 
         // 默认播放 走路动画
         const clipAction = this.mixer.clipAction(walk);
@@ -147,9 +134,6 @@ class Twin extends CreateTwin {
 
   // 添加阴影
   addShadow() {
-    // const dirHelper = new THREE.DirectionalLightHelper(this.directionalLight, 5);
-    // this.scene.add(dirHelper);
-
     this.directionalLight.position.set(-3, 10, -10);
 
     // 1. 设置产生阴影的模型对象 - 已在模型中设置了投射阴影
@@ -248,23 +232,44 @@ class Twin extends CreateTwin {
           this.clipAction!.paused = !val;
         });
 
-      folder
-        .add(setTools, "makeSingleStep")
-        .name("单步播放")
-        .onChange(val => {
+      const options = {
+        button: () => {
+          const { duration } = this.getAvcAnimate()!;
           const clipAction = this.clipAction!;
-
           // 如果正在播放则暂停
           if (setTools.pauseContinueStart) {
             clipAction!.paused = true;
           }
-
           // 循环播放
-          clipAction.loop = THREE.LoopPingPong;
-          clipAction!.time += 0.1;
-          clipAction!.clampWhenFinished = true;
-        });
+          clipAction.clampWhenFinished = true;
+          clipAction.loop = THREE.LoopRepeat;
+          const time = clipAction!.time + 0.1;
+          if (time > duration) {
+            clipAction.time = time - duration;
+          } else {
+            clipAction.time = time;
+          }
+        }
+      };
+
+      folder.add(options, "button").name("单步播放");
     }
+  }
+
+  // 获取当前运动
+  getAvcAnimate() {
+    return Object.values(this.animateObj).find(item => item.isActive);
+  }
+
+  // 设置当前运动
+  setAvcAnimate(name: IAnimationName) {
+    Object.values(this.animateObj).forEach(item => {
+      if (item.name === name) {
+        item.isActive = true;
+      } else {
+        item.isActive = false;
+      }
+    });
   }
 }
 

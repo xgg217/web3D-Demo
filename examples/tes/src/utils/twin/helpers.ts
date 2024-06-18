@@ -25,7 +25,7 @@ export default class Helper {
     this.gui = new GUI();
     mainDom.appendChild(this.gui.domElement);
     this.gui.domElement.style.right = "0px";
-    this.gui.domElement.style.width = "500px";
+    this.gui.domElement.style.width = "240px";
     this.gui.domElement.style.fontSize = "16px";
 
     // 平行光调试
