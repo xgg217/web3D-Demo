@@ -102,12 +102,6 @@ class Twin extends CreateTwin {
 
         this.animateObj.walk.isActive = true; // 正在激活
 
-        // this.animationArr[0] = idle;
-        // this.animationArr[1] = walk;
-        // this.animationArr[2] = run;
-
-        // console.log(walk.duration, run.duration);
-
         // 默认播放 走路动画
         const clipAction = this.mixer.clipAction(walk);
         this.clipAction = clipAction;
@@ -120,7 +114,7 @@ class Twin extends CreateTwin {
     this.onControlsChange();
   }
 
-  // 设置场景相关属性
+  //#region 设置场景相关属性
   setScene() {
     const pmremGenerator = new THREE.PMREMGenerator(this.renderer);
     this.scene.environment = pmremGenerator.fromScene(new RoomEnvironment(this.renderer), 0.04).texture;
@@ -131,8 +125,9 @@ class Twin extends CreateTwin {
     hemiLight.position.set(0, 20, 0);
     this.scene.add(hemiLight);
   }
+  //#endregion
 
-  // 添加阴影
+  //#region 添加阴影
   addShadow() {
     this.directionalLight.position.set(-3, 10, -10);
 
@@ -141,7 +136,6 @@ class Twin extends CreateTwin {
     // 2. 设置产生阴影的光源对象
     this.directionalLight.castShadow = true;
 
-    // const dirLight = new THREE.DirectionalLight(0xffffff, 3);
     // 3. 设置接收阴影效果的模型对象
     const mesh = new THREE.Mesh(
       new THREE.PlaneGeometry(8, 8),
@@ -162,6 +156,7 @@ class Twin extends CreateTwin {
     this.directionalLight.shadow.camera.near = 0.1;
     this.directionalLight.shadow.camera.far = 40;
   }
+  //#endregion
 
   // 动画
   animate() {
@@ -175,7 +170,7 @@ class Twin extends CreateTwin {
     this.mixer!.update(frameT);
   }
 
-  // 控制面板操作
+  //#region 控制面板操作
   onControlsChange() {
     // 添加分组
 
@@ -255,6 +250,7 @@ class Twin extends CreateTwin {
       folder.add(options, "button").name("单步播放");
     }
   }
+  //#endregion
 
   // 获取当前运动
   getAvcAnimate() {
