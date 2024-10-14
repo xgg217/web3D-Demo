@@ -1,13 +1,23 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import AnimationKeyframes from '@/views/animationSkinningAdditiveBlending/index.vue'
+import Home from '@/views/Home.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
-      name: 'animationKeyframes',
-      component: AnimationKeyframes
+      name: 'Home',
+      component: Home
+    },
+    {
+      path: '/webgl',
+      name: 'Home',
+      component: () => import('@/views/webgl/index.vue')
+    },
+    {
+      path: '/custom',
+      name: 'Home',
+      component: () => import('@/views/custom/index.vue')
     },
 
   ]
