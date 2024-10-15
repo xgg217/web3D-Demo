@@ -65,6 +65,8 @@ const onPage = (name: ILeftItem["routeName"]) => {
   }
 
   const isBool = router.hasRoute(name);
+  // console.log(name);
+
 
   if (isBool) {
     router.push({ name });

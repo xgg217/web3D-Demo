@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
-import LayoutExamples from "@/components/layout/index.vue";
+import LayoutCustom from "@/views/custom/layout/index.vue";
+import LayoutExamples from "@/views/examples/layout/index.vue";
 import HomeView from "@/views/HomeView.vue";
 
 const router = createRouter({
@@ -45,10 +46,31 @@ const router = createRouter({
     {
       path: "/custom",
       name: "Custom",
-      component: () => import("@/views/custom/customIndex.vue"),
+      component: LayoutCustom,
       meta: {
         title: "自定义"
       },
+      redirect: "/custom/index",
+      children: [
+        {
+          path: "index",
+          name: "CustomIndex",
+          component: () => import("@/views/custom/CustomIndex.vue"),
+          meta: {
+            title: "展位图",
+            imgSrc: ""
+          }
+        },
+        {
+          path: "index2",
+          name: "CustomIndex2",
+          component: () => import("@/views/custom/CustomIndex2.vue"),
+          meta: {
+            title: "展位图",
+            imgSrc: ""
+          }
+        },
+      ]
     },
     {
       path: "/404",

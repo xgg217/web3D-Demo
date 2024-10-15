@@ -9,8 +9,8 @@
 </template>
 
 <script setup lang="ts">
-import MainCmp from "./MainCmp.vue";
-import NavCmp from "./NavCmp.vue";
+import MainCmp from "@/components/layout/MainCmp.vue";
+import NavCmp from "@/components/layout/NavCmp.vue";
 </script>
 
 <style scoped>
