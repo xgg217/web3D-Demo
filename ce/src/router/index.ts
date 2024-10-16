@@ -33,11 +33,11 @@ const router = createRouter({
           }
         },
         {
-          path: "index2",
-          name: "ExamplesIndex2",
-          component: () => import("@/views/examples/ExamplesIndex2.vue"),
+          path: "cameraArray",
+          name: "CameraArray",
+          component: () => import("@/views/examples/cameraArray/index.vue"),
           meta: {
-            title: "展位图",
+            title: "camera / array",
             imgSrc: ""
           }
         },
