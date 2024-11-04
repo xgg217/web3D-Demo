@@ -38,7 +38,7 @@ const router = createRouter({
           component: () => import("@/views/examples/cameraArray/index.vue"),
           meta: {
             title: "camera / array",
-            imgSrc: ""
+            imgSrc: "cameraArray/webglCameraArray.jpg"
           }
         },
       ]

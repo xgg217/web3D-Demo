@@ -11,8 +11,8 @@
 <script setup lang="ts"></script>
 
 <style scoped>
-main {
+.main {
   flex: 1;
-  /* border: 1px solid red; */
+  height: 98vh;
 }
 </style>

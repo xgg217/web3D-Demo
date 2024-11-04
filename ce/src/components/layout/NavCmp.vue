@@ -84,9 +84,10 @@ onMounted(() => {
 <style scoped>
 nav {
   width: 300px;
-  height: 100vh;
+  height: 96.5vh;
   overflow-y: scroll;
   padding: 0 16px 16px 16px;
+
 }
 ul {
   padding-left: 0;
