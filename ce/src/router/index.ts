@@ -42,12 +42,12 @@ const router = createRouter({
           },
         },
         {
-          path: "decals",
-          name: "Decals",
-          component: () => import("@/views/examples/decals/index.vue"),
+          path: "clipping",
+          name: "Clipping",
+          component: () => import("@/views/examples/clipping/index.vue"),
           meta: {
-            title: "decals",
-            imgSrc: "decals/webglDecals.jpg",
+            title: "clipping",
+            imgSrc: "clipping/webglClipping.jpg",
           },
         },
       ],
