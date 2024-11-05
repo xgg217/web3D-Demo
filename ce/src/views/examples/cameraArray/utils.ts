@@ -11,7 +11,7 @@ export const getWAndH = (className: string) => {
 // 左侧为官方示例
 export class LeftCreate {
   scene: THREE.Scene;
-  camera: THREE.ArrayCamera;
+  camera: THREE.PerspectiveCamera;
   mesh: THREE.Mesh; // 物体
   renderer: THREE.WebGLRenderer;
   light: THREE.DirectionalLight; //  光
@@ -23,16 +23,18 @@ export class LeftCreate {
     const AMOUNT = 2; // 显示一个4*4的阵列
     const { width, height } = getWAndH("main");
     const WIDHT = Math.floor(width / 2);
-    const HEIGHT = Math.floor(height / 2);
-
-    console.log(window.devicePixelRatio);
+    const HEIGHT = height;
 
     // 相机 显示一个2*2的阵列
     {
       // 宽度
-      // const widthVal = WIDHT * window.devicePixelRatio;
-      // const heightVal = HEIGHT * window.devicePixelRatio;
-      // const ASPECT_RATIO = widthVal / heightVal;
+      const widthVal = WIDHT * window.devicePixelRatio;
+      const heightVal = HEIGHT * window.devicePixelRatio;
+      const ASPECT_RATIO = widthVal / heightVal;
+
+      this.camera = new THREE.PerspectiveCamera(40, ASPECT_RATIO, 0.1, 10);
+      this.camera.lookAt(0, 0, 0);
+
       // // 每个画面的宽度
       // const width = Math.floor(widthVal / AMOUNT);
       // const height = Math.floor(heightVal / AMOUNT);
@@ -68,7 +70,7 @@ export class LeftCreate {
     {
       this.scene.add(new THREE.AmbientLight(0x999999));
       const light = new THREE.DirectionalLight(0xffffff, 3);
-      light.position.set(0.5, 0.5, 1);
+      light.position.set(100, 100, 1);
       light.castShadow = true;
       light.shadow.camera.zoom = 4; // tighter shadow map
       this.light = light;
@@ -76,20 +78,20 @@ export class LeftCreate {
     }
 
     // 开启阴影
-    {
-      const geometryBackground = new THREE.PlaneGeometry(100, 100);
-      const materialBackground = new THREE.MeshPhongMaterial({
-        color: 0x000066,
-      });
-      const background = new THREE.Mesh(geometryBackground, materialBackground);
-      background.receiveShadow = true;
-      background.position.set(0, 0, -1);
-      this.scene.add(background);
-    }
+    // {
+    //   const geometryBackground = new THREE.PlaneGeometry(100, 100);
+    //   const materialBackground = new THREE.MeshPhongMaterial({
+    //     color: 0x000066,
+    //   });
+    //   const background = new THREE.Mesh(geometryBackground, materialBackground);
+    //   background.receiveShadow = true;
+    //   background.position.set(0, 0, -1);
+    //   this.scene.add(background);
+    // }
 
     // 物体
     {
-      const geometryCylinder = new THREE.CylinderGeometry(0.5, 0.5, 1, 32);
+      const geometryCylinder = new THREE.CylinderGeometry(50, 50, 1, 32);
       const materialCylinder = new THREE.MeshPhongMaterial({
         color: 0xff0000,
       });
@@ -102,7 +104,10 @@ export class LeftCreate {
 
     // 渲染器
     {
-      const renderer = new THREE.WebGLRenderer();
+      const renderer = new THREE.WebGLRenderer({
+        antialias: true, // 锯齿模糊
+        logarithmicDepthBuffer: true,
+      });
       renderer.setPixelRatio(window.devicePixelRatio);
       renderer.setSize(WIDHT, HEIGHT);
       renderer.setAnimationLoop(this.animate);

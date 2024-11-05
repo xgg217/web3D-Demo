@@ -11,15 +11,15 @@ const router = createRouter({
       name: "home",
       component: HomeView,
       meta: {
-        title: "首页"
-      }
+        title: "首页",
+      },
     },
     {
       path: "/examples",
       name: "Examples",
       component: LayoutExamples,
       meta: {
-        title: "官方示例"
+        title: "官方示例",
       },
       redirect: "/examples/index",
       children: [
@@ -29,8 +29,8 @@ const router = createRouter({
           component: () => import("@/views/examples/ExamplesIndex.vue"),
           meta: {
             title: "展位图",
-            imgSrc: ""
-          }
+            imgSrc: "",
+          },
         },
         {
           path: "cameraArray",
@@ -38,17 +38,26 @@ const router = createRouter({
           component: () => import("@/views/examples/cameraArray/index.vue"),
           meta: {
             title: "camera / array",
-            imgSrc: "cameraArray/webglCameraArray.jpg"
-          }
+            imgSrc: "cameraArray/webglCameraArray.jpg",
+          },
         },
-      ]
+        {
+          path: "decals",
+          name: "Decals",
+          component: () => import("@/views/examples/decals/index.vue"),
+          meta: {
+            title: "decals",
+            imgSrc: "decals/webglDecals.jpg",
+          },
+        },
+      ],
     },
     {
       path: "/custom",
       name: "Custom",
       component: LayoutCustom,
       meta: {
-        title: "自定义"
+        title: "自定义",
       },
       redirect: "/custom/index",
       children: [
@@ -58,8 +67,8 @@ const router = createRouter({
           component: () => import("@/views/custom/CustomIndex.vue"),
           meta: {
             title: "展位图",
-            imgSrc: ""
-          }
+            imgSrc: "",
+          },
         },
         {
           path: "index2",
@@ -67,18 +76,18 @@ const router = createRouter({
           component: () => import("@/views/custom/CustomIndex2.vue"),
           meta: {
             title: "展位图",
-            imgSrc: ""
-          }
+            imgSrc: "",
+          },
         },
-      ]
+      ],
     },
     {
       path: "/404",
       component: () => import("@/views/404.vue"),
       meta: {
-        title: "404"
-      }
-    }
+        title: "404",
+      },
+    },
   ],
 });
 

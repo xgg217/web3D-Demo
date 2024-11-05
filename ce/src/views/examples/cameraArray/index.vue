@@ -9,7 +9,7 @@ onMounted(() => {
 
 <template>
   <div class="box">
-    <div class="left">1</div>
+    <div class="left"></div>
     <div class="right">2</div>
   </div>
 </template>
