@@ -7,9 +7,14 @@ onMounted(() => {
 </script>
 
 <template>
-  <div>
+  <div class="warpp">
     <div class="box"></div>
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.warpp,
+.box {
+  height: 100%;
+}
+</style>

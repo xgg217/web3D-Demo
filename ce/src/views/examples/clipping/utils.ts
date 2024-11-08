@@ -91,6 +91,7 @@ export default class Clipping {
 
     // 物体 初始化
     this.mesh = new THREE.Mesh();
+    this.setMesh();
     this.scene.add(this.mesh);
   }
 
