@@ -99,24 +99,25 @@ export default class Clipping {
   setMesh() {
     const localPlane = new THREE.Plane(new THREE.Vector3(0, -1, 0), 0.8);
 
+    // 高光材质
     const material = new THREE.MeshPhongMaterial({
       color: 0x80ee10,
       shininess: 100,
       side: THREE.DoubleSide,
-
-      // ***** Clipping setup (material): *****
       clippingPlanes: [localPlane],
       clipShadows: true,
 
       alphaToCoverage: true,
     });
 
+    // 圆环缓冲扭结几何体
     const geometry = new THREE.TorusKnotGeometry(0.4, 0.08, 95, 20);
 
     this.mesh.geometry = geometry;
     this.mesh.material = material;
     this.mesh.castShadow = true;
 
+    // 投影
     {
       const ground = new THREE.Mesh(
         new THREE.PlaneGeometry(9, 9, 1, 1),
@@ -129,8 +130,6 @@ export default class Clipping {
   }
 
   animate() {
-    console.log(1);
-
     this.renderer.render(this.scene, this.camera);
     this.stats.update();
   }

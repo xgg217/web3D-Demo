@@ -12,7 +12,7 @@
 
 <style scoped>
 .main {
-  flex: 1;
+  width: calc(100vw - 300px);
   height: 98vh;
 }
 </style>
