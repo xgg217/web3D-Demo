@@ -43,6 +43,7 @@ export default class Clipping {
       this.renderer = renderer;
       boxDom.appendChild(renderer.domElement);
 
+      // 设置裁剪
       renderer.clippingPlanes = Empty; // GUI sets it to globalPlanes
       renderer.localClippingEnabled = true;
     }
