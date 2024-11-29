@@ -1,7 +1,7 @@
 <template>
   <div class="layout">
     <!-- 左侧导航栏 -->
-    <NavCmp path-name="custom" />
+    <NavCmp path-name="study" />
 
     <!-- 内容区 -->
     <MainCmp />

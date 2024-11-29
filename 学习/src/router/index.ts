@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import LayoutCustom from "@/views/custom/layout/index.vue";
 import LayoutExamples from "@/views/examples/layout/index.vue";
+import LayoutStudy from "@/views/study/layout/index.vue";
 import HomeView from "@/views/HomeView.vue";
 import examples from "./examples";
 import customs from "./customs";
@@ -40,7 +41,7 @@ const router = createRouter({
     {
       path: "/study",
       name: "Study",
-      component: LayoutCustom,
+      component: LayoutStudy,
       meta: {
         title: "学习",
       },

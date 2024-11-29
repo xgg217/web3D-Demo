@@ -1,0 +1,121 @@
+import * as THREE from "three";
+import Stats from "three/addons/libs/stats.module.js";
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import { getWAndH } from "@/utils/index";
+
+// 太阳系
+export default class SolarSystem {
+  scene: THREE.Scene;
+  camera: THREE.PerspectiveCamera;
+  mesh: THREE.Mesh; // 物体
+  renderer: THREE.WebGLRenderer;
+  light: THREE.AmbientLight; //  环境光
+  stats: Stats; // 帧率
+
+  constructor() {
+    const boxDom = document.querySelector(".box")!;
+
+    // 场景
+    {
+      const scene = new THREE.Scene();
+      scene.background = new THREE.Color(0x000000);
+      this.scene = scene;
+
+      //辅助观察的坐标系
+      const axesHelper = new THREE.AxesHelper(100);
+      scene.add(axesHelper);
+    }
+
+    const { width, height } = getWAndH("box");
+    console.log(width, height);
+
+    // 相机
+    {
+      const widthVal = width * window.devicePixelRatio;
+      const heightVal = height * window.devicePixelRatio;
+      const ASPECT_RATIO = widthVal / heightVal;
+
+      const camera = new THREE.PerspectiveCamera(40, ASPECT_RATIO, 0.1, 1000);
+      this.camera = camera;
+      camera.position.set(50, 130, 130);
+      this.camera.lookAt(0, 0, 0);
+    }
+
+    // 光源
+    {
+      const ambient = new THREE.AmbientLight(0xffffff, 1);
+      this.light = ambient;
+      this.scene.add(ambient);
+      // this.scene.add(new THREE.AmbientLight(0x999999));
+      // const light = new THREE.DirectionalLight(0xffffff, 3);
+      // light.position.set(100, 100, 1);
+      // light.castShadow = true;
+      // light.shadow.camera.zoom = 4; // tighter shadow map
+      // this.light = light;
+      // this.scene.add(light);
+    }
+
+    // 物体
+    {
+      // 太阳
+      const sunGeometry = new THREE.SphereGeometry(10);
+      const sunMaterial = new THREE.MeshBasicMaterial({
+        color: 0xffff00,
+        // transparent:true,//开启透明
+        // opacity: 0.75 // 不透明度
+      });
+      const sumMesh = new THREE.Mesh(sunGeometry, sunMaterial);
+      this.mesh = sumMesh;
+      this.scene.add(sumMesh);
+
+      // 地球
+      // const earth = new THREE.SphereGeometry(50);
+
+      // 月亮
+      // const moon = new THREE.SphereGeometry(20);
+    }
+
+    // 渲染器
+    {
+      const renderer = new THREE.WebGLRenderer({
+        antialias: true, // 锯齿模糊
+        logarithmicDepthBuffer: true,
+      });
+      renderer.setPixelRatio(window.devicePixelRatio);
+      renderer.setSize(width, height);
+      renderer.setAnimationLoop(() => this.animate());
+      // renderer.shadowMap.enabled = true;
+      this.renderer = renderer;
+      const leftDom = document.querySelector(".box")!;
+      leftDom.appendChild(renderer.domElement);
+    }
+
+    // 帧率
+    {
+      const stats = new Stats();
+      boxDom.appendChild(stats.dom);
+      stats.dom.style.left = "350px";
+      stats.dom.style.top = "20px";
+      this.stats = stats;
+    }
+
+    // 辅助网格地面
+    {
+      const gridHelper = new THREE.GridHelper(300, 25, 0x004444, 0x004444);
+      this.scene.add(gridHelper);
+    }
+
+    // 相机控件
+    {
+      const controls = new OrbitControls(this.camera, this.renderer.domElement);
+      controls.target.set(0, 0, 0);
+      controls.update();
+    }
+  }
+
+  // 运动
+  animate() {
+    this.renderer.render(this.scene, this.camera);
+    this.stats.update();
+  }
+}

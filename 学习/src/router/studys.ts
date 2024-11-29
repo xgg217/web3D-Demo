@@ -12,11 +12,11 @@ export default [
     },
   },
   {
-    path: "index2",
-    name: "StudyIndex2",
-    component: () => import("@/views/study/CustomIndex2.vue"),
+    path: "sceneSolarSystem",
+    name: "SceneSolarSystem",
+    component: () => import("@/views/study/SceneSolarSystem/index.vue"),
     meta: {
-      title: "展位图",
+      title: "场景之太阳系、太阳、地球、月亮",
       imgSrc: "",
     },
   },
