@@ -9,11 +9,12 @@ export default class SolarSystem {
   camera: THREE.PerspectiveCamera;
   mesh: THREE.Mesh; // 物体
   renderer: THREE.WebGLRenderer;
-  light: THREE.AmbientLight; //  环境光
+  light: THREE.PointLight; //  点光源
   stats: Stats; // 帧率
 
   constructor() {
     const boxDom = document.querySelector(".box")!;
+    const { width, height } = getWAndH("box");
 
     // 场景
     {
@@ -25,9 +26,6 @@ export default class SolarSystem {
       const axesHelper = new THREE.AxesHelper(100);
       scene.add(axesHelper);
     }
-
-    const { width, height } = getWAndH("box");
-    console.log(width, height);
 
     // 相机
     {
@@ -43,16 +41,16 @@ export default class SolarSystem {
 
     // 光源
     {
-      const ambient = new THREE.AmbientLight(0xffffff, 1);
+      // 点光源
+      const ambient = new THREE.PointLight(0xffff00, 1);
+      // 设置光源位置
+      ambient.position.set(0, 0, 0);
       this.light = ambient;
       this.scene.add(ambient);
-      // this.scene.add(new THREE.AmbientLight(0x999999));
-      // const light = new THREE.DirectionalLight(0xffffff, 3);
-      // light.position.set(100, 100, 1);
-      // light.castShadow = true;
-      // light.shadow.camera.zoom = 4; // tighter shadow map
-      // this.light = light;
-      // this.scene.add(light);
+
+      // 光源辅助观察
+      const pointLightHelper = new THREE.PointLightHelper(ambient, 50);
+      this.scene.add(pointLightHelper);
     }
 
     // 物体
@@ -61,7 +59,9 @@ export default class SolarSystem {
       const sunGeometry = new THREE.SphereGeometry(10);
       const sunMaterial = new THREE.MeshBasicMaterial({
         color: 0xffff00,
-        // transparent:true,//开启透明
+        transparent: true, //开启透明
+        side: THREE.DoubleSide, // 双面渲染
+        // emissive: 0xffff00, // 自发光颜色
         // opacity: 0.75 // 不透明度
       });
       const sumMesh = new THREE.Mesh(sunGeometry, sunMaterial);
@@ -69,10 +69,28 @@ export default class SolarSystem {
       this.scene.add(sumMesh);
 
       // 地球
-      // const earth = new THREE.SphereGeometry(50);
+      const earthGeometry = new THREE.SphereGeometry(5);
+      const earthMaterial = new THREE.MeshLambertMaterial({
+        color: 0x0000ff,
+        side: THREE.DoubleSide, // 双面渲染
+        // transparent:true,//开启透明
+        // opacity: 0.75 // 不透明度
+      });
+      const earthMesh = new THREE.Mesh(earthGeometry, earthMaterial);
+      sumMesh.add(earthMesh);
+      earthMesh.position.set(30, 0, 0);
 
       // 月亮
-      // const moon = new THREE.SphereGeometry(20);
+      const moonGeometry = new THREE.SphereGeometry(2);
+      const moonMaterial = new THREE.MeshLambertMaterial({
+        color: 0xffffff,
+        side: THREE.DoubleSide, // 双面渲染
+        // transparent:true,//开启透明
+        // opacity: 0.75 // 不透明度
+      });
+      const moonMesh = new THREE.Mesh(moonGeometry, moonMaterial);
+      earthMesh.add(moonMesh);
+      moonMesh.position.set(10, 0, 0);
     }
 
     // 渲染器
