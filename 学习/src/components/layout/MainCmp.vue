@@ -12,7 +12,7 @@
 
 <style scoped>
 .main {
-  width: calc(100vw - 300px);
+  width: calc(100vw - 330px);
   height: 98vh;
 }
 </style>

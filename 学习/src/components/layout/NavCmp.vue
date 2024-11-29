@@ -90,10 +90,11 @@ onMounted(() => {
 <style scoped>
 nav {
   flex: 1;
-  width: 300px;
+  /* width: 320px; */
   height: 96.5vh;
   overflow-y: scroll;
   padding: 0 16px 16px 16px;
+  /* box-sizing: border-box; */
 }
 ul {
   padding-left: 0;
@@ -102,6 +103,7 @@ ul {
 li {
   list-style: none;
   width: 260px;
+  box-sizing: border-box;
   /* border: 1px solid red; */
 }
 </style>
