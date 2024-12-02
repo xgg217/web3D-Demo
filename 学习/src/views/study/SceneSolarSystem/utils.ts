@@ -42,14 +42,18 @@ export default class SolarSystem {
     // 光源
     {
       // 点光源
-      const ambient = new THREE.PointLight(0xffff00, 1);
+      const PointLight = new THREE.PointLight(0xffffff, 100000, 100);
       // 设置光源位置
-      ambient.position.set(0, 0, 0);
-      this.light = ambient;
+      PointLight.position.set(0, 0, 0);
+      this.light = PointLight;
+      this.scene.add(PointLight);
+
+      // 环境光
+      const ambient = new THREE.AmbientLight(0xffffff, 0.1);
       this.scene.add(ambient);
 
       // 光源辅助观察
-      const pointLightHelper = new THREE.PointLightHelper(ambient, 50);
+      const pointLightHelper = new THREE.PointLightHelper(PointLight, 100);
       this.scene.add(pointLightHelper);
     }
 
@@ -59,38 +63,39 @@ export default class SolarSystem {
       const sunGeometry = new THREE.SphereGeometry(10);
       const sunMaterial = new THREE.MeshBasicMaterial({
         color: 0xffff00,
-        transparent: true, //开启透明
-        side: THREE.DoubleSide, // 双面渲染
+        // transparent: true, //开启透明
+        // side: THREE.DoubleSide, // 双面渲染
         // emissive: 0xffff00, // 自发光颜色
-        // opacity: 0.75 // 不透明度
+        // opacity: 0, // 不透明度
       });
       const sumMesh = new THREE.Mesh(sunGeometry, sunMaterial);
       this.mesh = sumMesh;
-      this.scene.add(sumMesh);
+      // sumMesh.position.set(30, 0, 0);
+      // this.scene.add(sumMesh);
 
-      // 地球
+      // 地球;
       const earthGeometry = new THREE.SphereGeometry(5);
       const earthMaterial = new THREE.MeshLambertMaterial({
         color: 0x0000ff,
-        side: THREE.DoubleSide, // 双面渲染
-        // transparent:true,//开启透明
-        // opacity: 0.75 // 不透明度
+        // side: THREE.DoubleSide, // 双面渲染
+        // transparent: true, //开启透明
+        // opacity: 0.75, // 不透明度
       });
       const earthMesh = new THREE.Mesh(earthGeometry, earthMaterial);
-      sumMesh.add(earthMesh);
+      this.scene.add(earthMesh);
       earthMesh.position.set(30, 0, 0);
 
       // 月亮
       const moonGeometry = new THREE.SphereGeometry(2);
       const moonMaterial = new THREE.MeshLambertMaterial({
         color: 0xffffff,
-        side: THREE.DoubleSide, // 双面渲染
+        // side: THREE.DoubleSide, // 双面渲染
         // transparent:true,//开启透明
         // opacity: 0.75 // 不透明度
       });
       const moonMesh = new THREE.Mesh(moonGeometry, moonMaterial);
       earthMesh.add(moonMesh);
-      moonMesh.position.set(10, 0, 0);
+      moonMesh.position.set(-10, 0, 0);
     }
 
     // 渲染器
