@@ -63,7 +63,7 @@ export default class SolarSystem {
       const sunGeometry = new THREE.SphereGeometry(10);
       const sunMaterial = new THREE.MeshBasicMaterial({
         color: 0xffff00,
-        // transparent: true, //开启透明
+        transparent: true, //开启透明
         // side: THREE.DoubleSide, // 双面渲染
         // emissive: 0xffff00, // 自发光颜色
         // opacity: 0, // 不透明度
@@ -71,7 +71,7 @@ export default class SolarSystem {
       const sumMesh = new THREE.Mesh(sunGeometry, sunMaterial);
       this.mesh = sumMesh;
       // sumMesh.position.set(30, 0, 0);
-      // this.scene.add(sumMesh);
+      this.scene.add(sumMesh);
 
       // 地球;
       const earthGeometry = new THREE.SphereGeometry(5);
@@ -82,7 +82,7 @@ export default class SolarSystem {
         // opacity: 0.75, // 不透明度
       });
       const earthMesh = new THREE.Mesh(earthGeometry, earthMaterial);
-      this.scene.add(earthMesh);
+      sumMesh.add(earthMesh);
       earthMesh.position.set(30, 0, 0);
 
       // 月亮
