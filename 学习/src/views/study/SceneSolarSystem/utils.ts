@@ -2,6 +2,7 @@ import * as THREE from "three";
 import Stats from "three/addons/libs/stats.module.js";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { getWAndH } from "@/utils/index";
+import * as TWEEN from "@tweenjs/tween.js";
 
 // 太阳系
 export default class SolarSystem {
@@ -11,6 +12,7 @@ export default class SolarSystem {
   renderer: THREE.WebGLRenderer;
   light: THREE.PointLight; //  点光源
   stats: Stats; // 帧率
+  tween: TWEEN;
 
   constructor() {
     const boxDom = document.querySelector(".box")!;
@@ -60,14 +62,22 @@ export default class SolarSystem {
     // 物体
     {
       // 太阳
-      const sunGeometry = new THREE.SphereGeometry(10);
+      const sunGeometry = new THREE.SphereGeometry(10, 10, 10);
+      // const wireframeGeometry = new THREE.WireframeGeometry(sunGeometry);
+      // const lineMaterial = new THREE.LineDashedMaterial({
+      //   color: 0xff0000,
+      //   dashSize: 10,
+      //   gapSize: 5,
+      // });
       const sunMaterial = new THREE.MeshBasicMaterial({
         color: 0xffff00,
-        transparent: true, //开启透明
+        wireframe: true,
+        // transparent: true, //开启透明
         // side: THREE.DoubleSide, // 双面渲染
         // emissive: 0xffff00, // 自发光颜色
         // opacity: 0, // 不透明度
       });
+      // const sumMesh = new THREE.LineSegments(wireframeGeometry, lineMaterial);
       const sumMesh = new THREE.Mesh(sunGeometry, sunMaterial);
       this.mesh = sumMesh;
       // sumMesh.position.set(30, 0, 0);
@@ -77,25 +87,44 @@ export default class SolarSystem {
       const earthGeometry = new THREE.SphereGeometry(5);
       const earthMaterial = new THREE.MeshLambertMaterial({
         color: 0x0000ff,
+        wireframe: true,
         // side: THREE.DoubleSide, // 双面渲染
         // transparent: true, //开启透明
         // opacity: 0.75, // 不透明度
       });
       const earthMesh = new THREE.Mesh(earthGeometry, earthMaterial);
+      // earthMesh.wireframe = true;
       sumMesh.add(earthMesh);
-      earthMesh.position.set(30, 0, 0);
+      earthMesh.position.set(40, 0, 0);
+
+      // 地球运动
+      {
+        const R = 40; //相机圆周运动的半径
+        this.tween = new TWEEN.Tween({ angle: 0 })
+          .to({ angle: -Math.PI * 2 }, 10000)
+          .repeat(Infinity)
+          .onUpdate(obj => {
+            // console.log(obj);
+            earthMesh.rotateY(0.02);
+            earthMesh.position.x = R * Math.cos(obj.angle);
+            earthMesh.position.z = R * Math.sin(obj.angle);
+            // console.log(R * Math.cos(obj.angle));
+          })
+          .start();
+      }
 
       // 月亮
       const moonGeometry = new THREE.SphereGeometry(2);
       const moonMaterial = new THREE.MeshLambertMaterial({
         color: 0xffffff,
+        wireframe: true,
         // side: THREE.DoubleSide, // 双面渲染
         // transparent:true,//开启透明
         // opacity: 0.75 // 不透明度
       });
       const moonMesh = new THREE.Mesh(moonGeometry, moonMaterial);
       earthMesh.add(moonMesh);
-      moonMesh.position.set(-10, 0, 0);
+      moonMesh.position.set(15, 0, 0);
     }
 
     // 渲染器
@@ -138,6 +167,10 @@ export default class SolarSystem {
 
   // 运动
   animate() {
+    // console.log(tiem);
+
+    this.tween.update();
+    // this.mesh.rotateY(0.01);
     this.renderer.render(this.scene, this.camera);
     this.stats.update();
   }
