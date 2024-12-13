@@ -12,7 +12,7 @@ export default class SolarSystem {
   renderer: THREE.WebGLRenderer;
   light: THREE.PointLight; //  点光源
   stats: Stats; // 帧率
-  tween: TWEEN;
+  tween: TWEEN.Tween;
 
   constructor() {
     const boxDom = document.querySelector(".box")!;

@@ -11,9 +11,6 @@ importers:
       '@tweenjs/tween.js':
         specifier: ^25.0.0
         version: 25.0.0
-      '@types/three':
-        specifier: ^0.169.0
-        version: 0.169.0
       three:
         specifier: ^0.169.0
         version: 0.169.0
@@ -33,6 +30,12 @@ importers:
       '@types/node':
         specifier: ^20.16.11
         version: 20.16.11
+      '@types/three':
+        specifier: ^0.169.0
+        version: 0.169.0
+      '@types/tweenjs':
+        specifier: ^1.0.8
+        version: 1.0.8
       '@vitejs/plugin-vue':
         specifier: ^5.1.4
         version: 5.1.4(vite@5.4.8(@types/node@20.16.11))(vue@3.5.12(typescript@5.5.4))
@@ -562,6 +565,9 @@ packages:
   '@tweenjs/tween.js@25.0.0':
     resolution: {integrity: sha512-XKLA6syeBUaPzx4j3qwMqzzq+V4uo72BnlbOjmuljLrRqdsd3qnzvZZoxvMHZ23ndsRS4aufU6JOZYpCbU6T1A==}
 
+  '@types/createjs-lib@0.0.33':
+    resolution: {integrity: sha512-mvK1sn2qSyGPwctg/MsjAP5m3/TBx83eB0hcEdZ6UqpuzQqCUWpVyyQddqkbAsKRpMECK0s7JosYXoTtIuNbhw==}
+
   '@types/debug@4.1.12':
     resolution: {integrity: sha512-vIChWdVG3LG1SMxEvI/AK+FWJthlrqlTu7fbrlywTkkaONwk/UAGaULXRlf8vkzFBLVm0zkMdCquhL5aOjhXPQ==}
 
@@ -585,6 +591,9 @@ packages:
 
   '@types/three@0.169.0':
     resolution: {integrity: sha512-oan7qCgJBt03wIaK+4xPWclYRPG9wzcg7Z2f5T8xYTNEF95kh0t0lklxLLYBDo7gQiGLYzE6iF4ta7nXF2bcsw==}
+
+  '@types/tweenjs@1.0.8':
+    resolution: {integrity: sha512-/HTVWu8c+AUJFK9P6b3LRzfodAYwDogtQKoH3ovZmnOY4aNJf+k3VqPx+D+AsLZP06AmoSLzqu9n/E5XCglCZw==}
 
   '@types/unist@3.0.3':
     resolution: {integrity: sha512-ko/gIFJRv177XgZsZcBwnqJN5x/Gien8qNOn0D5bQU/zAzVf9Zt3BlcUiLqhV9y4ARk0GbT3tnUiPNgnTXzc/Q==}
@@ -2284,6 +2293,8 @@ snapshots:
 
   '@tweenjs/tween.js@25.0.0': {}
 
+  '@types/createjs-lib@0.0.33': {}
+
   '@types/debug@4.1.12':
     dependencies:
       '@types/ms': 0.7.34
@@ -2312,6 +2323,10 @@ snapshots:
       '@webgpu/types': 0.1.48
       fflate: 0.8.2
       meshoptimizer: 0.18.1
+
+  '@types/tweenjs@1.0.8':
+    dependencies:
+      '@types/createjs-lib': 0.0.33
 
   '@types/unist@3.0.3': {}
 
