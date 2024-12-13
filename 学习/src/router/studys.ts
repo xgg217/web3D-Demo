@@ -17,7 +17,7 @@ export default [
     component: () => import("@/views/study/SceneSolarSystem/index.vue"),
     meta: {
       title: "场景之太阳系、太阳、地球、月亮",
-      imgSrc: "",
+      imgSrc: "SceneSolarSystem/SceneSolarSystem.png",
     },
   },
   {
@@ -26,7 +26,7 @@ export default [
     component: () => import("@/views/study/CameraSetScissorTest/index.vue"),
     meta: {
       title: "相机之剪函数",
-      imgSrc: "",
+      imgSrc: "CameraSetScissorTest/CameraSetScissorTest.png",
     },
   },
 ] as RouteRecordRaw[];

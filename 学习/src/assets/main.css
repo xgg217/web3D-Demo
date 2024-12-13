@@ -3,12 +3,6 @@
   --view-height: 96.5vh;
 }
 
-.main {
-  width: calc(100vw - var(--nav));
-  height: var(--view-height);
-  box-sizing: border-box;
-}
-
 main > .box {
   display: flex;
   align-items: center;
