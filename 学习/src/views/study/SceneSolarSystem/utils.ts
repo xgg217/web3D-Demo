@@ -41,7 +41,7 @@ export default class SolarSystem {
       this.camera.lookAt(0, 0, 0);
     }
 
-    // 光源
+    // #region 光源
     {
       // 点光源
       const PointLight = new THREE.PointLight(0xffffff, 100000, 100);
@@ -58,6 +58,7 @@ export default class SolarSystem {
       const pointLightHelper = new THREE.PointLightHelper(PointLight, 100);
       this.scene.add(pointLightHelper);
     }
+    // #endregion
 
     // 物体
     {

@@ -12,7 +12,8 @@
 
 <style scoped>
 .main {
-  width: calc(100vw - 330px);
-  height: 98vh;
+  width: calc(100vw - var(--nav));
+  height: var(--view-height);
+  box-sizing: border-box;
 }
 </style>

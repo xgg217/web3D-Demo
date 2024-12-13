@@ -1,0 +1,17 @@
+:root {
+  --nav: 330px;
+  --view-height: 96.5vh;
+}
+
+.main {
+  width: calc(100vw - var(--nav));
+  height: var(--view-height);
+  box-sizing: border-box;
+}
+
+main > .box {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  box-sizing: border-box;
+}
