@@ -21,7 +21,7 @@ export class CameraSetScissorTest {
     this.view2Elem = view2Elem;
 
     const { width, height } = getWAndH("box");
-    console.log(width, height);
+    // console.log(width, height);
 
     const widthVal = width * window.devicePixelRatio;
     const heightVal = height * window.devicePixelRatio;
@@ -209,8 +209,8 @@ export class CameraSetScissorTest {
     const boxDom = document.querySelector(".box")!;
     const canvasRect = boxDom.getBoundingClientRect();
     const elemRect = elem.getBoundingClientRect();
-    console.log("canvasRect", canvasRect);
-    console.log("elemRect", elemRect);
+    // console.log("canvasRect", canvasRect);
+    // console.log("elemRect", elemRect);
 
     // 计算canvas的尺寸
     const right = Math.min(elemRect.right, canvasRect.right) - canvasRect.left;
