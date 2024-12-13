@@ -5,14 +5,27 @@ import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 export class CameraSetScissorTest {
   scene: THREE.Scene;
   camera: THREE.PerspectiveCamera;
+  camera2: THREE.PerspectiveCamera;
   mesh: THREE.Mesh; // 物体
   renderer: THREE.WebGLRenderer;
   light: THREE.SpotLight; //  点光源
+  view1Elem: HTMLElement;
+  view2Elem: HTMLElement;
+  cameraHelper: THREE.CameraHelper;
 
   constructor() {
     const boxDom = document.querySelector(".box")!;
+    const view1Elem = document.querySelector("#view1")! as HTMLElement;
+    const view2Elem = document.querySelector("#view2")! as HTMLElement;
+    this.view1Elem = view1Elem;
+    this.view2Elem = view2Elem;
+
     const { width, height } = getWAndH("box");
     console.log(width, height);
+
+    const widthVal = width * window.devicePixelRatio;
+    const heightVal = height * window.devicePixelRatio;
+    const ASPECT_RATIO = widthVal / heightVal;
 
     // 场景
     {
@@ -27,14 +40,35 @@ export class CameraSetScissorTest {
 
     // 相机
     {
-      const widthVal = width * window.devicePixelRatio;
-      const heightVal = height * window.devicePixelRatio;
-      const ASPECT_RATIO = widthVal / heightVal;
-
       const camera = new THREE.PerspectiveCamera(40, ASPECT_RATIO, 0.1, 1000);
       this.camera = camera;
       camera.position.set(50, 130, 130);
       this.camera.lookAt(0, 0, 0);
+
+      // 相机辅助
+      const cameraHelper = new THREE.CameraHelper(camera);
+      this.cameraHelper = cameraHelper;
+      this.scene.add(cameraHelper);
+
+      const controls = new OrbitControls(camera, view1Elem);
+      controls.target.set(0, 0, 0);
+      controls.update();
+    }
+
+    // 相机2
+    {
+      const camera2 = new THREE.PerspectiveCamera(
+        60, // fov
+        ASPECT_RATIO, // aspect
+        0.1, // near
+        500, // far
+      );
+      camera2.position.set(50, 130, 130);
+      this.camera2 = camera2;
+
+      const controls2 = new OrbitControls(camera2, view2Elem);
+      controls2.target.set(0, 0, 0);
+      controls2.update();
     }
 
     // 光源
@@ -45,7 +79,7 @@ export class CameraSetScissorTest {
           0xffffff,
           20000,
           150,
-          -Math.PI / 8,
+          -Math.PI / 6,
         );
         // 设置光源位置
         PointLight.position.set(60, 50, 0);
@@ -144,20 +178,119 @@ export class CameraSetScissorTest {
       renderer.setAnimationLoop(() => this.animate());
       this.renderer = renderer;
       renderer.shadowMap.enabled = true; // 允许光源阴影渲染
+
       // const leftDom = document.querySelector(".box")!;
       boxDom.appendChild(renderer.domElement);
     }
 
-    // 相机控件
+    // 第一个视窗 相机控件
+    // {
+    //   const controls = new OrbitControls(this.camera, view1Elem);
+    //   controls.target.set(0, 0, 0);
+    //   controls.update();
+    // }
+
+    // 第二个视窗
     {
-      const controls = new OrbitControls(this.camera, this.renderer.domElement);
-      controls.target.set(0, 0, 0);
-      controls.update();
+      // const camera2 = new THREE.PerspectiveCamera(
+      //   60, // fov
+      //   ASPECT_RATIO, // aspect
+      //   0.1, // near
+      //   500, // far
+      // );
+      // camera2.position.set(50, 130, 130);
+      // const controls2 = new OrbitControls(camera2, view2Elem);
+      // controls2.update();
     }
   }
 
+  //
+  setScissorForElement(elem: HTMLElement) {
+    const boxDom = document.querySelector(".box")!;
+    const canvasRect = boxDom.getBoundingClientRect();
+    const elemRect = elem.getBoundingClientRect();
+
+    // 计算canvas的尺寸
+    const right = Math.min(elemRect.right, canvasRect.right) - canvasRect.left;
+    const left = Math.max(0, elemRect.left - canvasRect.left);
+    const bottom =
+      Math.min(elemRect.bottom, canvasRect.bottom) - canvasRect.top;
+    const top = Math.max(0, elemRect.top - canvasRect.top);
+
+    const width = Math.min(canvasRect.width, right - left);
+    const height = Math.min(canvasRect.height, bottom - top);
+
+    // 设置剪函数以仅渲染一部分场景
+    const positiveYUpBottom = canvasRect.height - bottom;
+    this.renderer.setScissor(left, positiveYUpBottom, width, height);
+    this.renderer.setViewport(left, positiveYUpBottom, width, height);
+    console.log(width, height);
+
+    // 返回aspect
+    return width / height;
+  }
+
+  // 画布重置
+  // resizeRendererToDisplaySize(renderer: THREE.WebGLRenderer) {
+  //   const canvas = renderer.domElement;
+  //   const width = canvas.clientWidth;
+  //   const height = canvas.clientHeight;
+  //   const needResize = canvas.width !== width || canvas.height !== height;
+  //   if (needResize) {
+  //     renderer.setSize(width, height, false);
+  //   }
+
+  //   return needResize;
+  // }
+
   animate() {
-    this.renderer.render(this.scene, this.camera);
+    // this.resizeRendererToDisplaySize(this.renderer);
+    // this.renderer.render(this.scene, this.camera);
     // this.stats.update();
+
+    // 启用剪刀函数
+    this.renderer.setScissorTest(true);
+
+    // 视角1
+    {
+      const camera = this.camera;
+      const aspect = this.setScissorForElement(this.view1Elem);
+      // console.log();
+
+      // adjust the camera for this aspect
+      camera.aspect = aspect;
+      camera.updateProjectionMatrix();
+      this.cameraHelper.update();
+      this.cameraHelper.visible = false;
+      this.scene.background = new THREE.Color(0x000000);
+      this.renderer.render(this.scene, camera);
+      // if (this.scene) {
+      // this.scene.background!.set(0x000000);
+      // }
+
+      // // don't draw the camera helper in the original view
+      // cameraHelper.visible = false;
+
+      // scene.background.set( 0x000000 );
+
+      // // render
+      // renderer.render( scene, camera );
+    }
+
+    // 视角2
+    {
+      const aspect = this.setScissorForElement(this.view2Elem);
+
+      // adjust the camera for this aspect
+      this.camera2.aspect = aspect;
+      this.camera2.updateProjectionMatrix();
+
+      // draw the camera helper in the 2nd view
+      this.cameraHelper.visible = true;
+
+      // this.scene.background.set(0x000040);
+
+      this.renderer.render(this.scene, this.camera2);
+    }
   }
 }

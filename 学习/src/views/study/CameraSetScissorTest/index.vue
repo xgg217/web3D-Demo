@@ -7,17 +7,30 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="box"></div>
+  <div class="box">
+    <div class="split">
+      <div id="view1" tabindex="1"></div>
+      <div id="view2" tabindex="2"></div>
+    </div>
+  </div>
 </template>
 
 <style scoped>
 .box {
   height: calc(100vh -50px);
 }
-/* .box {
-  display: flex;
-  align-items: center;
+
+.split {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
   height: 100%;
-  box-sizing: border-box;
-} */
+  display: flex;
+}
+.split > div {
+  border: 1px solid red;
+  width: 50%;
+  height: 100%;
+}
 </style>
