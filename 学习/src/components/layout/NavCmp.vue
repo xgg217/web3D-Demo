@@ -93,7 +93,7 @@ nav {
   width: var(--nav);
   height: var(--view-height);
   overflow-y: scroll;
-  padding: 0 16px 16px 16px;
+  padding: 0 8px 16px 8px;
   box-sizing: border-box;
 }
 ul {
@@ -102,9 +102,6 @@ ul {
 
 li {
   list-style: none;
-  /* width: 260px; */
-  width: calc(var(--nav) - 70px);
   box-sizing: border-box;
-  /* border: 1px solid red; */
 }
 </style>

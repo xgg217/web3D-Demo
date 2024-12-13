@@ -35,6 +35,7 @@ const emit = defineEmits<{
   cursor: pointer;
   box-sizing: border-box;
   margin-bottom: 16px;
+  /* border: 1px solid blue; */
 }
 
 .avc {
@@ -43,7 +44,8 @@ const emit = defineEmits<{
 }
 
 .imgs {
-  width: 254px;
+  border: 1px solid blue;
+  width: 100%;
   height: 160px;
   box-sizing: border-box;
   display: flex;
