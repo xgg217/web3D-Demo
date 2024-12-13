@@ -42,7 +42,7 @@ export class CameraSetScissorTest {
     {
       const camera = new THREE.PerspectiveCamera(40, ASPECT_RATIO, 0.1, 1000);
       this.camera = camera;
-      camera.position.set(50, 130, 130);
+      camera.position.set(50, 100, 100);
       this.camera.lookAt(0, 0, 0);
 
       // 相机辅助
@@ -51,7 +51,7 @@ export class CameraSetScissorTest {
       this.scene.add(cameraHelper);
 
       const controls = new OrbitControls(camera, view1Elem);
-      controls.target.set(0, 0, 0);
+      controls.target.set(0, 5, 0);
       controls.update();
     }
 
@@ -63,11 +63,11 @@ export class CameraSetScissorTest {
         0.1, // near
         500, // far
       );
-      camera2.position.set(50, 130, 130);
+      camera2.position.set(340, 30, 20);
       this.camera2 = camera2;
 
       const controls2 = new OrbitControls(camera2, view2Elem);
-      controls2.target.set(0, 0, 0);
+      controls2.target.set(0, -5, 0);
       controls2.update();
     }
 
@@ -99,8 +99,8 @@ export class CameraSetScissorTest {
         // PointLight.shadow.bias = -0.002;
 
         // 光源辅助观察
-        const pointLightHelper = new THREE.SpotLightHelper(PointLight, 100);
-        this.scene.add(pointLightHelper);
+        // const pointLightHelper = new THREE.SpotLightHelper(PointLight, 100);
+        // this.scene.add(pointLightHelper);
       }
 
       // 环境光
@@ -209,6 +209,8 @@ export class CameraSetScissorTest {
     const boxDom = document.querySelector(".box")!;
     const canvasRect = boxDom.getBoundingClientRect();
     const elemRect = elem.getBoundingClientRect();
+    console.log("canvasRect", canvasRect);
+    console.log("elemRect", elemRect);
 
     // 计算canvas的尺寸
     const right = Math.min(elemRect.right, canvasRect.right) - canvasRect.left;
@@ -224,30 +226,13 @@ export class CameraSetScissorTest {
     const positiveYUpBottom = canvasRect.height - bottom;
     this.renderer.setScissor(left, positiveYUpBottom, width, height);
     this.renderer.setViewport(left, positiveYUpBottom, width, height);
-    console.log(width, height);
+    // console.log("elem", width, height);
 
     // 返回aspect
     return width / height;
   }
 
-  // 画布重置
-  // resizeRendererToDisplaySize(renderer: THREE.WebGLRenderer) {
-  //   const canvas = renderer.domElement;
-  //   const width = canvas.clientWidth;
-  //   const height = canvas.clientHeight;
-  //   const needResize = canvas.width !== width || canvas.height !== height;
-  //   if (needResize) {
-  //     renderer.setSize(width, height, false);
-  //   }
-
-  //   return needResize;
-  // }
-
   animate() {
-    // this.resizeRendererToDisplaySize(this.renderer);
-    // this.renderer.render(this.scene, this.camera);
-    // this.stats.update();
-
     // 启用剪刀函数
     this.renderer.setScissorTest(true);
 
@@ -264,17 +249,6 @@ export class CameraSetScissorTest {
       this.cameraHelper.visible = false;
       this.scene.background = new THREE.Color(0x000000);
       this.renderer.render(this.scene, camera);
-      // if (this.scene) {
-      // this.scene.background!.set(0x000000);
-      // }
-
-      // // don't draw the camera helper in the original view
-      // cameraHelper.visible = false;
-
-      // scene.background.set( 0x000000 );
-
-      // // render
-      // renderer.render( scene, camera );
     }
 
     // 视角2
@@ -287,8 +261,6 @@ export class CameraSetScissorTest {
 
       // draw the camera helper in the 2nd view
       this.cameraHelper.visible = true;
-
-      // this.scene.background.set(0x000040);
 
       this.renderer.render(this.scene, this.camera2);
     }

@@ -18,6 +18,9 @@ onMounted(() => {
 <style scoped>
 .box {
   height: calc(100vh -50px);
+  position: relative;
+  top: 0;
+  left: 0;
 }
 
 .split {
@@ -28,9 +31,16 @@ onMounted(() => {
   height: 100%;
   display: flex;
 }
-.split > div {
-  border: 1px solid red;
-  width: 50%;
-  height: 100%;
+.split div {
+  flex: 1;
+
+  box-sizing: border-box;
+  /* width: 50%; */
+  /* height: 100%; */
+  /* height: calc(100vh -50px); */
+}
+
+.split div:first-child {
+  border-right: 1px solid red;
 }
 </style>
