@@ -25,7 +25,7 @@ export default [
     name: "CameraSetScissorTest",
     component: () => import("@/views/study/CameraSetScissorTest/index.vue"),
     meta: {
-      title: "相机之剪函数",
+      title: "相机之局部渲染",
       imgSrc: "CameraSetScissorTest/CameraSetScissorTest.png",
     },
   },

@@ -186,26 +186,6 @@ export class CameraSetScissorTest {
       // const leftDom = document.querySelector(".box")!;
       boxDom.appendChild(renderer.domElement);
     }
-
-    // 第一个视窗 相机控件
-    // {
-    //   const controls = new OrbitControls(this.camera, view1Elem);
-    //   controls.target.set(0, 0, 0);
-    //   controls.update();
-    // }
-
-    // 第二个视窗
-    {
-      // const camera2 = new THREE.PerspectiveCamera(
-      //   60, // fov
-      //   ASPECT_RATIO, // aspect
-      //   0.1, // near
-      //   500, // far
-      // );
-      // camera2.position.set(50, 130, 130);
-      // const controls2 = new OrbitControls(camera2, view2Elem);
-      // controls2.update();
-    }
   }
 
   //
