@@ -15,14 +15,13 @@ onMounted(() => {
       <div id="view1" tabindex="1"></div>
       <div id="view2" tabindex="2"></div>
     </div>
-
     <RemarkCmp :url="url" />
   </div>
 </template>
 
 <style scoped>
 .box {
-  height: calc(100vh -50px);
+  /* height: calc(100vh -50px); */
   position: relative;
   top: 0;
   left: 0;

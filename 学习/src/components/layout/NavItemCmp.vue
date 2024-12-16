@@ -1,3 +1,27 @@
+<script setup lang="ts">
+import type { ILeftItem } from "./types";
+
+const props = defineProps<{
+  row: ILeftItem;
+  isAvc: boolean;
+}>();
+
+const emit = defineEmits<{
+  click: [routeName: string];
+}>();
+
+// const placeholderURl = new URL("@/assets/占位图.svg", import.meta.url).href;
+
+// const url = computed(() => {
+//   console.log();
+
+//   if (props.row.imgSrc) {
+//     return props.row.imgSrc;
+//   }
+//   return placeholderURl;
+// });
+</script>
+
 <template>
   <div
     class="item"
@@ -10,19 +34,6 @@
     <p>{{ props.row.title }}</p>
   </div>
 </template>
-
-<script setup lang="ts">
-import type { ILeftItem } from "./types";
-
-const props = defineProps<{
-  row: ILeftItem;
-  isAvc: boolean;
-}>();
-
-const emit = defineEmits<{
-  click: [routeName: string];
-}>();
-</script>
 
 <style scoped>
 .item {

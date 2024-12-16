@@ -1,45 +1,52 @@
 <script setup lang="ts">
-import { ElDrawer } from "element-plus";
+import { ElDrawer, ElLoading } from "element-plus";
 import markdownit from "markdown-it";
 
 const {
   bgc = "#fff",
   textColor = "#000",
   url,
+  title = "备注",
 } = defineProps<{
   bgc?: string;
   textColor?: string;
   url: string;
+  title?: string;
 }>();
 
 // 抽屉
-const { drawer, loading, txtVal } = (() => {
-  const loading = ref(false);
+const { drawer, txtVal, loading, open } = (() => {
   const drawer = ref(false);
+  const loading = ref(false);
 
   const md = markdownit();
   const txtVal = ref("");
 
-  fetch(url)
-    .then(res => {
-      return res.text();
-    })
-    .then(text => {
-      console.log(text);
+  const open = () => {
+    drawer.value = true;
+    loading.value = true;
+    fetch(url)
+      .then(res => {
+        return res.text();
+      })
+      .then(text => {
+        txtVal.value = md.render(text);
+      })
+      .catch(err => {
+        console.error(err);
+      })
+      .finally(() => {
+        loading.value = false;
+      });
+  };
 
-      txtVal.value = md.render(text);
-    })
-    .catch(err => {
-      console.error(err);
-    });
-
-  return { drawer, loading, txtVal };
+  return { drawer, txtVal, loading, open };
 })();
 </script>
 
 <template>
   <div class="remark" :style="{ backgroundColor: bgc }">
-    <p :style="{ color: textColor }" @click="drawer = true">1</p>
+    <p :style="{ color: textColor }" @click="open">{{ title }}</p>
   </div>
 
   <!-- 抽屉 -->

@@ -17,6 +17,7 @@
 <script setup lang="ts">
 import type { ILeftItem } from "./types";
 import NavItemCmp from "./NavItemCmp.vue";
+import placeholderURl from "@/assets/占位图.svg";
 
 const props = defineProps<{
   pathName: string;
@@ -29,6 +30,9 @@ const avcRouteName = ref(""); // 当前被激活的路由名称
 
 const arr = shallowRef<ILeftItem[]>([]);
 
+// 默认占位符
+// const placeholderURl = new URL("/src/assets/占位图.svg", import.meta.url).href;
+
 // 获取所有路由
 const getRouterArr = () => {
   const list = router.getRoutes(); // 获取所有路由
@@ -40,10 +44,19 @@ const getRouterArr = () => {
   return arr[0].children.map((item: any) => {
     const { name, meta } = item;
 
-    const imgSrc = new URL(
-      `/src/views/${props.pathName}/${meta?.imgSrc}`,
-      import.meta.url,
-    ).href;
+    let imgSrc = placeholderURl;
+    // 图片存在
+    if (meta.imgSrc) {
+      imgSrc = new URL(
+        `/src/views/${props.pathName}/${meta.imgSrc}`,
+        import.meta.url,
+      ).href;
+    }
+
+    // const imgSrc = new URL(
+    //   `/src/views/${props.pathName}/${meta?.imgSrc}`,
+    //   import.meta.url,
+    // ).href;
 
     const obj: ILeftItem = {
       imgSrc,
