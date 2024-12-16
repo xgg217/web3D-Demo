@@ -21,8 +21,8 @@
     "vue-router": "^4.4.5"
   },
   "devDependencies": {
-    "@eslint/markdown": "^6.2.0",
     "@tsconfig/node20": "^20.1.4",
+    "@types/markdown-it": "^14.1.2",
     "@types/node": "^20.16.11",
     "@types/three": "^0.169.0",
     "@types/tweenjs": "^1.0.8",

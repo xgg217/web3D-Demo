@@ -1,7 +1,7 @@
 import pluginVue from 'eslint-plugin-vue';
 import vueTsEslintConfig from '@vue/eslint-config-typescript';
 import skipFormatting from '@vue/eslint-config-prettier/skip-formatting';
-import markdown from "@eslint/markdown"
+// import markdown from "@eslint/markdown"
 
 export default [
   {
@@ -14,13 +14,13 @@ export default [
     ignores: ['**/dist/**', '**/dist-ssr/**', '**/coverage/**'],
   },
 
-  {
-    plugin: {
-      markdown
-    },
-    files: ['**/*.md'],
-    language: 'markdown/commonmark'
-  },
+  // {
+  //   plugin: {
+  //     markdown
+  //   },
+  //   files: ['**/*.md'],
+  //   language: 'markdown/commonmark'
+  // },
 
   ...pluginVue.configs['flat/essential'],
   ...vueTsEslintConfig(),

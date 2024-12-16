@@ -2,6 +2,8 @@
 import { CameraSetScissorTest } from "./utils";
 import RemarkCmp from "@/components/RemarkCmp/index.vue";
 
+const url = new URL("./Tips/README.md", import.meta.url).href;
+
 onMounted(() => {
   new CameraSetScissorTest();
 });
@@ -14,7 +16,7 @@ onMounted(() => {
       <div id="view2" tabindex="2"></div>
     </div>
 
-    <RemarkCmp />
+    <RemarkCmp :url="url" />
   </div>
 </template>
 

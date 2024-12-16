@@ -92,9 +92,13 @@ export class CameraSetScissorTest {
         PointLight.shadow.mapSize.height = 1024;
         PointLight.shadow.camera.near = 0.5; // 设置阴影摄像机的裁剪平面
         PointLight.shadow.camera.far = 500;
+        // @ts-ignore
         PointLight.shadow.camera.left = -10;
+        // @ts-ignore
         PointLight.shadow.camera.right = 10;
+        // @ts-ignore
         PointLight.shadow.camera.top = 10;
+        // @ts-ignore
         PointLight.shadow.camera.bottom = -10;
         // PointLight.shadow.bias = -0.002;
 
