@@ -1,11 +1,13 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { SimulatedShadow } from "./utils";
+
+onMounted(() => {
+  new SimulatedShadow();
+});
+</script>
 
 <template>
-  <div class="box">123</div>
+  <div class="box"></div>
 </template>
 
-<style scoped>
-.box {
-  border: 1px solid #000;
-}
-</style>
+<style scoped></style>
