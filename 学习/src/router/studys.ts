@@ -29,4 +29,14 @@ export default [
       imgSrc: "CameraSetScissorTest/CameraSetScissorTest.png",
     },
   },
+  {
+    path: "shadowMapsSimulatedShadow",
+    name: "ShadowMapsSimulatedShadow",
+    component: () =>
+      import("@/views/study/ShadowMapsSimulatedShadow/index.vue"),
+    meta: {
+      title: "阴影之假阴影",
+      imgSrc: "ShadowMapsSimulatedShadow/ShadowMapsSimulatedShadow.png",
+    },
+  },
 ] as RouteRecordRaw[];
