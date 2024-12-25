@@ -209,7 +209,7 @@ export class SimulatedShadow {
       const yOff = Math.abs(Math.sin(time * 2 + index));
       // 上下移动球体
       sphereMesh.position.y = y + THREE.MathUtils.lerp(-2, 2, yOff);
-      // f随着球的上升，阴影逐渐消失
+      // @ts-ignore 随着球的上升，阴影逐渐消失
       shadowMesh.material.opacity = THREE.MathUtils.lerp(1, 0.25, yOff);
     });
   }

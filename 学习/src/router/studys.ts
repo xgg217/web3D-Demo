@@ -39,4 +39,13 @@ export default [
       imgSrc: "ShadowMapsSimulatedShadow/ShadowMapsSimulatedShadow.png",
     },
   },
+  {
+    path: "shadowMapsPointLight",
+    name: "ShadowMapsPointLight",
+    component: () => import("@/views/study/ShadowMapsPointLight/index.vue"),
+    meta: {
+      title: "阴影之聚光灯",
+      imgSrc: "ShadowMapsPointLight/ShadowMapsPointLight.png",
+    },
+  },
 ] as RouteRecordRaw[];
