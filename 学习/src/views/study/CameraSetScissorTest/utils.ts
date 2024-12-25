@@ -145,7 +145,7 @@ export class CameraSetScissorTest {
 
         // 纹理
         const loader = new THREE.TextureLoader();
-        const imgUr = new URL("./checker.png", import.meta.url).href;
+        const imgUr = new URL("@/assets/checker.png", import.meta.url).href;
         const texture = loader.load(imgUr);
         texture.wrapS = THREE.RepeatWrapping;
         texture.wrapT = THREE.RepeatWrapping;

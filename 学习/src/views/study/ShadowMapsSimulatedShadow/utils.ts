@@ -86,8 +86,7 @@ export class SimulatedShadow {
         const planeSize = 40;
 
         // 纹理
-
-        const imgUr = new URL("./checker.png", import.meta.url).href;
+        const imgUr = new URL("@/assets/checker.png", import.meta.url).href;
         const texture = loader.load(imgUr);
         texture.wrapS = THREE.RepeatWrapping;
         texture.wrapT = THREE.RepeatWrapping;
@@ -161,22 +160,6 @@ export class SimulatedShadow {
 
         this.sphereShadowBases.push(obj);
       }
-    }
-
-    // 渲染器
-    {
-      const renderer = new THREE.WebGLRenderer({
-        antialias: true, // 锯齿模糊
-        logarithmicDepthBuffer: true,
-      });
-      renderer.setPixelRatio(window.devicePixelRatio);
-      renderer.setSize(width, height);
-      renderer.setAnimationLoop(() => this.animate());
-      this.renderer = renderer;
-      renderer.shadowMap.enabled = true; // 允许光源阴影渲染
-
-      // const leftDom = document.querySelector(".box")!;
-      boxDom.appendChild(renderer.domElement);
     }
 
     // 相机控件
