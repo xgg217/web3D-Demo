@@ -1,11 +1,13 @@
 import * as THREE from "three";
 import { getWAndH } from "@/utils/index";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import { GUI } from "three/addons/libs/lil-gui.module.min.js";
 
 export class ShadowMapsPointLight {
   scene: THREE.Scene;
   camera: THREE.PerspectiveCamera;
-  mesh: THREE.Mesh; // 物体
+  light: THREE.PointLight; //  聚光灯
+  // mesh: THREE.Mesh; // 物体
   renderer: THREE.WebGLRenderer;
 
   constructor() {
@@ -134,6 +136,7 @@ export class ShadowMapsPointLight {
       const color = 0xffffff;
       const intensity = 100;
       const light = new THREE.PointLight(color, intensity);
+      this.light = light;
       light.castShadow = true;
       light.position.set(0, 10, 0);
       this.scene.add(light);
@@ -142,9 +145,85 @@ export class ShadowMapsPointLight {
       const helper = new THREE.PointLightHelper(light);
       this.scene.add(helper);
     }
+
+    // gui
+    {
+      const gui = new GUI();
+      // gui.addColor(new ColorGUIHelper(light, "color"), "value").name("color");
+      // 光照强度
+      gui.add(this.light, "intensity", 0, 200);
+      // 光源照射的最大距离 默认值为 0（无限远）
+      gui.add(this.light, "distance", 0, 40);
+
+      // 分组 相机与阴影
+      {
+        const folder = gui.addFolder("相机与阴影");
+        folder.open();
+        const minMaxGUIHelper = new MinMaxGUIHelper(
+          this.light.shadow.camera,
+          "near",
+          "far",
+          0.1,
+        );
+        folder.add(minMaxGUIHelper, "min", 0.1, 50, 0.1).name("near");
+        folder.add(minMaxGUIHelper, "max", 0.1, 50, 0.1).name("far");
+      }
+    }
   }
 
   animate() {
     this.renderer.render(this.scene, this.camera);
   }
 }
+
+// 获取 PerspectiveCamera 的所有属性类型
+type MyProps = keyof THREE.PerspectiveCamera;
+
+// 最大值与最小值
+class MinMaxGUIHelper {
+  obj: THREE.PerspectiveCamera;
+  minProp: MyProps; // THREE.PerspectiveCamera的属性
+  maxProp: MyProps; // 属性
+  minDif: number; // 值
+
+  constructor(
+    obj: THREE.PerspectiveCamera,
+    minProp: MyProps,
+    maxProp: MyProps,
+    minDif: number,
+  ) {
+    this.obj = obj;
+    this.minProp = minProp;
+    this.maxProp = maxProp;
+    this.minDif = minDif;
+  }
+  // get min() {
+  //   return this.obj[this.minProp];
+  // }
+  // set min(v) {
+  //   this.obj[this.minProp] = v;
+  //   this.obj[this.maxProp] = Math.max(this.obj[this.maxProp], v + this.minDif);
+  // }
+
+  // get max() {
+  //   return this.obj[this.maxProp];
+  // }
+  // set max(v) {
+  //   this.obj[this.maxProp] = v;
+  //   this.min = this.min; // this will call the min setter
+  // }
+}
+
+// // 颜色GUI
+// class ColorGUIHelper {
+//   constructor(object, prop) {
+//     this.object = object;
+//     this.prop = prop;
+//   }
+//   get value() {
+//     return `#${this.object[this.prop].getHexString()}`;
+//   }
+//   set value(hexString) {
+//     this.object[this.prop].set(hexString);
+//   }
+// }
