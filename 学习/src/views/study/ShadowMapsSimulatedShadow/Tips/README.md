@@ -27,3 +27,11 @@
   ```
 
 - DirectionalLight 环境光
+
+## 上下移动
+
+- 它们在 XZ 平面上移动。带来一个类似弹性的动画
+
+  ```js
+  Math.abs(Math.sin(time));
+  ```

@@ -17,6 +17,7 @@ export class SimulatedShadow {
   // light: THREE.AmbientLight; //  光源
   sphereShadowBases: TSphereShadowBases[]; // 球体 + 阴影网格
   // cameraHelper: THREE.CameraHelper;
+  clock: THREE.Clock; // 两帧渲染时间间隔
 
   constructor() {
     const boxDom = document.querySelector(".box")!;
@@ -26,6 +27,8 @@ export class SimulatedShadow {
     const ASPECT_RATIO = widthVal / heightVal;
     this.sphereShadowBases = [];
     const numSpheres = 15; // 小球个数
+
+    this.clock = new THREE.Clock();
 
     // 场景
     {
@@ -185,6 +188,29 @@ export class SimulatedShadow {
   }
 
   animate() {
+    console.log("time");
     this.renderer.render(this.scene, this.camera);
+
+    // 两帧渲染时间间隔
+    const time = this.clock.getElapsedTime();
+
+    // 运动
+    const arr = this.sphereShadowBases;
+    arr.forEach((item, index) => {
+      const { base, sphereMesh, shadowMesh, y } = item;
+
+      const u = index / arr.length;
+      const speed = time * 0.2;
+      const angle = speed + u * Math.PI * 2 * (index % 1 ? 1 : -1);
+      const radius = Math.sin(speed - index) * 10;
+      base.position.set(Math.cos(angle) * radius, 0, Math.sin(angle) * radius);
+
+      // yOff是一个从0到1的值
+      const yOff = Math.abs(Math.sin(time * 2 + index));
+      // 上下移动球体
+      sphereMesh.position.y = y + THREE.MathUtils.lerp(-2, 2, yOff);
+      // f随着球的上升，阴影逐渐消失
+      shadowMesh.material.opacity = THREE.MathUtils.lerp(1, 0.25, yOff);
+    });
   }
 }
