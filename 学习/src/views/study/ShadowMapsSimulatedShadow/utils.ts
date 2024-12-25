@@ -30,6 +30,22 @@ export class SimulatedShadow {
 
     this.clock = new THREE.Clock();
 
+    // 渲染器
+    {
+      const renderer = new THREE.WebGLRenderer({
+        antialias: true, // 锯齿模糊
+        logarithmicDepthBuffer: true,
+      });
+      renderer.setPixelRatio(window.devicePixelRatio);
+      renderer.setSize(width, height);
+      renderer.setAnimationLoop(() => this.animate());
+      this.renderer = renderer;
+      renderer.shadowMap.enabled = true; // 允许光源阴影渲染
+
+      // const leftDom = document.querySelector(".box")!;
+      boxDom.appendChild(renderer.domElement);
+    }
+
     // 场景
     {
       const scene = new THREE.Scene();

@@ -5,7 +5,7 @@ import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 export class ShadowMapsPointLight {
   scene: THREE.Scene;
   camera: THREE.PerspectiveCamera;
-  // mesh: THREE.Mesh; // 物体
+  mesh: THREE.Mesh; // 物体
   renderer: THREE.WebGLRenderer;
 
   constructor() {
@@ -53,6 +53,94 @@ export class ShadowMapsPointLight {
       const controls = new OrbitControls(this.camera, this.renderer.domElement);
       controls.target.set(0, 5, 0);
       controls.update();
+    }
+
+    // 物体
+    {
+      const loader = new THREE.TextureLoader();
+      // 平面
+      {
+        const planeSize = 40;
+        // 纹理
+        const imgUr = new URL("@/assets/checker.png", import.meta.url).href;
+        const texture = loader.load(imgUr);
+        texture.wrapS = THREE.RepeatWrapping;
+        texture.wrapT = THREE.RepeatWrapping;
+        texture.magFilter = THREE.NearestFilter;
+        texture.colorSpace = THREE.SRGBColorSpace;
+        const repeats = planeSize / 2;
+        texture.repeat.set(repeats, repeats);
+
+        const planeGeo = new THREE.PlaneGeometry(planeSize, planeSize);
+        const planeMat = new THREE.MeshPhongMaterial({
+          map: texture,
+          side: THREE.DoubleSide,
+        });
+        const mesh = new THREE.Mesh(planeGeo, planeMat);
+        mesh.receiveShadow = true;
+        mesh.rotation.x = Math.PI * -0.5;
+        this.scene.add(mesh);
+      }
+
+      // 正方体
+      {
+        const cubeSize = 4;
+        const boxGeometry = new THREE.BoxGeometry(cubeSize, cubeSize, cubeSize);
+        const boxMaterial = new THREE.MeshPhongMaterial({
+          color: "#8AC",
+        });
+        const mesh = new THREE.Mesh(boxGeometry, boxMaterial);
+        mesh.castShadow = true;
+        mesh.receiveShadow = true;
+        mesh.position.set(cubeSize + 1, cubeSize / 2, 0);
+        this.scene.add(mesh);
+      }
+
+      // 外面的大盒子
+      {
+        const cubeSize = 30;
+        const cubeGeo = new THREE.BoxGeometry(cubeSize, cubeSize, cubeSize);
+        const cubeMat = new THREE.MeshPhongMaterial({
+          color: "#CCC",
+          side: THREE.BackSide,
+        });
+        const mesh = new THREE.Mesh(cubeGeo, cubeMat);
+        mesh.receiveShadow = true;
+        mesh.position.set(0, cubeSize / 2 - 0.1, 0);
+        this.scene.add(mesh);
+      }
+
+      // 球体
+      {
+        const sphereRadius = 3;
+        const sphereWidthDivisions = 32;
+        const sphereHeightDivisions = 16;
+        const sphereGeo = new THREE.SphereGeometry(
+          sphereRadius,
+          sphereWidthDivisions,
+          sphereHeightDivisions,
+        );
+        const sphereMat = new THREE.MeshPhongMaterial({ color: "#CA8" });
+        const mesh = new THREE.Mesh(sphereGeo, sphereMat);
+        mesh.castShadow = true;
+        mesh.receiveShadow = true;
+        mesh.position.set(-sphereRadius - 1, sphereRadius + 2, 0);
+        this.scene.add(mesh);
+      }
+    }
+
+    // 光源
+    {
+      const color = 0xffffff;
+      const intensity = 100;
+      const light = new THREE.PointLight(color, intensity);
+      light.castShadow = true;
+      light.position.set(0, 10, 0);
+      this.scene.add(light);
+
+      // 辅助光源
+      const helper = new THREE.PointLightHelper(light);
+      this.scene.add(helper);
     }
   }
 
