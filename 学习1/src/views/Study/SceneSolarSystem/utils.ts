@@ -3,6 +3,7 @@ import Stats from "three/addons/libs/stats.module.js";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { getWAndH } from "@/utils/index";
 // import * as TWEEN from "@tweenjs/tween.js";
+import anime from "animejs";
 
 // 太阳系
 export default class SolarSystem {
@@ -86,6 +87,24 @@ export default class SolarSystem {
       // 地球运动
       {
         const R = 40; // 相机圆周运动的半径
+
+        const obj = {
+          angle: 0,
+        };
+
+        anime({
+          targets: obj,
+          angle: -Math.PI * 2,
+          easing: "linear",
+          duration: 10000,
+          loop: true,
+          update: () => {
+            earthMesh.rotateY(0.02);
+            earthMesh.position.x = R * Math.cos(obj.angle);
+            earthMesh.position.z = R * Math.sin(obj.angle);
+          },
+        });
+
         // this.tween = new TWEEN.Tween({ angle: 0 })
         //   .to({ angle: -Math.PI * 2 }, 10000)
         //   .repeat(Infinity)

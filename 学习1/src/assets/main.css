@@ -9,18 +9,17 @@
   /* box-sizing: border-box; */
 }
 
-
-
 main {
   width: 100%;
   box-sizing: border-box;
 }
 
-main > .box {
+main .box {
   display: flex;
   align-items: center;
   height: 100%;
   box-sizing: border-box;
+  border: 1px solid #000;
 }
 
 li {
