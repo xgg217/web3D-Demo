@@ -1,5 +1,5 @@
 <template>
-  <LayoutCmp path-name="custom"></LayoutCmp>
+  <LayoutCmp path-name="study"></LayoutCmp>
 </template>
 
 <script setup lang="ts">

@@ -12,8 +12,14 @@ const router = createRouter({
       name: "home",
       component: HomeView,
     },
+
+    // 自定义
     examples,
+
+    // 官方示例
     customs,
+
+    // 学习
     studys,
 
     {

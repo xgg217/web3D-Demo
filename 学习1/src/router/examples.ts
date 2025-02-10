@@ -14,9 +14,9 @@ export default {
     {
       path: "index",
       name: "ExamplesIndex",
-      component: () => import("@/views/examples/ExamplesIndex.vue"),
+      component: () => import("@/views/Examples/ExamplesIndex.vue"),
       meta: {
-        title: "展位图",
+        title: "占位图",
         imgSrc: "",
       },
     },

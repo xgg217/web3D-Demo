@@ -13,12 +13,12 @@ export default defineConfig({
     vueDevTools(),
     AutoImport({
       imports: ["vue", "vue-router"],
-      // 自定义 导入
-      dirs: ["./src/api"],
-      dts: "./src/auto-imports.d.ts", // 解决使用了ts会出现类型丢失的问题
+      dts: "src/types/auto-imports.d.ts", //自定义生成 auto-imports.d.ts 路径丢失的问题
+      resolvers: [ElementPlusResolver()],
     }),
     Components({
       resolvers: [ElementPlusResolver()],
+      dts: "src/types/components.d.ts", //自定义生成 components.d.ts 路径
     }),
   ],
   resolve: {

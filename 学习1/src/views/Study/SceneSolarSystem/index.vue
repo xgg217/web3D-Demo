@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import SolarSystem from "./utils";
+// import SolarSystem from "./utils";
 
 onMounted(() => {
-  new SolarSystem();
+  // new SolarSystem();
 });
 </script>
 

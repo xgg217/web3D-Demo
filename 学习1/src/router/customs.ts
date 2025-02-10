@@ -1,7 +1,6 @@
 import type { RouteRecordRaw } from "vue-router";
 import Layout from "@/views/Custom/layout/index.vue";
 
-
 // 自定义
 export default {
   path: "/custom",
@@ -17,7 +16,7 @@ export default {
       name: "CustomIndex",
       component: () => import("@/views/Custom/CustomIndex.vue"),
       meta: {
-        title: "展位图",
+        title: "占位图",
         imgSrc: "",
       },
     },
@@ -26,7 +25,7 @@ export default {
       name: "CustomIndex2",
       component: () => import("@/views/Custom/CustomIndex2.vue"),
       meta: {
-        title: "展位图",
+        title: "占位图",
         imgSrc: "",
       },
     },

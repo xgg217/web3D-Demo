@@ -4,12 +4,8 @@
     <nav>
       <h2>{{ title }}</h2>
       <ul>
-        <li v-for="item of arr" :key="item.imgSrc">
-          <NavItemCmp
-            :row="item"
-            @click="onPage"
-            :is-avc="avcRouteName === item.routeName"
-          />
+        <li v-for="item of arr" :key="item.routeName">
+          <NavItemCmp :row="item" @click="onPage" :is-avc="avcRouteName === item.routeName" />
         </li>
       </ul>
     </nav>
@@ -29,6 +25,7 @@
 import type { ILeftItem } from "./types";
 import NavItemCmp from "./NavItemCmp.vue";
 import placeholderURl from "@/assets/占位图.svg";
+import type { RouteRecordRaw } from "vue-router";
 
 const props = defineProps<{
   pathName: string;
@@ -60,29 +57,30 @@ const { title, arr, avcRouteName, getRouterArr, onPage } = (() => {
   const getRouterArr = () => {
     const list = router.getRoutes(); // 获取所有路由
 
-    const arr = list.filter((item: any) => {
+    const obj = list.find((item: RouteRecordRaw) => {
       return item.path === `/${props.pathName}`;
     });
 
-    if (!arr.length) {
+    if (obj === undefined) {
       console.error(`未找到${props.pathName}路由`);
 
       return [];
     }
 
-    return arr[0].children.map((item: any) => {
+    const viewName = obj.name as string;
+
+    return obj.children.map((item: RouteRecordRaw) => {
       const { name, meta } = item;
 
       let imgSrc = placeholderURl;
 
       // 图片存在
-      if (meta.imgSrc) {
+      if (meta && meta.imgSrc) {
         // 在vite 6.0.5 中才需要这种处理
         const arr = meta.imgSrc.split("/");
-
         imgSrc = new URL(
-          `/src/views/${props.pathName}/${arr[0]}/${arr[1]}`,
-          // `/src/views/${props.pathName}/$meta.imgSrc}`,
+          `/src/views/${viewName}/${arr[0]}/${arr[1]}`,
+          // `/src/views/${viewName}/$meta.imgSrc}`,
           import.meta.url,
         ).href;
       }
@@ -94,6 +92,12 @@ const { title, arr, avcRouteName, getRouterArr, onPage } = (() => {
       };
       return obj;
     });
+
+    // if (obj) {
+    //   return obj.children;
+    // }
+
+    // return [];
   };
 
   // 页面跳转
@@ -128,6 +132,7 @@ onMounted(() => {
 
   // 获取所有页面
   arr.value = getRouterArr();
+  console.log(arr.value);
 });
 </script>
 
