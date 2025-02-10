@@ -156,18 +156,18 @@ export class ShadowMapsPointLight {
       gui.add(this.light, "distance", 0, 40);
 
       // 分组 相机与阴影
-      {
-        const folder = gui.addFolder("相机与阴影");
-        folder.open();
-        const minMaxGUIHelper = new MinMaxGUIHelper(
-          this.light.shadow.camera,
-          "near",
-          "far",
-          0.1,
-        );
-        folder.add(minMaxGUIHelper, "min", 0.1, 50, 0.1).name("near");
-        folder.add(minMaxGUIHelper, "max", 0.1, 50, 0.1).name("far");
-      }
+      // {
+      //   const folder = gui.addFolder("相机与阴影");
+      //   folder.open();
+      //   const minMaxGUIHelper = new MinMaxGUIHelper(
+      //     this.light.shadow.camera,
+      //     "near",
+      //     "far",
+      //     0.1,
+      //   );
+      //   folder.add(minMaxGUIHelper, "min", 0.1, 50, 0.1).name("near");
+      //   folder.add(minMaxGUIHelper, "max", 0.1, 50, 0.1).name("far");
+      // }
     }
   }
 

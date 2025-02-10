@@ -187,7 +187,7 @@ export class SimulatedShadow {
   }
 
   animate() {
-    console.log("time");
+    // console.log("time");
     this.renderer.render(this.scene, this.camera);
 
     // 两帧渲染时间间隔

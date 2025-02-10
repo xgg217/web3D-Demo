@@ -3,7 +3,8 @@ import AutoImport from "unplugin-auto-import/vite";
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import vueDevTools from "vite-plugin-vue-devtools";
-import ElementPlus from "unplugin-element-plus/vite";
+import Components from "unplugin-vue-components/vite";
+import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -16,8 +17,8 @@ export default defineConfig({
       dirs: ["./src/api"],
       dts: "./src/auto-imports.d.ts", // 解决使用了ts会出现类型丢失的问题
     }),
-    ElementPlus({
-      useSource: true,
+    Components({
+      resolvers: [ElementPlusResolver()],
     }),
   ],
   resolve: {

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ElDrawer, ElLoading } from "element-plus";
 import markdownit from "markdown-it";
 
 const {

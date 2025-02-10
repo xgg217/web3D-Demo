@@ -1,18 +1,43 @@
 <script setup lang="ts">
-import { RouterLink } from "vue-router";
-import { ElCard } from "element-plus";
 import markdownit from "markdown-it";
 import README from "./../../README.md?raw";
 
 const md = markdownit();
 const mdHTML = md.render(README);
+
+const routerArr = [
+  {
+    name: "学习",
+    path: "/study",
+  },
+  {
+    name: "WebGL",
+    path: "/examples",
+  },
+  {
+    name: "自定义",
+    path: "/custom",
+  },
+] as const;
 </script>
 
 <template>
   <main>
-    <RouterLink to="/study">学习</RouterLink>
-    <RouterLink to="/examples">webgl</RouterLink>
-    <RouterLink to="/custom">自定义</RouterLink>
+    <ElMenu
+      router
+      style="width: 200px"
+      active-text-color="#ffd04b"
+      background-color="#545c64"
+      class="el-menu-vertical-demo"
+      default-active="2"
+      text-color="#fff"
+    >
+      <template v-for="item of routerArr" :key="item.path">
+        <ElMenuItem :index="item.path">
+          <span>{{ item.name }}</span>
+        </ElMenuItem>
+      </template>
+    </ElMenu>
   </main>
   <footer>
     <ElCard style="width: 100%">
