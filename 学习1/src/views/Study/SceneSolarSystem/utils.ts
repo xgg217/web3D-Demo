@@ -170,6 +170,11 @@ export default class SolarSystem {
     }
   }
 
+  // 销毁动画
+  destroy() {
+    this.renderer.setAnimationLoop(null);
+  }
+
   // 运动
   animate() {
     // console.log(tiem);

@@ -1,8 +1,15 @@
 <script setup lang="ts">
 import SolarSystem from "./utils";
 
+const SolarSystemClass = ref<SolarSystem>();
+
 onMounted(() => {
   new SolarSystem();
+});
+
+onBeforeUnmount(() => {
+  console.log("销毁组件");
+  SolarSystemClass.value?.destroy();
 });
 </script>
 

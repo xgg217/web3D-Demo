@@ -15,10 +15,12 @@ export class CameraSetScissorTest {
 
   constructor() {
     const boxDom = document.querySelector(".box")!;
-    const view1Elem = document.querySelector("#view1")! as HTMLElement;
-    const view2Elem = document.querySelector("#view2")! as HTMLElement;
+    const view1Elem = document.querySelector(".box #view1")! as HTMLElement;
+    const view2Elem = document.querySelector(".box #view2")! as HTMLElement;
     this.view1Elem = view1Elem;
     this.view2Elem = view2Elem;
+
+    console.log(view1Elem, view2Elem);
 
     const { width, height } = getWAndH("box");
     // console.log(width, height);
@@ -75,12 +77,7 @@ export class CameraSetScissorTest {
     {
       // 聚光灯光源
       {
-        const PointLight = new THREE.SpotLight(
-          0xffffff,
-          20000,
-          150,
-          -Math.PI / 6,
-        );
+        const PointLight = new THREE.SpotLight(0xffffff, 20000, 150, -Math.PI / 6);
         // 设置光源位置
         PointLight.position.set(60, 50, 0);
         this.light = PointLight;
@@ -190,30 +187,44 @@ export class CameraSetScissorTest {
 
   //
   setScissorForElement(elem: HTMLElement) {
-    const boxDom = document.querySelector(".box")!;
-    const canvasRect = boxDom.getBoundingClientRect();
-    const elemRect = elem.getBoundingClientRect();
-    // console.log("canvasRect", canvasRect);
-    // console.log("elemRect", elemRect);
+    const { width, height, left, top } = elem.getBoundingClientRect();
 
-    // 计算canvas的尺寸
-    const right = Math.min(elemRect.right, canvasRect.right) - canvasRect.left;
-    const left = Math.max(0, elemRect.left - canvasRect.left);
-    const bottom =
-      Math.min(elemRect.bottom, canvasRect.bottom) - canvasRect.top;
-    const top = Math.max(0, elemRect.top - canvasRect.top);
+    this.renderer.setScissor(left, top, width, height);
+    this.renderer.setScissor(left, top, width, height);
 
-    const width = Math.min(canvasRect.width, right - left);
-    const height = Math.min(canvasRect.height, bottom - top);
-
-    // 设置剪函数以仅渲染一部分场景
-    const positiveYUpBottom = canvasRect.height - bottom;
-    this.renderer.setScissor(left, positiveYUpBottom, width, height);
-    this.renderer.setViewport(left, positiveYUpBottom, width, height);
-    // console.log("elem", width, height);
-
-    // 返回aspect
     return width / height;
+
+    // const boxDom = document.querySelector(".box")!;
+    // const canvasRect = boxDom.getBoundingClientRect();
+    // const elemRect = elem.getBoundingClientRect();
+    // // console.log("canvasRect", canvasRect);
+    // // console.log("elemRect", elemRect);
+
+    // // 计算canvas的尺寸
+    // const right = Math.min(elemRect.right, canvasRect.right) - canvasRect.left;
+    // const left = Math.max(0, elemRect.left - canvasRect.left);
+    // const bottom = Math.min(elemRect.bottom, canvasRect.bottom) - canvasRect.top;
+    // const top = Math.max(0, elemRect.top - canvasRect.top);
+
+    // const width = Math.min(canvasRect.width, right - left);
+    // const height = Math.min(canvasRect.height, bottom - top);
+
+    // if (width > 0 && height > 0) {
+    //   // 设置剪函数以仅渲染一部分场景
+    //   const positiveYUpBottom = canvasRect.height - bottom;
+    //   this.renderer.setScissor(left, positiveYUpBottom, width, height);
+    //   this.renderer.setViewport(left, positiveYUpBottom, width, height);
+    //   // console.log("elem", width, height);
+
+    //   // 返回aspect
+    //   return width / height;
+    // }
+    // return 1;
+  }
+
+  // 销毁动画
+  destroy() {
+    this.renderer.setAnimationLoop(null);
   }
 
   animate() {
@@ -232,24 +243,26 @@ export class CameraSetScissorTest {
       this.cameraHelper.update();
       this.cameraHelper.visible = false;
       this.scene.background = new THREE.Color(0x000000);
+      // console.log("camera.position", this.scene, camera);
+
       this.renderer.render(this.scene, camera);
     }
 
     // 视角2
-    {
-      const aspect = this.setScissorForElement(this.view2Elem);
+    // {
+    //   const aspect = this.setScissorForElement(this.view2Elem);
 
-      // adjust the camera for this aspect
-      this.camera2.aspect = aspect;
-      this.camera2.updateProjectionMatrix();
+    //   // adjust the camera for this aspect
+    //   this.camera2.aspect = aspect;
+    //   this.camera2.updateProjectionMatrix();
 
-      // draw the camera helper in the 2nd view
-      this.cameraHelper.visible = true;
+    //   // draw the camera helper in the 2nd view
+    //   this.cameraHelper.visible = true;
 
-      // setTimeout(() => {
+    //   // setTimeout(() => {
 
-      this.renderer.render(this.scene, this.camera2);
-      // })
-    }
+    //   this.renderer.render(this.scene, this.camera2);
+    //   // })
+    // }
   }
 }

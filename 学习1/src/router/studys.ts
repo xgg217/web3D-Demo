@@ -29,15 +29,15 @@ export default {
         imgSrc: "SceneSolarSystem/SceneSolarSystem.png",
       },
     },
-    // {
-    //   path: "cameraSetScissorTest",
-    //   name: "CameraSetScissorTest",
-    //   component: () => import("@/views/study/CameraSetScissorTest/index.vue"),
-    //  meta: {
-    //    title: "相机之局部渲染",
-    //    imgSrc: "CameraSetScissorTest/CameraSetScissorTest.png",
-    //  },
-    //},
+    {
+      path: "cameraSetScissorTest",
+      name: "CameraSetScissorTest",
+      component: () => import("@/views/Study/CameraSetScissorTest/index.vue"),
+      meta: {
+        title: "相机之局部渲染",
+        imgSrc: "CameraSetScissorTest/CameraSetScissorTest.png",
+      },
+    },
     //{
     //  path: "shadowMapsSimulatedShadow",
     //  name: "ShadowMapsSimulatedShadow",
