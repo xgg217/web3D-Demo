@@ -2,7 +2,7 @@ import * as THREE from "three";
 import Stats from "three/addons/libs/stats.module.js";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { getWAndH } from "@/utils/index";
-import * as TWEEN from "@tweenjs/tween.js";
+// import * as TWEEN from "@tweenjs/tween.js";
 
 // 太阳系
 export default class SolarSystem {
@@ -12,7 +12,7 @@ export default class SolarSystem {
   renderer: THREE.WebGLRenderer;
   light: THREE.PointLight; //  点光源
   stats: Stats; // 帧率
-  tween: TWEEN.Tween;
+  // tween: TWEEN.Tween;
 
   constructor() {
     const boxDom = document.querySelector(".box")!;
@@ -64,24 +64,12 @@ export default class SolarSystem {
     {
       // 太阳
       const sunGeometry = new THREE.SphereGeometry(10, 10, 10);
-      // const wireframeGeometry = new THREE.WireframeGeometry(sunGeometry);
-      // const lineMaterial = new THREE.LineDashedMaterial({
-      //   color: 0xff0000,
-      //   dashSize: 10,
-      //   gapSize: 5,
-      // });
       const sunMaterial = new THREE.MeshBasicMaterial({
         color: 0xffff00,
         wireframe: true,
-        // transparent: true, //开启透明
-        // side: THREE.DoubleSide, // 双面渲染
-        // emissive: 0xffff00, // 自发光颜色
-        // opacity: 0, // 不透明度
       });
-      // const sumMesh = new THREE.LineSegments(wireframeGeometry, lineMaterial);
       const sumMesh = new THREE.Mesh(sunGeometry, sunMaterial);
       this.mesh = sumMesh;
-      // sumMesh.position.set(30, 0, 0);
       this.scene.add(sumMesh);
 
       // 地球;
@@ -89,9 +77,6 @@ export default class SolarSystem {
       const earthMaterial = new THREE.MeshLambertMaterial({
         color: 0x0000ff,
         wireframe: true,
-        // side: THREE.DoubleSide, // 双面渲染
-        // transparent: true, //开启透明
-        // opacity: 0.75, // 不透明度
       });
       const earthMesh = new THREE.Mesh(earthGeometry, earthMaterial);
       // earthMesh.wireframe = true;
@@ -100,18 +85,18 @@ export default class SolarSystem {
 
       // 地球运动
       {
-        const R = 40; //相机圆周运动的半径
-        this.tween = new TWEEN.Tween({ angle: 0 })
-          .to({ angle: -Math.PI * 2 }, 10000)
-          .repeat(Infinity)
-          .onUpdate(obj => {
-            // console.log(obj);
-            earthMesh.rotateY(0.02);
-            earthMesh.position.x = R * Math.cos(obj.angle);
-            earthMesh.position.z = R * Math.sin(obj.angle);
-            // console.log(R * Math.cos(obj.angle));
-          })
-          .start();
+        const R = 40; // 相机圆周运动的半径
+        // this.tween = new TWEEN.Tween({ angle: 0 })
+        //   .to({ angle: -Math.PI * 2 }, 10000)
+        //   .repeat(Infinity)
+        //   .onUpdate(obj => {
+        //     // console.log(obj);
+        //     earthMesh.rotateY(0.02);
+        //     earthMesh.position.x = R * Math.cos(obj.angle);
+        //     earthMesh.position.z = R * Math.sin(obj.angle);
+        //     // console.log(R * Math.cos(obj.angle));
+        //   })
+        //   .start();
       }
 
       // 月亮
@@ -170,7 +155,7 @@ export default class SolarSystem {
   animate() {
     // console.log(tiem);
 
-    this.tween.update();
+    // this.tween.update();
     // this.mesh.rotateY(0.01);
     this.renderer.render(this.scene, this.camera);
     this.stats.update();
