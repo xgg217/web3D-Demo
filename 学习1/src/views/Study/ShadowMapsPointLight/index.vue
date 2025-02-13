@@ -1,8 +1,17 @@
 <script setup lang="ts">
 import { ShadowMapsPointLight } from "./utils";
 
+const ShadowMapsPointLightClass = ref<ShadowMapsPointLight>();
+
 onMounted(() => {
-  new ShadowMapsPointLight();
+  setTimeout(() => {
+    ShadowMapsPointLightClass.value = new ShadowMapsPointLight();
+  }, 1000);
+});
+
+onBeforeUnmount(() => {
+  // console.log("销毁组件");
+  ShadowMapsPointLightClass.value?.destroy();
 });
 </script>
 

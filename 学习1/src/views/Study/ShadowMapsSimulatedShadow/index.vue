@@ -1,8 +1,17 @@
 <script setup lang="ts">
 import { SimulatedShadow } from "./utils";
 
+const SimulatedShadowClass = ref<SimulatedShadow>();
+
 onMounted(() => {
-  new SimulatedShadow();
+  setTimeout(() => {
+    SimulatedShadowClass.value = new SimulatedShadow();
+  }, 1000);
+});
+
+onBeforeUnmount(() => {
+  // console.log("销毁组件");
+  SimulatedShadowClass.value?.destroy();
 });
 </script>
 

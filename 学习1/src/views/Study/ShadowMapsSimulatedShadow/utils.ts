@@ -18,9 +18,11 @@ export class SimulatedShadow {
   sphereShadowBases: TSphereShadowBases[]; // 球体 + 阴影网格
   // cameraHelper: THREE.CameraHelper;
   clock: THREE.Clock; // 两帧渲染时间间隔
+  boxDom: HTMLElement;
 
   constructor() {
-    const boxDom = document.querySelector(".box")!;
+    const boxDom = document.querySelector(".box")! as HTMLElement;
+    this.boxDom = boxDom;
     const { width, height } = getWAndH("box");
     const widthVal = width * window.devicePixelRatio;
     const heightVal = height * window.devicePixelRatio;
@@ -72,11 +74,7 @@ export class SimulatedShadow {
         const skyColor = 0xb1e1ff; // 天空的颜色
         const groundColor = 0xb97a20; // 地面的颜色
         const intensity = 2;
-        const light = new THREE.HemisphereLight(
-          skyColor,
-          groundColor,
-          intensity,
-        );
+        const light = new THREE.HemisphereLight(skyColor, groundColor, intensity);
         this.scene.add(light);
       }
 
@@ -211,5 +209,43 @@ export class SimulatedShadow {
       // @ts-ignore 随着球的上升，阴影逐渐消失
       shadowMesh.material.opacity = THREE.MathUtils.lerp(1, 0.25, yOff);
     });
+  }
+
+  // 销毁
+  destroy() {
+    const renderer = this.renderer;
+    const scene = this.scene;
+    const camera = this.camera;
+
+    // 销毁动画
+    renderer.setAnimationLoop(null);
+
+    // 清除渲染器和画布
+    renderer.dispose();
+    this.boxDom.removeChild(renderer.domElement);
+
+    // 删除场景中的所有对象
+    scene.traverse(object => {
+      // @ts-ignore
+      if (object.isMesh) {
+        // @ts-ignore
+        object.geometry.dispose();
+        // @ts-ignore
+        object.material.dispose();
+      }
+    });
+
+    // 重置相机和其他辅助对象
+    camera.position.set(0, 0, 0);
+
+    // 解除引用
+    {
+      // @ts-ignore
+      this.scene = null;
+      // @ts-ignore
+      this.camera = null;
+      // @ts-ignore
+      this.renderer = null;
+    }
   }
 }

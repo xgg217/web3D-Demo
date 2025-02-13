@@ -38,24 +38,23 @@ export default {
         imgSrc: "CameraSetScissorTest/CameraSetScissorTest.png",
       },
     },
-    //{
-    //  path: "shadowMapsSimulatedShadow",
-    //  name: "ShadowMapsSimulatedShadow",
-    //  component: () =>
-    //    import("@/views/study/ShadowMapsSimulatedShadow/index.vue"),
-    //  meta: {
-    //    title: "阴影之假阴影",
-    //    imgSrc: "ShadowMapsSimulatedShadow/ShadowMapsSimulatedShadow.png",
-    //  },
-    //},
-    //{
-    //  path: "shadowMapsPointLight",
-    //  name: "ShadowMapsPointLight",
-    //  component: () => import("@/views/study/ShadowMapsPointLight/index.//vue"),
-    //  meta: {
-    //    title: "阴影之聚光灯",
-    //    imgSrc: "ShadowMapsPointLight/ShadowMapsPointLight.png",
-    //  },
-    //},
+    {
+      path: "shadowMapsSimulatedShadow",
+      name: "ShadowMapsSimulatedShadow",
+      component: () => import("@/views/Study/ShadowMapsSimulatedShadow/index.vue"),
+      meta: {
+        title: "阴影之假阴影",
+        imgSrc: "ShadowMapsSimulatedShadow/ShadowMapsSimulatedShadow.png",
+      },
+    },
+    {
+      path: "shadowMapsPointLight",
+      name: "ShadowMapsPointLight",
+      component: () => import("@/views/Study/ShadowMapsPointLight/index.vue"),
+      meta: {
+        title: "阴影之聚光灯",
+        imgSrc: "ShadowMapsPointLight/ShadowMapsPointLight.png",
+      },
+    },
   ],
 } as RouteRecordRaw;

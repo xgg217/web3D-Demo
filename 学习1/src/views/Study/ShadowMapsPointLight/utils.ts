@@ -9,9 +9,11 @@ export class ShadowMapsPointLight {
   light: THREE.PointLight; //  聚光灯
   // mesh: THREE.Mesh; // 物体
   renderer: THREE.WebGLRenderer;
+  boxDom: HTMLElement;
 
   constructor() {
-    const boxDom = document.querySelector(".box")!;
+    const boxDom = document.querySelector(".box")! as HTMLElement;
+    this.boxDom = boxDom;
     const { width, height } = getWAndH("box");
     const widthVal = width * window.devicePixelRatio;
     const heightVal = height * window.devicePixelRatio;
@@ -174,6 +176,44 @@ export class ShadowMapsPointLight {
   animate() {
     this.renderer.render(this.scene, this.camera);
   }
+
+  // 销毁
+  destroy() {
+    const renderer = this.renderer;
+    const scene = this.scene;
+    const camera = this.camera;
+
+    // 销毁动画
+    renderer.setAnimationLoop(null);
+
+    // 清除渲染器和画布
+    renderer.dispose();
+    this.boxDom.removeChild(renderer.domElement);
+
+    // 删除场景中的所有对象
+    scene.traverse(object => {
+      // @ts-ignore
+      if (object.isMesh) {
+        // @ts-ignore
+        object.geometry.dispose();
+        // @ts-ignore
+        object.material.dispose();
+      }
+    });
+
+    // 重置相机和其他辅助对象
+    camera.position.set(0, 0, 0);
+
+    // 解除引用
+    {
+      // @ts-ignore
+      this.scene = null;
+      // @ts-ignore
+      this.camera = null;
+      // @ts-ignore
+      this.renderer = null;
+    }
+  }
 }
 
 // 获取 PerspectiveCamera 的所有属性类型
@@ -186,12 +226,7 @@ class MinMaxGUIHelper {
   maxProp: MyProps; // 属性
   minDif: number; // 值
 
-  constructor(
-    obj: THREE.PerspectiveCamera,
-    minProp: MyProps,
-    maxProp: MyProps,
-    minDif: number,
-  ) {
+  constructor(obj: THREE.PerspectiveCamera, minProp: MyProps, maxProp: MyProps, minDif: number) {
     this.obj = obj;
     this.minProp = minProp;
     this.maxProp = maxProp;
@@ -213,17 +248,3 @@ class MinMaxGUIHelper {
   //   this.min = this.min; // this will call the min setter
   // }
 }
-
-// // 颜色GUI
-// class ColorGUIHelper {
-//   constructor(object, prop) {
-//     this.object = object;
-//     this.prop = prop;
-//   }
-//   get value() {
-//     return `#${this.object[this.prop].getHexString()}`;
-//   }
-//   set value(hexString) {
-//     this.object[this.prop].set(hexString);
-//   }
-// }

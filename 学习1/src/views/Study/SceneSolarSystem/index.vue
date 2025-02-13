@@ -5,7 +5,7 @@ const SolarSystemClass = ref<SolarSystem>();
 
 onMounted(() => {
   setTimeout(() => {
-    new SolarSystem();
+    SolarSystemClass.value = new SolarSystem();
   }, 1000);
 });
 
