@@ -56,5 +56,14 @@ export default {
         imgSrc: "ShadowMapsPointLight/ShadowMapsPointLight.png",
       },
     },
+    {
+      path: "fog",
+      name: "Fog",
+      component: () => import("@/views/Study/Fog/index.vue"),
+      meta: {
+        title: "雾",
+        imgSrc: "Fog/Fog.gif",
+      },
+    },
   ],
 } as RouteRecordRaw;

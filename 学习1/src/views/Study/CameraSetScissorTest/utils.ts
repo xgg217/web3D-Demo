@@ -21,7 +21,7 @@ export class CameraSetScissorTest {
     this.view1Elem = view1Elem;
     this.view2Elem = view2Elem;
 
-    console.log(view1Elem, view2Elem);
+    // console.log(view1Elem, view2Elem);
 
     const { width, height } = getWAndH("box");
     // console.log(width, height);

@@ -10,6 +10,7 @@ declare module 'vue' {
     ElDrawer: typeof import('element-plus/es')['ElDrawer']
     ElMenu: typeof import('element-plus/es')['ElMenu']
     ElMenuItem: typeof import('element-plus/es')['ElMenuItem']
+    ElScrollbar: typeof import('element-plus/es')['ElScrollbar']
     Layout: typeof import('./../components/layout/index.vue')['default']
     NavItemCmp: typeof import('./../components/layout/NavItemCmp.vue')['default']
     RemarkCmp: typeof import('./../components/RemarkCmp/index.vue')['default']
