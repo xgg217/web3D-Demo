@@ -4,11 +4,13 @@ import SolarSystem from "./utils";
 const SolarSystemClass = ref<SolarSystem>();
 
 onMounted(() => {
-  new SolarSystem();
+  setTimeout(() => {
+    new SolarSystem();
+  }, 1000);
 });
 
 onBeforeUnmount(() => {
-  console.log("销毁组件");
+  // console.log("销毁组件");
   SolarSystemClass.value?.destroy();
 });
 </script>

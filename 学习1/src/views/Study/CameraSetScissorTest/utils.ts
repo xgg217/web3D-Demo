@@ -12,9 +12,10 @@ export class CameraSetScissorTest {
   view1Elem: HTMLElement;
   view2Elem: HTMLElement;
   cameraHelper: THREE.CameraHelper;
+  boxDom: HTMLElement;
 
   constructor() {
-    const boxDom = document.querySelector(".box")!;
+    this.boxDom = document.querySelector(".box")!;
     const view1Elem = document.querySelector(".box #view1")! as HTMLElement;
     const view2Elem = document.querySelector(".box #view2")! as HTMLElement;
     this.view1Elem = view1Elem;
@@ -181,60 +182,43 @@ export class CameraSetScissorTest {
       renderer.shadowMap.enabled = true; // 允许光源阴影渲染
 
       // const leftDom = document.querySelector(".box")!;
-      boxDom.appendChild(renderer.domElement);
+      // console.log(JSON.stringify(boxDom), JSON.stringify(width), JSON.stringify(height));
+
+      this.boxDom.appendChild(renderer.domElement);
     }
   }
 
-  //
-  setScissorForElement(elem: HTMLElement) {
-    const { width, height, left, top } = elem.getBoundingClientRect();
+  // 窗口重置
+  setScissorForElement(elem: HTMLElement, val: "left" | "right") {
+    const renderer = this.renderer;
+    const { width, height } = elem.getBoundingClientRect();
+    // 左侧
+    if (val === "left") {
+      renderer.setScissor(0, 0, width, height);
+      renderer.setViewport(0, 0, width, height);
+    }
 
-    this.renderer.setScissor(left, top, width, height);
-    this.renderer.setScissor(left, top, width, height);
+    if (val === "right") {
+      renderer.setScissor(width, 0, width, height);
+      renderer.setViewport(width, 0, width, height);
+    }
 
     return width / height;
-
-    // const boxDom = document.querySelector(".box")!;
-    // const canvasRect = boxDom.getBoundingClientRect();
-    // const elemRect = elem.getBoundingClientRect();
-    // // console.log("canvasRect", canvasRect);
-    // // console.log("elemRect", elemRect);
-
-    // // 计算canvas的尺寸
-    // const right = Math.min(elemRect.right, canvasRect.right) - canvasRect.left;
-    // const left = Math.max(0, elemRect.left - canvasRect.left);
-    // const bottom = Math.min(elemRect.bottom, canvasRect.bottom) - canvasRect.top;
-    // const top = Math.max(0, elemRect.top - canvasRect.top);
-
-    // const width = Math.min(canvasRect.width, right - left);
-    // const height = Math.min(canvasRect.height, bottom - top);
-
-    // if (width > 0 && height > 0) {
-    //   // 设置剪函数以仅渲染一部分场景
-    //   const positiveYUpBottom = canvasRect.height - bottom;
-    //   this.renderer.setScissor(left, positiveYUpBottom, width, height);
-    //   this.renderer.setViewport(left, positiveYUpBottom, width, height);
-    //   // console.log("elem", width, height);
-
-    //   // 返回aspect
-    //   return width / height;
-    // }
-    // return 1;
-  }
-
-  // 销毁动画
-  destroy() {
-    this.renderer.setAnimationLoop(null);
   }
 
   animate() {
+    const renderer = this.renderer;
+    const scene = this.scene;
+    const camera = this.camera;
+    const camera2 = this.camera2;
+
     // 启用剪刀函数
-    this.renderer.setScissorTest(true);
+    renderer.setScissorTest(true);
 
     // 视角1
     {
-      const camera = this.camera;
-      const aspect = this.setScissorForElement(this.view1Elem);
+      // const camera = this.camera!;
+      const aspect = this.setScissorForElement(this.view1Elem, "left");
       // console.log();
 
       // adjust the camera for this aspect
@@ -242,27 +226,64 @@ export class CameraSetScissorTest {
       camera.updateProjectionMatrix();
       this.cameraHelper.update();
       this.cameraHelper.visible = false;
-      this.scene.background = new THREE.Color(0x000000);
-      // console.log("camera.position", this.scene, camera);
+      scene.background = new THREE.Color(0x000000);
 
-      this.renderer.render(this.scene, camera);
+      renderer.render(scene, camera);
     }
 
     // 视角2
-    // {
-    //   const aspect = this.setScissorForElement(this.view2Elem);
+    {
+      const aspect = this.setScissorForElement(this.view2Elem, "right");
 
-    //   // adjust the camera for this aspect
-    //   this.camera2.aspect = aspect;
-    //   this.camera2.updateProjectionMatrix();
+      // adjust the camera for this aspect
+      camera2.aspect = aspect;
+      camera2.updateProjectionMatrix();
 
-    //   // draw the camera helper in the 2nd view
-    //   this.cameraHelper.visible = true;
+      // draw the camera helper in the 2nd view
+      this.cameraHelper.visible = true;
 
-    //   // setTimeout(() => {
+      renderer.render(scene, camera2);
+    }
+  }
 
-    //   this.renderer.render(this.scene, this.camera2);
-    //   // })
-    // }
+  // 销毁
+  destroy() {
+    const renderer = this.renderer;
+    const scene = this.scene;
+    const camera = this.camera;
+    const camera2 = this.camera2;
+
+    // 销毁动画
+    renderer.setAnimationLoop(null);
+
+    // 清除渲染器和画布
+    renderer.dispose();
+    this.boxDom.removeChild(renderer.domElement);
+
+    // 删除场景中的所有对象
+    scene.traverse(object => {
+      // @ts-ignore
+      if (object.isMesh) {
+        // @ts-ignore
+        object.geometry.dispose();
+        // @ts-ignore
+        object.material.dispose();
+      }
+    });
+
+    // 重置相机和其他辅助对象
+    camera.position.set(0, 0, 0);
+
+    // 解除引用
+    {
+      // @ts-ignore
+      this.scene = null;
+      // @ts-ignore
+      this.camera = null;
+      // @ts-ignore
+      this.camera2 = null;
+      // @ts-ignore
+      this.renderer = null;
+    }
   }
 }

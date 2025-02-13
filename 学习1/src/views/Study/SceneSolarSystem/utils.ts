@@ -13,10 +13,11 @@ export default class SolarSystem {
   renderer: THREE.WebGLRenderer;
   light: THREE.PointLight; //  点光源
   stats: Stats; // 帧率
+  boxDom: HTMLElement;
   // tween: TWEEN.Tween;
 
   constructor() {
-    const boxDom = document.querySelector(".box")!;
+    this.boxDom = document.querySelector(".box")!;
     const { width, height } = getWAndH("box");
 
     // 场景
@@ -150,7 +151,7 @@ export default class SolarSystem {
     // 帧率
     {
       const stats = new Stats();
-      boxDom.appendChild(stats.dom);
+      this.boxDom.appendChild(stats.dom);
       stats.dom.style.left = "350px";
       stats.dom.style.top = "20px";
       this.stats = stats;
@@ -170,11 +171,6 @@ export default class SolarSystem {
     }
   }
 
-  // 销毁动画
-  destroy() {
-    this.renderer.setAnimationLoop(null);
-  }
-
   // 运动
   animate() {
     // console.log(tiem);
@@ -183,5 +179,43 @@ export default class SolarSystem {
     // this.mesh.rotateY(0.01);
     this.renderer.render(this.scene, this.camera);
     this.stats.update();
+  }
+
+  // 销毁
+  destroy() {
+    const renderer = this.renderer;
+    const scene = this.scene;
+    const camera = this.camera;
+
+    // 销毁动画
+    renderer.setAnimationLoop(null);
+
+    // 清除渲染器和画布
+    renderer.dispose();
+    this.boxDom.removeChild(renderer.domElement);
+
+    // 删除场景中的所有对象
+    scene.traverse(object => {
+      // @ts-ignore
+      if (object.isMesh) {
+        // @ts-ignore
+        object.geometry.dispose();
+        // @ts-ignore
+        object.material.dispose();
+      }
+    });
+
+    // 重置相机和其他辅助对象
+    camera.position.set(0, 0, 0);
+
+    // 解除引用
+    {
+      // @ts-ignore
+      this.scene = null;
+      // @ts-ignore
+      this.camera = null;
+      // @ts-ignore
+      this.renderer = null;
+    }
   }
 }
