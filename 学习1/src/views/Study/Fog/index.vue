@@ -1,4 +1,7 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+// 参考
+// https://threejs.org/manual/#zh/fog
+</script>
 
 <template>
   <el-scrollbar height="100vh">
