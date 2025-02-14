@@ -53,8 +53,9 @@ export class Fog1 {
     {
       const stats = new Stats();
       boxDom.appendChild(stats.dom);
-      stats.dom.style.left = "350px";
-      stats.dom.style.top = "20px";
+      stats.dom.style.position = "absolute";
+      stats.dom.style.left = "10px";
+      stats.dom.style.top = "10px";
       this.stats = stats;
     }
   }
