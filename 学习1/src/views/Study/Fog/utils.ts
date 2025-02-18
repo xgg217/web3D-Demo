@@ -1,7 +1,8 @@
 import * as THREE from "three";
 import { getWAndH } from "@/utils/index";
-import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+// import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import Stats from "three/addons/libs/stats.module.js";
+import { GUI } from "three/addons/libs/lil-gui.module.min.js";
 
 // 案例1
 export class Fog1 {
@@ -14,11 +15,12 @@ export class Fog1 {
   boxDom: HTMLElement;
   clock: THREE.Clock; // 两帧渲染时间间隔
   meshArr: THREE.Mesh[];
+  gui: GUI;
 
   constructor() {
-    const boxDom = document.querySelector(".box1")! as HTMLElement;
+    const boxDom = document.querySelector(".box")! as HTMLElement;
     this.boxDom = boxDom;
-    const { width, height } = getWAndH("box1");
+    const { width, height } = getWAndH("box");
     const widthVal = width * window.devicePixelRatio;
     const heightVal = height * window.devicePixelRatio;
     const ASPECT_RATIO = widthVal / heightVal;
@@ -58,9 +60,12 @@ export class Fog1 {
       stats.dom.style.top = "10px";
       this.stats = stats;
     }
+
+    // GUI
+    this.gui = this.createGUI();
   }
 
-  // 创建场景
+  // 创建场景(含 雾)
   createScene() {
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0x000000);
@@ -74,7 +79,8 @@ export class Fog1 {
       const near = 1;
       const far = 2;
       const color = "lightblue";
-      scene.fog = new THREE.Fog(color, near, far);
+      const fog = new THREE.Fog(color, near, far);
+      scene.fog = fog;
       scene.background = new THREE.Color(color);
     }
 
@@ -146,6 +152,20 @@ export class Fog1 {
     return renderer;
   }
 
+  // gui
+  createGUI() {
+    const fog = this.scene.fog as THREE.Fog;
+    const gui = new GUI();
+    gui.add(fog, "near", 1, 2);
+    gui.add(fog, "far", 1, 2);
+    gui.addColor({ color: new THREE.Color("lightblue") }, "color").onChange(color => {
+      // console.log(err);
+      this.scene.background = new THREE.Color(color);
+      fog.color = new THREE.Color(color);
+    });
+    return gui;
+  }
+
   animate() {
     this.renderer.render(this.scene, this.camera);
 
@@ -177,6 +197,7 @@ export class Fog1 {
     // 清除渲染器和画布
     renderer.dispose();
     this.boxDom.removeChild(renderer.domElement);
+    this.boxDom.remove();
 
     // 删除场景中的所有对象
     scene.traverse(object => {
@@ -191,6 +212,9 @@ export class Fog1 {
 
     // 重置相机和其他辅助对象
     camera.position.set(0, 0, 0);
+
+    // GUI销毁
+    this.gui.destroy();
 
     // 解除引用
     {
