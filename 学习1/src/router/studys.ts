@@ -48,6 +48,15 @@ export default {
       },
     },
     {
+      path: "texture3",
+      name: "Texture3",
+      component: () => import("@/views/Study/Texture3/index.vue"),
+      meta: {
+        title: "纹理之批量加载回调",
+        imgSrc: "Texture3/Texture.gif",
+      },
+    },
+    {
       path: "cameraSetScissorTest",
       name: "CameraSetScissorTest",
       component: () => import("@/views/Study/CameraSetScissorTest/index.vue"),
