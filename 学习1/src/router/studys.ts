@@ -30,6 +30,24 @@ export default {
       },
     },
     {
+      path: "texture",
+      name: "Texture",
+      component: () => import("@/views/Study/Texture/index.vue"),
+      meta: {
+        title: "纹理",
+        imgSrc: "Texture/Texture.gif",
+      },
+    },
+    {
+      path: "texture2",
+      name: "Texture2",
+      component: () => import("@/views/Study/Texture2/index.vue"),
+      meta: {
+        title: "纹理2",
+        imgSrc: "Texture2/Texture.gif",
+      },
+    },
+    {
       path: "cameraSetScissorTest",
       name: "CameraSetScissorTest",
       component: () => import("@/views/Study/CameraSetScissorTest/index.vue"),
