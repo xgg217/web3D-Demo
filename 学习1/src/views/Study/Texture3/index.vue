@@ -1,11 +1,47 @@
 <script setup lang="ts">
 import { Textures } from "./utils";
+import type { TSetLoadTextCb } from "./types";
+import { ElLoading } from "element-plus";
+// import type {LoadingInstance } from "element-plus"
 
 const texturesClass = ref<Textures>();
+const loading = ref(false);
+// const loadVal = ref(0); // 当前加载到了第几个
+// const loadSize = ref(0); // 一共需要加载多少个
+
+// const loadText = computed(() => {
+//   return `加载中(${loadVal.value}/${loadSize.value})`;
+// });
+
+let loadingInstance = null;
+
+const setLoadText: TSetLoadTextCb = (val: number, size: number) => {
+  const str = `加载中(${val}/${size})`;
+  loadingInstance!.setText(str);
+};
 
 onMounted(() => {
+  loading.value = true;
   setTimeout(() => {
-    texturesClass.value = new Textures();
+    // loadingInstance = ElLoading.service({
+    //   target: ".box",
+    //   lock: true,
+    //   text: "加载中",
+    //   background: "rgba(0, 0, 0, 0.7)",
+    // });
+    Textures.createTextures(setLoadText)
+      .then(res => {
+        // console.log(res);
+        texturesClass.value = res;
+
+        // console.log(loadText);
+      })
+      .finally(() => {
+        console.log();
+
+        // loadingInstance!.close();
+        loading.value = false;
+      });
   }, 1000);
 });
 
@@ -16,7 +52,11 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="box"></div>
+  <div class="box" v-loading="loading" :element-loading-text="loadText"></div>
 </template>
 
-<style lang="scss" scoped></style>
+<style scoped>
+.box {
+  border: 1px solid red;
+}
+</style>
