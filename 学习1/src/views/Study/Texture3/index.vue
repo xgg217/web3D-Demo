@@ -53,8 +53,6 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <!-- v-loading="loading"
-  :element-loading-text="`加载中(${loadVal}/${loadSize})`" -->
   <div class="box" v-loading="loading"></div>
 </template>
 
