@@ -16,15 +16,17 @@ const loading = ref(false);
 let loadingInstance = null;
 
 const setLoadText: TSetLoadTextCb = (val: number, size: number) => {
-  const str = `加载中(${val}/${size})`;
-  loadingInstance!.setText(str);
+  // const str = `加载中(${val}/${size})`;
+  // loadVal.value = val;
+  // loadSize.value = size;
+  // loadingInstance!.setText(str);
 };
 
 onMounted(() => {
   loading.value = true;
   setTimeout(() => {
     // loadingInstance = ElLoading.service({
-    //   target: ".box",
+    //   target: document.querySelector(".box"),
     //   lock: true,
     //   text: "加载中",
     //   background: "rgba(0, 0, 0, 0.7)",
@@ -33,14 +35,13 @@ onMounted(() => {
       .then(res => {
         // console.log(res);
         texturesClass.value = res;
-
-        // console.log(loadText);
+      })
+      .catch(err => {
+        console.error(err);
       })
       .finally(() => {
-        console.log();
-
-        // loadingInstance!.close();
         loading.value = false;
+        // loadingInstance!.close();
       });
   }, 1000);
 });
@@ -52,7 +53,9 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="box" v-loading="loading" :element-loading-text="loadText"></div>
+  <!-- v-loading="loading"
+  :element-loading-text="`加载中(${loadVal}/${loadSize})`" -->
+  <div class="box" v-loading="loading"></div>
 </template>
 
 <style scoped>
