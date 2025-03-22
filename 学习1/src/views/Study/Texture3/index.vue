@@ -16,17 +16,17 @@ const loadSize = ref(0); // 一共需要加载多少个
 let loadingInstance = null;
 
 const setLoadText: TSetLoadTextCb = (val: number, size: number) => {
-  const str = `加载中(${val}/${size})`;
+  // const str = `加载中(${val}/${size})`;
   // loadVal.value = val;
   // loadSize.value = size;
-  loadingInstance!.setText(str);
+  // loadingInstance!.setText(str);
 };
 
 onMounted(() => {
   loading.value = true;
   setTimeout(() => {
     // loadingInstance = ElLoading.service({
-    //   target: ".box",
+    //   target: document.querySelector(".box"),
     //   lock: true,
     //   text: "加载中",
     //   background: "rgba(0, 0, 0, 0.7)",
@@ -35,8 +35,9 @@ onMounted(() => {
       .then(res => {
         console.log(res);
         texturesClass.value = res;
-
-        // console.log(loadText);
+      })
+      .catch(err => {
+        console.error(err);
       })
       .catch(err => {
         console.error(err);
@@ -45,6 +46,7 @@ onMounted(() => {
         // console.log();
         // loadingInstance!.close();
         loading.value = false;
+        // loadingInstance!.close();
       });
   }, 1000);
 });
