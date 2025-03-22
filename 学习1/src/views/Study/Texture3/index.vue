@@ -6,8 +6,8 @@ import { ElLoading } from "element-plus";
 
 const texturesClass = ref<Textures>();
 const loading = ref(false);
-// const loadVal = ref(0); // 当前加载到了第几个
-// const loadSize = ref(0); // 一共需要加载多少个
+const loadVal = ref(0); // 当前加载到了第几个
+const loadSize = ref(0); // 一共需要加载多少个
 
 // const loadText = computed(() => {
 //   return `加载中(${loadVal.value}/${loadSize.value})`;
@@ -17,6 +17,8 @@ let loadingInstance = null;
 
 const setLoadText: TSetLoadTextCb = (val: number, size: number) => {
   const str = `加载中(${val}/${size})`;
+  // loadVal.value = val;
+  // loadSize.value = size;
   loadingInstance!.setText(str);
 };
 
@@ -31,14 +33,16 @@ onMounted(() => {
     // });
     Textures.createTextures(setLoadText)
       .then(res => {
-        // console.log(res);
+        console.log(res);
         texturesClass.value = res;
 
         // console.log(loadText);
       })
+      .catch(err => {
+        console.error(err);
+      })
       .finally(() => {
-        console.log();
-
+        // console.log();
         // loadingInstance!.close();
         loading.value = false;
       });
@@ -52,7 +56,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="box" v-loading="loading" :element-loading-text="loadText"></div>
+  <div class="box" v-loading="loading"></div>
 </template>
 
 <style scoped>

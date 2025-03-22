@@ -3,6 +3,7 @@ import HomeView from "../views/HomeView.vue";
 import examples from "./examples";
 import customs from "./customs";
 import studys from "./studys";
+import tweenJS from "./tweenJS";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -21,6 +22,9 @@ const router = createRouter({
 
     // 学习
     studys,
+
+    // tween.js 补间动画
+    tweenJS,
 
     {
       path: "/404",

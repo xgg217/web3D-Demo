@@ -117,18 +117,26 @@ export class Textures {
       new URL("./flower-6.jpg", import.meta.url).href,
     ] as const;
 
+    function loadColorTexture(path: string) {
+      const texture = loader.load(path);
+      texture.colorSpace = THREE.SRGBColorSpace;
+      return texture;
+    }
+
     const materials = [
-      new THREE.MeshBasicMaterial({ map: loader.load(urlArr[0]) }),
-      new THREE.MeshBasicMaterial({ map: loader.load(urlArr[1]) }),
-      new THREE.MeshBasicMaterial({ map: loader.load(urlArr[2]) }),
-      new THREE.MeshBasicMaterial({ map: loader.load(urlArr[3]) }),
-      new THREE.MeshBasicMaterial({ map: loader.load(urlArr[4]) }),
-      new THREE.MeshBasicMaterial({ map: loader.load(urlArr[5]) }),
+      new THREE.MeshBasicMaterial({ map: loadColorTexture(urlArr[0]) }),
+      new THREE.MeshBasicMaterial({ map: loadColorTexture(urlArr[1]) }),
+      new THREE.MeshBasicMaterial({ map: loadColorTexture(urlArr[2]) }),
+      new THREE.MeshBasicMaterial({ map: loadColorTexture(urlArr[3]) }),
+      new THREE.MeshBasicMaterial({ map: loadColorTexture(urlArr[4]) }),
+      new THREE.MeshBasicMaterial({ map: loadColorTexture(urlArr[5]) }),
     ];
 
     return new Promise((res, rej) => {
       loadManager.onLoad = () => {
         const textures = new Textures(materials);
+        // textures.colorSpace = THREE.SRGBColorSpace;
+
         res(textures);
       };
 
