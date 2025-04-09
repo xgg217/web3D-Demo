@@ -20,5 +20,14 @@ export default {
         imgSrc: "",
       },
     },
+    {
+      path: "index",
+      name: "TweenJSIndex",
+      component: () => import("@/views/TweenJS/HelloWorld/index.vue"),
+      meta: {
+        title: "HelloWorld",
+        imgSrc: "HelloWorld/HelloWorld.png",
+      },
+    },
   ],
 } as RouteRecordRaw;
