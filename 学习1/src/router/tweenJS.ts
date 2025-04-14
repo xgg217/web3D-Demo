@@ -13,7 +13,7 @@ export default {
   children: [
     {
       path: "index",
-      name: "TweenJSIndex",
+      name: "index",
       component: () => import("@/views/TweenJS/CustomIndex.vue"),
       meta: {
         title: "占位图",
@@ -21,7 +21,7 @@ export default {
       },
     },
     {
-      path: "index",
+      path: "TweenJSIndex",
       name: "TweenJSIndex",
       component: () => import("@/views/TweenJS/HelloWorld/index.vue"),
       meta: {

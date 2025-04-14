@@ -2,8 +2,8 @@ import * as THREE from "three";
 import Stats from "three/addons/libs/stats.module.js";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { getWAndH } from "@/utils/index";
-// import * as TWEEN from "@tweenjs/tween.js";
-import anime from "animejs";
+import * as TWEEN from "@tweenjs/tween.js";
+// import anime from "animejs";
 
 // 太阳系
 export default class SolarSystem {
@@ -14,7 +14,7 @@ export default class SolarSystem {
   light: THREE.PointLight; //  点光源
   stats: Stats; // 帧率
   boxDom: HTMLElement;
-  // tween: TWEEN.Tween;
+  tween: TWEEN.Tween;
 
   constructor() {
     this.boxDom = document.querySelector(".box")!;
@@ -93,30 +93,30 @@ export default class SolarSystem {
           angle: 0,
         };
 
-        anime({
-          targets: obj,
-          angle: -Math.PI * 2,
-          easing: "linear",
-          duration: 10000,
-          loop: true,
-          update: () => {
-            earthMesh.rotateY(0.02);
-            earthMesh.position.x = R * Math.cos(obj.angle);
-            earthMesh.position.z = R * Math.sin(obj.angle);
-          },
-        });
-
-        // this.tween = new TWEEN.Tween({ angle: 0 })
-        //   .to({ angle: -Math.PI * 2 }, 10000)
-        //   .repeat(Infinity)
-        //   .onUpdate(obj => {
-        //     // console.log(obj);
+        // anime({
+        //   targets: obj,
+        //   angle: -Math.PI * 2,
+        //   easing: "linear",
+        //   duration: 10000,
+        //   loop: true,
+        //   update: () => {
         //     earthMesh.rotateY(0.02);
         //     earthMesh.position.x = R * Math.cos(obj.angle);
         //     earthMesh.position.z = R * Math.sin(obj.angle);
-        //     // console.log(R * Math.cos(obj.angle));
-        //   })
-        //   .start();
+        //   },
+        // });
+
+        this.tween = new TWEEN.Tween(obj)
+          .to({ angle: -Math.PI * 2 }, 10000)
+          .repeat(Infinity)
+          .onUpdate(obj => {
+            // console.log(obj);
+            earthMesh.rotateY(0.02);
+            earthMesh.position.x = R * Math.cos(obj.angle);
+            earthMesh.position.z = R * Math.sin(obj.angle);
+            // console.log(R * Math.cos(obj.angle));
+          })
+          .start();
       }
 
       // 月亮
