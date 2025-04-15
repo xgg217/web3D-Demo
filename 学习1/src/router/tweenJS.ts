@@ -38,5 +38,14 @@ export default {
         imgSrc: "BlackAndRed/BlackAndRed.png",
       },
     },
+    {
+      path: "Bars",
+      name: "Bars",
+      component: () => import("@/views/TweenJS/Bars/index.vue"),
+      meta: {
+        title: "线条来回移动",
+        imgSrc: "Bars/Bars.png",
+      },
+    },
   ],
 } as RouteRecordRaw;

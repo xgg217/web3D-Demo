@@ -132,7 +132,7 @@ onMounted(() => {
 
   // 获取所有页面
   arr.value = getRouterArr();
-  console.log(arr.value);
+  // console.log(arr.value);
 });
 </script>
 
