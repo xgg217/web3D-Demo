@@ -29,5 +29,14 @@ export default {
         imgSrc: "HelloWorld/HelloWorld.png",
       },
     },
+    {
+      path: "BlackAndRed",
+      name: "BlackAndRed",
+      component: () => import("@/views/TweenJS/BlackAndRed/index.vue"),
+      meta: {
+        title: "黑与红",
+        imgSrc: "BlackAndRed/BlackAndRed.png",
+      },
+    },
   ],
 } as RouteRecordRaw;
