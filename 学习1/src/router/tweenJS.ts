@@ -47,5 +47,14 @@ export default {
         imgSrc: "Bars/Bars.png",
       },
     },
+    {
+      path: "Graphs",
+      name: "Graphs",
+      component: () => import("@/views/TweenJS/Graphs/index.vue"),
+      meta: {
+        title: "运动轨迹",
+        imgSrc: "Graphs/Graphs.png",
+      },
+    },
   ],
 } as RouteRecordRaw;

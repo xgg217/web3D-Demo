@@ -23,11 +23,7 @@ const emit = defineEmits<{
 </script>
 
 <template>
-  <div
-    class="item"
-    @click="emit('click', props.row.routeName)"
-    :class="{ avc: props.isAvc }"
-  >
+  <div class="item" @click="emit('click', props.row.routeName)" :class="{ avc: props.isAvc }">
     <div class="imgs">
       <img :src="props.row.imgSrc" loading="lazy" :alt="props.row.title" />
     </div>
@@ -65,7 +61,7 @@ const emit = defineEmits<{
 }
 
 .imgs img {
-  max-width: 100%;
+  width: 100%;
   max-height: 100%;
 }
 
