@@ -5,7 +5,7 @@
         v-for="item of arr"
         :key="item.index"
         :style="{
-          transform: `translate(${item.left}px, ${item.index * 2}px)`,
+          transform: `translate(${item.left}px, ${item.index * 4}px)`,
           backgroundColor: item.bgc,
         }"
       ></li>
@@ -35,13 +35,13 @@ const { init } = (() => {
   const initArr = () => {
     let index = 0;
     for (let i = 0; i < MAX; i++) {
-      const activeVal = getRandomIntInclusive(ACTIVE_ARR[0], ACTIVE_ARR[1]);
-      const leftVal = getRandomIntInclusive(-activeVal, activeVal);
+      const startValue = getRandomIntInclusive(0, 100);
+      const endValue = getRandomIntInclusive(200, 400);
       const obj: IItem = {
         index,
         bgc: getRandomColor(),
-        left: leftVal,
-        activeArr: [-activeVal, activeVal],
+        left: startValue,
+        activeArr: [startValue, endValue],
       };
       arr.value.push(obj);
       index++;
@@ -56,7 +56,7 @@ const { init } = (() => {
         .delay(Math.random() * 1000)
         .easing(Easing.Back.Out)
         .onUpdate(item => {
-          item.left = -item.left;
+          // item.left = -item.left;
         });
 
       const tweenBack = new Tween(item)
@@ -64,7 +64,7 @@ const { init } = (() => {
         .delay(Math.random() * 1000)
         .easing(Easing.Elastic.InOut)
         .onUpdate(item => {
-          item.left = -item.left;
+          // item.left = -item.left;
         });
 
       // // const tweenBack = new Tween(item)
@@ -96,7 +96,7 @@ const { init } = (() => {
   const init = () => {
     initArr();
     initMove();
-    // animate(performance.now());
+    animate(performance.now());
   };
 
   return {
@@ -115,17 +115,21 @@ onMounted(() => {
   align-items: start;
   /* align-items: center; */
   justify-content: center;
-}
-ul {
   position: relative;
   top: 0;
   left: 0;
-  margin-top: 50px;
+  /* border: 1px solid red; */
+}
+ul {
+  width: 500px;
+  position: absolute;
+  top: 30px;
+  height: 100%;
+  left: translateX(50%);
+  /* border: 1px solid red; */
 }
 
 li {
-  position: absolute;
-  top: 0;
   transform: translate(0, 0);
   width: 200px;
   height: 2px;
