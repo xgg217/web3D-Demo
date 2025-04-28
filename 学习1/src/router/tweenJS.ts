@@ -56,5 +56,23 @@ export default {
         imgSrc: "Graphs/Graphs.png",
       },
     },
+    {
+      path: "Simplest",
+      name: "Simplest",
+      component: () => import("@/views/TweenJS/Simplest/index.vue"),
+      meta: {
+        title: "补间动画",
+        imgSrc: "Simplest/Simplest.png",
+      },
+    },
+    {
+      path: "VideoAndTime",
+      name: "VideoAndTime",
+      component: () => import("@/views/TweenJS/VideoAndTime/index.vue"),
+      meta: {
+        title: "播放视频，同步渐变",
+        imgSrc: "VideoAndTime/VideoAndTime.png",
+      },
+    },
   ],
 } as RouteRecordRaw;
