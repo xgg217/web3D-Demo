@@ -74,5 +74,14 @@ export default {
         imgSrc: "VideoAndTime/VideoAndTime.png",
       },
     },
+    {
+      path: "Dynamic",
+      name: "Dynamic",
+      component: () => import("@/views/TweenJS/Dynamic/index.vue"),
+      meta: {
+        title: "Dynamic修改",
+        imgSrc: "Dynamic/Dynamic.png",
+      },
+    },
   ],
 } as RouteRecordRaw;
