@@ -79,7 +79,7 @@ export default {
       name: "Dynamic",
       component: () => import("@/views/TweenJS/Dynamic/index.vue"),
       meta: {
-        title: "Dynamic修改",
+        title: "Dynamic to, object",
         imgSrc: "Dynamic/Dynamic.png",
       },
     },
