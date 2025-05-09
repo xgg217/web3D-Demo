@@ -75,12 +75,22 @@ export default {
       },
     },
     {
-      path: "Dynamic",
-      name: "Dynamic",
-      component: () => import("@/views/TweenJS/Dynamic/index.vue"),
+      path: "DynamicToObject",
+      name: "DynamicToObject",
+      component: () => import("@/views/TweenJS/DynamicToObject/index.vue"),
       meta: {
         title: "Dynamic to, object",
-        imgSrc: "Dynamic/Dynamic.png",
+        imgSrc: "DynamicToObject/DynamicToObject.png",
+      },
+    },
+
+    {
+      path: "DynamicToInterpolationArray",
+      name: "DynamicToInterpolationArray",
+      component: () => import("@/views/TweenJS/DynamicToInterpolationArray/index.vue"),
+      meta: {
+        title: "Dynamic to, interpolation array",
+        imgSrc: "DynamicToInterpolationArray/DynamicToInterpolationArray.png",
       },
     },
   ],

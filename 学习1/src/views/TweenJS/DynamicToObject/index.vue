@@ -8,7 +8,7 @@
         </div>
       </template>
 
-      <CardCmp :row1="boxFalse1" :row2="boxFalse2" />
+      <CardCmp :arr="boxFalseArr" />
     </el-card>
 
     <el-card style="width: 520px">
@@ -18,7 +18,7 @@
         </div>
       </template>
 
-      <CardCmp :row1="boxTrue1" :row2="boxTrue2" />
+      <CardCmp :arr="boxTrueArr" />
     </el-card>
   </div>
 </template>
@@ -27,20 +27,29 @@
 import CardCmp from "./components/CardCmp.vue";
 import type { TBox } from "./types";
 import { Tween, Easing, Group } from "@tweenjs/tween.js";
+import { cloneDeep } from "lodash-es";
 
-const temp: TBox = {
-  x: 0,
-  y: 0,
-};
+const tempArr: TBox[] = [
+  { x: 20, y: 20, bgc: "rgb(150, 150, 150)" },
+  { x: 410, y: 20, bgc: "rgb(200, 80, 80)" },
+];
 
-const dynamicFun = (row1: TBox, row2: TBox, dynamic: boolean) => {
+const dynamicFun = (arr: Ref<TBox[]>, dynamic: boolean) => {
   const group = new Group();
+  console.log(arr.value);
+
   // 模块2 x2: 0, y2: 230
-  new Tween(row2, group).to({ x: 410, y: 250 }, 3000).easing(Easing.Exponential.InOut).start();
+  new Tween(arr.value[1], group)
+    .to({ x: 410, y: 250 }, 3000)
+    .easing(Easing.Exponential.InOut)
+    .onUpdate(obj => {
+      // console.log(obj);
+    })
+    .start();
 
   // 模块1
-  new Tween(row1, group)
-    .to(row2, 3000)
+  new Tween(arr.value[0], group)
+    .to(arr.value[1], 3000)
     .dynamic(dynamic)
     .duration(3000)
     .easing(Easing.Exponential.InOut)
@@ -50,11 +59,11 @@ const dynamicFun = (row1: TBox, row2: TBox, dynamic: boolean) => {
 };
 
 // .dynamic(false)
-const { boxFalse1, boxFalse2, dynamicFalse } = (() => {
-  const boxFalse1: TBox = reactive({ ...temp, x: 20, y: 20 });
-  const boxFalse2: TBox = reactive({ ...temp, x: 410, y: 20 });
+const { boxFalseArr, dynamicFalse } = (() => {
+  const boxFalseArr = ref<TBox[]>(cloneDeep(tempArr));
+
   const dynamicFalse = () => {
-    const group = dynamicFun(boxFalse1, boxFalse2, false);
+    const group = dynamicFun(boxFalseArr, false);
     const animate = (time: number) => {
       requestAnimationFrame(animate);
       group.update(time);
@@ -62,14 +71,16 @@ const { boxFalse1, boxFalse2, dynamicFalse } = (() => {
     animate(performance.now());
   };
 
-  return { boxFalse1, boxFalse2, dynamicFalse };
+  return { boxFalseArr, dynamicFalse };
 })();
 
-const { boxTrue1, boxTrue2, dynamicTrue } = (() => {
-  const boxTrue1: TBox = reactive({ ...temp, x: 20, y: 20 });
-  const boxTrue2: TBox = reactive({ ...temp, x: 410, y: 20 });
+const { boxTrueArr, dynamicTrue } = (() => {
+  // const boxTrue1: TBox = reactive({ ...temp, x: 20, y: 20 });
+  // const boxTrue2: TBox = reactive({ ...temp, x: 410, y: 20 });
+
+  const boxTrueArr = ref<TBox[]>(cloneDeep(tempArr));
   const dynamicTrue = () => {
-    const group = dynamicFun(boxTrue1, boxTrue2, true);
+    const group = dynamicFun(boxTrueArr, true);
     const animate = (time: number) => {
       // console.log(1);
       requestAnimationFrame(animate);
@@ -79,7 +90,7 @@ const { boxTrue1, boxTrue2, dynamicTrue } = (() => {
     animate(performance.now());
   };
 
-  return { boxTrue1, boxTrue2, dynamicTrue };
+  return { boxTrueArr, dynamicTrue };
 })();
 
 onMounted(() => {

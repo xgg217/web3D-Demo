@@ -18,6 +18,7 @@
     "@element-plus/icons-vue": "^2.3.1",
     "@tweenjs/tween.js": "^25.0.0",
     "element-plus": "^2.9.4",
+    "lodash-es": "^4.17.21",
     "markdown-it": "^14.1.0",
     "pinia": "^2.3.1",
     "three": "^0.173.0",
