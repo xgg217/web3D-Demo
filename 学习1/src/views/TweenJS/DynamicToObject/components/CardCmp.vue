@@ -1,12 +1,12 @@
 <template>
   <div class="card">
-    <template v-for="(item, index) in props.arr" :key="index">
+    <template v-for="item in list" :key="item.bgc">
       <div
         :style="{
           left: `${item.x}px`,
           top: `${item.y}px`,
           backgroundColor: item.bgc,
-          zIndex: index,
+          borderRadius: item.borderRadius,
         }"
       ></div>
     </template>
@@ -18,9 +18,26 @@
 <script setup lang="ts">
 import type { TBox } from "../types";
 
+type TCard = TBox & {
+  bgc: string;
+  borderRadius: string;
+};
+
 const props = defineProps<{
   arr: TBox[];
 }>();
+
+const list = computed<TCard[]>(() => {
+  return props.arr.map((item, index) => {
+    const obj: TCard = {
+      ...item,
+      bgc: `rgb(${100 * index}, ${100 * index}, ${100 * index})`,
+      borderRadius: index * 10 + "%",
+    };
+
+    return obj;
+  });
+});
 </script>
 
 <style scoped>

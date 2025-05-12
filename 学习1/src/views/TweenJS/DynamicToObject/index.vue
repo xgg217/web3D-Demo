@@ -30,8 +30,8 @@ import { Tween, Easing, Group } from "@tweenjs/tween.js";
 import { cloneDeep } from "lodash-es";
 
 const tempArr: TBox[] = [
-  { x: 20, y: 20, bgc: "rgb(150, 150, 150)" },
-  { x: 410, y: 20, bgc: "rgb(200, 80, 80)" },
+  { x: 20, y: 20 },
+  { x: 410, y: 20 },
 ];
 
 const dynamicFun = (arr: Ref<TBox[]>, dynamic: boolean) => {
