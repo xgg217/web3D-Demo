@@ -111,5 +111,23 @@ export default {
         imgSrc: "RelativeValues/RelativeValues.png",
       },
     },
+    {
+      path: "Yoyo",
+      name: "Yoyo",
+      component: () => import("@/views/TweenJS/Yoyo/index.vue"),
+      meta: {
+        title: "Yoyo",
+        imgSrc: "Yoyo/Yoyo.png",
+      },
+    },
+    {
+      path: "StopAllChainedTweens",
+      name: "StopAllChainedTweens",
+      component: () => import("@/views/TweenJS/StopAllChainedTweens/index.vue"),
+      meta: {
+        title: "StopAllChainedTweens",
+        imgSrc: "StopAllChainedTweens/StopAllChainedTweens.png",
+      },
+    },
   ],
 } as RouteRecordRaw;
