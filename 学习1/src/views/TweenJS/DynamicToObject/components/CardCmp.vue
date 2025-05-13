@@ -1,6 +1,6 @@
 <template>
   <div class="card">
-    <template v-for="item in list" :key="item.bgc">
+    <template v-for="(item, index) in list" :key="item.bgc">
       <div
         :style="{
           left: `${item.x}px`,
@@ -8,7 +8,9 @@
           backgroundColor: item.bgc,
           borderRadius: item.borderRadius,
         }"
-      ></div>
+      >
+        {{ index }}
+      </div>
     </template>
     <!-- <div class="box1" :style="{ left: `${row1.x}px`, top: `${row1.y}px` }"></div>
     <div class="box2" :style="{ left: `${row2.x}px`, top: `${row2.y}px` }"></div> -->
@@ -55,5 +57,9 @@ const list = computed<TCard[]>(() => {
   /* top: 20px; */
   width: 50px;
   height: 50px;
+  text-align: center;
+  line-height: 50px;
+  font-size: 20px;
+  color: red;
 }
 </style>

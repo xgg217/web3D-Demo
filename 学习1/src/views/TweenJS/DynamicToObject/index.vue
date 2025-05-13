@@ -36,7 +36,6 @@ const tempArr: TBox[] = [
 
 const dynamicFun = (arr: Ref<TBox[]>, dynamic: boolean) => {
   const group = new Group();
-  console.log(arr.value);
 
   // 模块2 x2: 0, y2: 230
   new Tween(arr.value[1], group)

@@ -93,5 +93,23 @@ export default {
         imgSrc: "DynamicToInterpolationArray/DynamicToInterpolationArray.png",
       },
     },
+    {
+      path: "Repeat",
+      name: "Repeat",
+      component: () => import("@/views/TweenJS/Repeat/index.vue"),
+      meta: {
+        title: "重复",
+        imgSrc: "Repeat/Repeat.png",
+      },
+    },
+    {
+      path: "RelativeValues",
+      name: "RelativeValues",
+      component: () => import("@/views/TweenJS/RelativeValues/index.vue"),
+      meta: {
+        title: "渐变到相对值，使用repeat",
+        imgSrc: "RelativeValues/RelativeValues.png",
+      },
+    },
   ],
 } as RouteRecordRaw;
