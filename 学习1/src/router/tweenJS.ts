@@ -129,5 +129,34 @@ export default {
         imgSrc: "StopAllChainedTweens/StopAllChainedTweens.png",
       },
     },
+
+    {
+      path: "PauseTween",
+      name: "PauseTween",
+      component: () => import("@/views/TweenJS/PauseTween/index.vue"),
+      meta: {
+        title: "PauseTween",
+        imgSrc: "PauseTween/PauseTween.png",
+      },
+    },
+    {
+      path: "ComplexProperties",
+      name: "ComplexProperties",
+      component: () => import("@/views/TweenJS/ComplexProperties/index.vue"),
+      meta: {
+        title: "嵌套对象",
+        imgSrc: "ComplexProperties/ComplexProperties.png",
+      },
+    },
+
+    {
+      path: "AnimateAnArrayOfValues",
+      name: "AnimateAnArrayOfValues",
+      component: () => import("@/views/TweenJS/AnimateAnArrayOfValues/index.vue"),
+      meta: {
+        title: "翻转",
+        imgSrc: "AnimateAnArrayOfValues/AnimateAnArrayOfValues.png",
+      },
+    },
   ],
 } as RouteRecordRaw;

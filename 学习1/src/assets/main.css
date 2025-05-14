@@ -14,7 +14,7 @@ main {
   box-sizing: border-box;
 }
 
-main .box {
+main > aside > .box {
   display: flex;
   align-items: center;
   height: 100%;
