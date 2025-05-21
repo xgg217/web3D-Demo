@@ -92,5 +92,14 @@ export default {
         imgSrc: "Fog/Fog.gif",
       },
     },
+    {
+      path: "GenerateMountainTerrain",
+      name: "GenerateMountainTerrain",
+      component: () => import("@/views/Study/GenerateMountainTerrain/index.vue"),
+      meta: {
+        title: "生成山脉地形",
+        imgSrc: "GenerateMountainTerrain/生成山脉地形.gif",
+      },
+    },
   ],
 } as RouteRecordRaw;
