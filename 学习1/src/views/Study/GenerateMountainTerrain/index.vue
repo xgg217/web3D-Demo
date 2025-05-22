@@ -13,6 +13,11 @@ onMounted(() => {
     createMountain.value = new CreateMountain(boxDom);
   }, 1000);
 });
+
+onBeforeUnmount(() => {
+  // console.log("销毁组件");
+  createMountain.value?.destroy();
+});
 </script>
 
 <style lang="scss" scoped></style>

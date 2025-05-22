@@ -27,11 +27,13 @@ const emit = defineEmits<{
     <div class="imgs">
       <img :src="props.row.imgSrc" loading="lazy" :alt="props.row.title" />
     </div>
-    <p>{{ props.row.title }}</p>
+    <p :class="{ textColor: props.isAvc }">{{ props.row.title }}</p>
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
+$textColor: #049ef4;
+
 .item {
   border: 1px solid transparent;
   border-radius: 3px;
@@ -47,7 +49,7 @@ const emit = defineEmits<{
 }
 
 .avc {
-  border-color: #049ef4;
+  border-color: $textColor;
   border-width: 3px;
 }
 
@@ -72,6 +74,10 @@ p {
 }
 
 .item:hover p {
-  color: #049ef4;
+  color: $textColor;
+}
+
+.textColor {
+  color: $textColor;
 }
 </style>

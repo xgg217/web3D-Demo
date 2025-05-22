@@ -101,5 +101,15 @@ export default {
         imgSrc: "GenerateMountainTerrain/生成山脉地形.gif",
       },
     },
+
+    {
+      path: "EdgesGeometry",
+      name: "EdgesGeometry",
+      component: () => import("@/views/Study/EdgesGeometry/index.vue"),
+      meta: {
+        title: "虚线线框几何体",
+        imgSrc: "EdgesGeometry/EdgesGeometry.png",
+      },
+    },
   ],
 } as RouteRecordRaw;
