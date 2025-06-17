@@ -111,5 +111,14 @@ export default {
         imgSrc: "EdgesGeometry/EdgesGeometry.png",
       },
     },
+    {
+      path: "TunnelShuttle",
+      name: "TunnelShuttle",
+      component: () => import("@/views/Study/TunnelShuttle/index.vue"),
+      meta: {
+        title: "隧道穿梭",
+        imgSrc: "TunnelShuttle/TunnelShuttle.png",
+      },
+    },
   ],
 } as RouteRecordRaw;
