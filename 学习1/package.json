@@ -18,7 +18,7 @@
     "@element-plus/icons-vue": "^2.3.1",
     "@tweenjs/tween.js": "^25.0.0",
     "element-plus": "^2.9.4",
-    "lodash-es": "^4.17.21",
+    "es-toolkit": "^1.39.10",
     "markdown-it": "^14.1.0",
     "pinia": "^2.3.1",
     "simplex-noise": "^4.0.3",
@@ -29,7 +29,6 @@
   "devDependencies": {
     "@tsconfig/node22": "^22.0.0",
     "@types/animejs": "^3.1.12",
-    "@types/lodash-es": "^4.17.12",
     "@types/markdown-it": "^14.1.2",
     "@types/node": "^22.13.1",
     "@types/three": "^0.173.0",

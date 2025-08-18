@@ -25,7 +25,7 @@
 
 <script setup lang="ts">
 import CardCmp from "@/views/TweenJS/DynamicToObject/components/CardCmp.vue";
-import { cloneDeep } from "lodash-es";
+import { cloneDeep } from "es-toolkit";
 import type { TBox } from "@/views/TweenJS/DynamicToObject/types";
 import { Tween, Easing, Group, Interpolation } from "@tweenjs/tween.js";
 

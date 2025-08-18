@@ -27,7 +27,7 @@
 import CardCmp from "./components/CardCmp.vue";
 import type { TBox } from "./types";
 import { Tween, Easing, Group } from "@tweenjs/tween.js";
-import { cloneDeep } from "lodash-es";
+import { cloneDeep } from "es-toolkit";
 
 const tempArr: TBox[] = [
   { x: 20, y: 20 },
