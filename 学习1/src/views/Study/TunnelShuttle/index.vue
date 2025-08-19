@@ -16,7 +16,7 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
   // console.log("销毁组件");
-  TunnelShuttleClassRef.value.destroy();
+  TunnelShuttleClassRef.value?.destroy();
 });
 </script>
 
