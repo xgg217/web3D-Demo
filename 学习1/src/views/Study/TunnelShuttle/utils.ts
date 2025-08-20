@@ -170,8 +170,6 @@ export class TunnelShuttleClass {
       // @ts-ignore
       this.camera = null;
       // @ts-ignore
-      this.camera2 = null;
-      // @ts-ignore
       this.renderer = null;
     }
   }

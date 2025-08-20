@@ -120,5 +120,14 @@ export default {
         imgSrc: "TunnelShuttle/TunnelShuttle.png",
       },
     },
+    {
+      path: "Box3",
+      name: "Box3",
+      component: () => import("@/views/Study/Box3/index.vue"),
+      meta: {
+        title: "包围盒 Box3",
+        // imgSrc: "TunnelShuttle/TunnelShuttle.png",
+      },
+    },
   ],
 } as RouteRecordRaw;
