@@ -126,7 +126,16 @@ export default {
       component: () => import("@/views/Study/Box3/index.vue"),
       meta: {
         title: "包围盒 Box3",
-        // imgSrc: "TunnelShuttle/TunnelShuttle.png",
+        imgSrc: "Box3/Box3.png",
+      },
+    },
+    {
+      path: "Ray",
+      name: "Ray",
+      component: () => import("@/views/Study/Ray/index.vue"),
+      meta: {
+        title: "射线 Ray",
+        // imgSrc: "Box3/Box3.png",
       },
     },
   ],
