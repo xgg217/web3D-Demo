@@ -24,16 +24,6 @@ const { mesh } = (() => {
     80,
     80,
     0, //顶点3坐标
-
-    0,
-    0,
-    0, //顶点4坐标   和顶点1位置相同
-    80,
-    80,
-    0, //顶点5坐标  和顶点3位置相同
-    0,
-    80,
-    0, //顶点6坐标
   ]);
 
   // 创建属性缓冲区对象
@@ -46,7 +36,7 @@ const { mesh } = (() => {
   // 材质
   const metr = new THREE.MeshBasicMaterial({
     color: 0xff0000,
-    // side: THREE.DoubleSide, //两面可见
+    side: THREE.DoubleSide, //两面可见
   });
 
   // 创建线模型对象
@@ -111,6 +101,21 @@ const init = () => {
 
   // 物体
   scene.add(mesh);
+
+  // 射线
+  {
+    const ray = new THREE.Ray();
+    ray.origin.set(50, 50, 100);
+    ray.direction = new THREE.Vector3(0, 0, -1);
+
+    const arrowHelper = new THREE.ArrowHelper(
+      ray.direction,
+      ray.origin,
+      1000,
+      new THREE.Color("pink"),
+    );
+    mesh.add(arrowHelper);
+  }
 
   // 渲染循环
   function render() {
