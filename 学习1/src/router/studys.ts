@@ -138,5 +138,14 @@ export default {
         // imgSrc: "Box3/Box3.png",
       },
     },
+    {
+      path: "BufferGeometry",
+      name: "BufferGeometry",
+      component: () => import("@/views/Study/BufferGeometry/index.vue"),
+      meta: {
+        title: "缓冲模型 BufferGeometry",
+        // imgSrc: "Box3/Box3.png",
+      },
+    },
   ],
 } as RouteRecordRaw;
