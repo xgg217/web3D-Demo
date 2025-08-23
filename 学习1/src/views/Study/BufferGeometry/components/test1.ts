@@ -87,22 +87,18 @@ export class Test1 {
 
 // 随机生成一个等边三角形
 export const getRandomTriangle = (len: number) => {
-  // 第一个点-
-  const p1 = new THREE.Vector3(0, 0, 0);
-
-  // 第二个点
-  const p2 = new THREE.Vector3(0, 0, 0);
+  // 1. 先在 ​​XY 平面​​生成一个等边三角形
   {
-    // 随机一个点
-    const randomDirection = new THREE.Vector3(
-      Math.random() - 0.5,
-      Math.random() - 0.5,
-      Math.random() - 0.5,
-    ).normalize();
-    console.log(randomDirection);
+    // 60度的正弦
+    const y = Math.sin((60 * Math.PI) / 180) * len; // y点长度
+    const triangle = new THREE.Triangle(
+      new THREE.Vector3(0, 0, 0),
+      new THREE.Vector3(0, len, 0),
+      new THREE.Vector3(1, y, 0),
+    );
 
-    p2.copy(p1).add(randomDirection.multiplyScalar(len));
+    // triangle.rotateX()
   }
 
-  // 第三个点
+  // 然后 ​​随机旋转整个三角形​​（绕任意轴旋转任意角度）
 };
