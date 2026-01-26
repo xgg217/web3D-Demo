@@ -11,17 +11,17 @@ import Config from "@/config.json";
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-    // {
-    //   path: "/",
-    //   name: "home",
-    //   component: HomeView,
-    //   meta: {
-    //     title: "首页",
-    //   },
-    // },
+    {
+      path: "/",
+      name: "home",
+      component: HomeView,
+      meta: {
+        title: "首页",
+      },
+    },
 
     // web api
-    webApi,
+    ...webApi,
 
     {
       path: "/404",

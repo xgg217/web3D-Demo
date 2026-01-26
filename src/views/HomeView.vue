@@ -1,36 +1,24 @@
 <script setup lang="ts">
 import CardListCmp from "@/components/CardListCmp.vue";
 import type { ICardItem } from "@/types/index";
-import routerRow from "@/router/index";
+import routerRow from "@/router/webApi";
 import type { RouteRecordRaw } from "vue-router";
 
 // 要显示的路由
 const routeList = shallowRef<ICardItem[]>([]);
 
 onMounted(() => {
-  const arr = routerRow.options.routes
-    .filter(item => {
-      return item.name === "home";
-    })
-    .map(item => {
-      if (Array.isArray(item.children)) {
-        return item.children;
-      }
-      return [];
-    })[0]
-    .map(item => {
-      // console.log(item);
-
-      const { meta, name, path } = item as RouteRecordRaw;
-      const obj: ICardItem = {
-        title: meta!.title,
-        name: name as string,
-        remark: (meta?.remark || "") as string,
-        path,
-      };
-      return obj;
-    });
-  console.log(arr);
+  const arr = routerRow.map(item => {
+    const { meta, name, path } = item as RouteRecordRaw;
+    const obj: ICardItem = {
+      title: meta!.title,
+      name: name as string,
+      remark: (meta?.remark || "") as string,
+      path,
+    };
+    return obj;
+  });
+  console.log(routerRow);
   routeList.value = arr;
 });
 </script>

@@ -4,6 +4,7 @@ import { getRoutes } from "@/utils/router";
 import type { ICardItem } from "@/types/index";
 import placeholderURl from "@/assets/占位图.svg";
 import NavItemCmp from "./NavItemCmp.vue";
+import routerRow from "@/router/webApi";
 
 const route = useRoute();
 const router = useRouter();
@@ -14,71 +15,36 @@ const { title, routeList, avcRouteName, getRouterArr, onPage } = (() => {
   const routeList = shallowRef<ICardItem[]>([]);
   const avcRouteName = ref(""); // 当前被激活的路由名称
 
-  const globalRow = getCurrentInstance();
-
-  // 三级路由
-  const getThreeRoute = () => {
-    const matchedArr = route.matched;
-
-    return matchedArr[1];
-  };
-
   // 获取所有路由
   const getRouterArr = () => {
-    const list = router.options.routes; // 获取所有路由
-    // 父级路由
-    const { path } = route.matched[0];
+    const { name } = route.matched[0];
 
-    const row1 = list.find(item => {
-      return item.path === path;
+    // console.log(routerRow);
+    const row = routerRow.find(item => {
+      return item.name === name;
     });
-
-    // 一级路由
-    if (!row1 || !row1.children) {
-      return [];
-    }
-
-    // 多级路由
-    {
-      const row = getThreeRoute();
-      if (row) {
-        const row2 = row1.children.find(item => {
-          return item.name === row?.name;
-        });
-
-        if (!row2 || !row2.children) {
-          return [];
+    // console.log(row);
+    if (row && row.children && Array.isArray(row.children)) {
+      const arr = row.children.map(item => {
+        const { meta, name, path } = item;
+        let imgSrc = placeholderURl;
+        if (meta && meta.imgSrc) {
+          const src = `/src/views${row!.path}/${meta.imgSrc}`;
+          imgSrc = new URL(src, import.meta.url).href;
         }
+        const obj: ICardItem = {
+          title: (meta?.title || "") as string,
+          name: (name as string) || "",
+          remark: (meta?.remark || "") as string,
+          imgSrc,
+          path,
+        };
+        return obj;
+      });
 
-        title.value = (row2.meta?.title || "") as string;
-
-        return row2.children
-          .filter(item => {
-            // 过滤不需要显示的路由
-            return item.meta?.isShow !== false;
-          })
-          .map(item => {
-            const { meta, name, path } = item;
-
-            let imgSrc = placeholderURl;
-
-            if (meta && meta.imgSrc) {
-              const src = `/src/views${row!.path}/${meta.imgSrc}`;
-
-              imgSrc = new URL(src, import.meta.url).href;
-            }
-
-            const obj: ICardItem = {
-              title: (meta?.title || "") as string,
-              name: (name as string) || "",
-              remark: (meta?.remark || "") as string,
-              imgSrc,
-              path,
-            };
-            return obj;
-          });
-      }
+      return arr;
     }
+    return [];
   };
 
   // 页面跳转
@@ -92,7 +58,7 @@ const { title, routeList, avcRouteName, getRouterArr, onPage } = (() => {
     if (isBool) {
       avcRouteName.value = name;
       router.replace({ name });
-      console.log(globalRow);
+      // console.log(globalRow);
 
       return;
     }
@@ -111,7 +77,8 @@ const { title, routeList, avcRouteName, getRouterArr, onPage } = (() => {
 })();
 
 onMounted(() => {
-  routeList.value = getRouterArr() as ICardItem[];
+  routeList.value = getRouterArr();
+  // console.log(getRouterArr());
 
   avcRouteName.value = (route.name as string) || "";
 });
@@ -124,11 +91,7 @@ onMounted(() => {
       <h2>{{ title }}</h2>
       <ul>
         <li v-for="item of routeList" :key="item.path">
-          <NavItemCmp
-            :row="item"
-            @click="onPage"
-            :is-avc="avcRouteName === item.name"
-          />
+          <NavItemCmp :row="item" @click="onPage" :is-avc="avcRouteName === item.name" />
         </li>
       </ul>
     </nav>
